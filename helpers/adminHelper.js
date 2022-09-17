@@ -24,11 +24,15 @@ module.exports = {
                     response.status = true
                     resolve(response)
                 }
+                else {
+                    console.log("you are here");
+                    resolve({ status: false })
+                }
             } else {
                 console.log("you are here");
-               resolve({ status: false })
+                resolve({ status: false })
             }
-            
+
         })
 
 
@@ -39,48 +43,50 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.user_COLLECTION).find().toArray()
             resolve(user)
-           
+
         })
     },
     //block user
-    
-    blockUser:(usrId)=>{
+
+    blockUser: (usrId) => {
         console.log("i am here");
-        
-       const ousrId =objectId(usrId)
-       console.log(ousrId)
-        return new Promise((resolve,reject)=>{
+
+        const ousrId = objectId(usrId)
+        console.log(ousrId)
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.user_COLLECTION)
-            .updateOne({_id:ousrId},
-            {$set:{
-                block:true
-            }
-        }).then((response)=>{
-            resolve()
+                .updateOne({ _id: ousrId },
+                    {
+                        $set: {
+                            block: true
+                        }
+                    }).then((response) => {
+                        resolve()
+                    })
+            console.log("outside")
         })
-        console.log("outside")
-        })
-        
+
     },
     //UNblock user
-    
-    unblockUser:(usrId)=>{
+
+    unblockUser: (usrId) => {
         console.log("i am here");
-        
-       const ousrId =objectId(usrId)
-       console.log(ousrId)
-        return new Promise((resolve,reject)=>{
+
+        const ousrId = objectId(usrId)
+        console.log(ousrId)
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.user_COLLECTION)
-            .updateOne({_id:ousrId},
-            {$set:{
-                block:false
-            }
-        }).then((response)=>{
-            resolve()
+                .updateOne({ _id: ousrId },
+                    {
+                        $set: {
+                            block: false
+                        }
+                    }).then((response) => {
+                        resolve()
+                    })
+            console.log("outside")
         })
-        console.log("outside")
-        })
-        
+
     }
 
 }
