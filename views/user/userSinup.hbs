@@ -1,0 +1,101 @@
+<div class="adminsellerbg-image">
+    <div class="container ">
+
+        <div class="py-3 ">
+            <div class="row d-flex justify-content-end align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5 ">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+
+                        <div class="card-body p-4  text-center">
+
+                            <div class=" mb-md-5 mt-md-4 ">
+
+                                <h2 class=" fw-bold mb-1 text-uppercase">
+                                    {{!-- <img src="/images/login-icon-png-27.png" style="width:80px"> --}}
+                                    Singup</h2>
+                                <p class="text-white mb-5">
+                                    {{#if phfound}}
+                                <p style="color: rgb(255, 251, 0);">
+                                    User already exist with this phone number...!
+                                </p>
+                                {{/if}}
+                                {{#if Done}}
+                                <p style="color: rgb(60, 255, 0);">
+                                    Sucessfull updated...
+                                </p>
+                                {{else}}
+                                Please enter your details for singup!
+                                {{/if}}
+                                </p>
+                                <form method="post" id="singupForm" action="/user/userSinghup"
+                                    enctype="multipart/form-data">
+
+                                    <div class="form-outline form-white mb-4">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" name="name" placeholder="Full Name" id="typeEmailX"
+                                                    class="form-control form-control-lg" />
+                                            </div>
+                                            <div class="col"><input type="date" name="dob" placeholder="DOB"
+                                                    id="typeEmailX" class="form-control form-control-lg" /></div>
+                                        </div>
+
+                                        {{!-- <label class="form-label" for="typeEmailX">Email/Phone</label> --}}
+                                    </div>
+                                    {{!-- <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
+                                            href="#!">Forgot
+                                            password?</a></p> --}}
+                                    <div class="form-outline form-white mb-4">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" name="email" placeholder="Email Id" id="typeEmailX"
+                                                    class="form-control form-control-lg" />
+                                            </div>
+                                            <div class="col"><input type="text" name="phone" placeholder="Phone"
+                                                    id="typeEmailX" class="form-control form-control-lg" /></div>
+                                        </div>
+
+                                        {{!-- <label class="form-label" for="typeEmailX">Email/Phone</label> --}}
+                                    </div>
+                                    {{!-- <div class="form-outline mb-4">
+                                        <textarea class="form-control" id="textAreaExample6"
+                                            placeholder="Pickup Address" rows="3"></textarea>
+
+                                    </div> --}}
+                                    <div class="form-outline form-white mb-4">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" name="password" placeholder="password" i
+                                                    id="password" class="form-control form-control-lg" />
+                                            </div>
+                                            <div class="col"><input type="text" name="passwordConfirm"
+                                                    placeholder="Conform Password" id="typeEmailX"
+                                                    class="form-control form-control-lg" /></div>
+                                        </div>
+
+                                        <p class="small  pb-lg-2"><a class="text-white" href="/user/userLogin">Existing
+                                                Eller User? Log
+                                                in</a>
+                                        </p>
+
+                                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Singup</button>
+
+                                </form>
+
+                            </div>
+
+                            {{!-- <div>
+                                <p class="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign
+                                        Up</a>
+                                </p>
+                            </div> --}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

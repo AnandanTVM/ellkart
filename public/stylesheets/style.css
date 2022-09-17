@@ -1,0 +1,26 @@
+.navbar {
+  background-color: #C587EC !important;
+  top: 0;
+  position: sticky;
+  z-index: 10;
+
+}
+
+#logo {
+  width: 150px;
+  height: 50px;
+}
+
+.adminsellerbg-image {
+  background-image: url('/images/Loginbackground.jpg');
+  background-size: 100% 100%;
+
+}
+
+.bg-dark {
+  background-color: #0702FF !important;
+}
+
+.bg-mycolor {
+  background-color: #d7adf0 !important;
+}

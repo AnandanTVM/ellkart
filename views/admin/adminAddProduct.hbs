@@ -1,0 +1,250 @@
+<div class="col-lg-6 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
+    <h1>
+        <p class="text-center mt-1"> <i><b>Add Product</b></i></p>
+        {{!--
+        <hr style="height:2px;border-width:0;"> --}}
+    </h1>
+
+    <div class="row d-flex justify-content-center align-items-center h-80">
+        <div class="col-xl-9">
+
+
+
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body">
+                    <i><b>Product Info</b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Product Name" name="productName"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Brand Name" name="brand"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Category" name="category"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Model Number(Optional)" name="modelnumber"
+                                class="form-control border-warning form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="MRP" name="mrp"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Retailer Price" name="retailerPrice"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-9 pe-5">
+
+                            <textarea class="form-control border-primary" rows="4" placeholder="Highlights"
+                                name="highlights"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Number of stock avalable" name="stock"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+
+                    <i><b>General Details </b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="In box" name="inbox"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Type" name="Type"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Made in" name="madein"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="colour" name="colour"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="width" name="width"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Hight" name="hight"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Wight" name="wight"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" placeholder="Warranty" name="warranty"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <i><b>Photos </b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+
+                            <h6 class="mb-0">photo 1</h6>
+
+                        </div>
+                        <div class="col-md-9 pe-5">
+
+                            <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo1"
+                                type="file" />
+                            <div class="small text-muted mt-2">Upload Products <b>Front Photo </b>Fist.</div>
+
+                        </div>
+
+                    </div>
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+
+                            <h6 class="mb-0">photo 2</h6>
+
+                        </div>
+                        <div class="col-md-9 pe-5">
+
+                            <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo2"
+                                type="file" />
+                            {{!-- <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file.
+                                Max
+                                file
+                                size 50 MB</div> --}}
+
+                        </div>
+
+                    </div>
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+
+                            <h6 class="mb-0">photo 3</h6>
+
+                        </div>
+                        <div class="col-md-9 pe-5">
+
+                            <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo3"
+                                type="file" />
+                            {{!-- <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file.
+                                Max
+                                file
+                                size 50 MB</div> --}}
+
+                        </div>
+
+                    </div>
+                    <i><b>More Details </b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+
+                    <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-9 pe-5">
+
+                            <textarea class="form-control border-warning" rows="4"
+                                placeholder="More about produts(Optional)" name="highlights"></textarea>
+
+                        </div>
+                    </div>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+
+                    <div class=" row px-5 py-4">
+                        <div class="col"><button type="submit" class="btn btn-danger btn-lg">Cancel</button></div>
+                        <div class="col"> <button type="submit" class="btn btn-primary btn-lg">Upload</button></div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+</div>

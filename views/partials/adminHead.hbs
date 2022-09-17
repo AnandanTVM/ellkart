@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/admin/adminHome"><img id="logo" title="ELLKart PVT LMt"
+                src="/images/Logo.png"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container-fluid">
+
+        </div>
+        <div class="collapse navbar-collapse text-center" id="navbarNav">
+            <ul class="navbar-nav  justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin/adminHome">Home</a>
+                </li>
+              
+<li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin/adminUserList">UserInfo</a>
+                </li>
+               
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">SalseReport</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Odder
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                        <li><a class="dropdown-item" href="#">Odder details</a></li>
+                        <li><a class="dropdown-item" href="#">Odder Review</a></li>
+                        <li><a class="dropdown-item" href="#">Approvel Return</a></li>
+
+                    </ul>
+
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Products
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                        <li><a class="dropdown-item" href="/admin/adminAddeProduct">Add Product</a></li>
+                        <li><a class="dropdown-item" href="#">Iteam Managemet</a></li>
+                        <li><a class="dropdown-item" href="#">Ctagary Managemet</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a type="button" href="/admin/logout" class="btn btn-danger">Logout</a>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            {{#if admin}}
+            <div class="card text-dark bg-light mt-3 ms-2 mb-3 rounded" style="max-width: 18rem;">
+                <div class="card-header">Hellow,</div>
+                <div class="card-body text-center" style="background-color:#d7adf0 ; ">
+                    <img src="/images/man.png">
+                    <h5 class="card-title">{{admin.name}}</h5>
+                </div>
+
+                <a type="button" href="#" class="btn btn-primary">Profile</a>
+
+
+            </div>
+            {{/if}}
+        </div>
+        {{!-- <div class="col-sm">
+            One of three columns
+        </div>
+
+    </div>
+</div> --}}
