@@ -4,6 +4,7 @@ var collection = require('../config/collection')
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
 const { response } = require('express')
+const { catagary_COLLECTION } = require('../config/collection')
 var objectId = require('mongodb').ObjectId
 
 
@@ -87,6 +88,34 @@ module.exports = {
             console.log("outside")
         })
 
-    }
+    },
+    //add catagary
+    addcatagarory:(catagary)=>{
+        return new Promise(async (resolve, reject) => {
+            db.get().collection(collection.catagary_COLLECTION).insertOne(catagary).then((data) => {
+                resolve(data)
+            })
+    
+        })
+    },
 
+    //catagary info getting here
+    getAllcatagary: () => {
+        return new Promise(async (resolve, reject) => {
+            let cat = await db.get().collection(collection.catagary_COLLECTION).find().toArray()
+            resolve(cat)
+
+        })
+    },
+    //delect catagary
+    catDelect: (cat) => {
+        return new Promise((resolve, reject) => {
+            console.log("h1");
+            db.get().collection(collection.catagary_COLLECTION).deleteOne({ _id: ObjectId(cat) }).then((data) => {
+
+                resolve(data)
+
+            })
+        })
+    },
 }

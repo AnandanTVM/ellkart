@@ -1,5 +1,46 @@
- <div class="col-sm">
-            One of three columnsggg
+ <div class="col-lg-6 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
+    <h1>
+        <p class="text-center mt-1"> <i><b>Category</b></i></p>
+        {{!--
+        <hr style="height:2px;border-width:0;"> --}}
+    </h1>
+   <div class="card card-body" style="border-radius: 15px;">
+                    <div class="row align-items-center pt-4 pb-3">
+  <form method="post"  action="/admin/addcatagarory"
+                                    enctype="multipart/form-data">
+                        <div class="col">
+
+                            <input type="text" placeholder="Add Catagary" name="catagary"
+                                class="form-control border-primary form-control-lg" />
+                                <button type="submit" class="btn me-1 mt-2 btn-primary">Add</button>
+</div>
+</form>
+                           </div>
+
+                </div>
+                
+            
+<table class="table mt-5">
+  <thead>
+    <tr style="background-color:#606063;color:azure">
+      <th scope="col"></th>
+      <th scope="col">Category</th>
+      <th scope="col">Action</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    {{#each cat}}
+    <tr class="table-warning">
+      <th scope="row">></th>
+      <td>{{this.catagary}} </td>
+      <td><a type="button" href="/admin/adminCatagaryDelect/{{this._id}}" class="btn btn-danger btn-rounded">Delect</a></td>
+      
+    </tr>
+    {{/each}}
+    </tbody>
+    </table>
+ 
         </div>
 
     </div>

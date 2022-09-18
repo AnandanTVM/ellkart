@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
 
 //sesstion usiing
-app.use(session({ secret: "MTK", resave: true, saveUninitialized: true, cookie: { maxAge: 60000 } }));
+app.use(session({ secret: "MTK", resave: true, saveUninitialized: true, cookie: { maxAge: 30*24*60*60*1000 } }));// sesstion for 30days seted
 app.use((req, res, next) => {
   res.set('cache-control', 'no-cache,private,no-store,must-revalidate,max-stale=0,post-check=0,pre-check=0')
   next();

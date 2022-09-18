@@ -61,11 +61,6 @@ router.get('/adminLoginOtp', (req, res) => {
 
 
 
-//Seller managemet
-router.get('/sellerManagemet', verifyLogin, (req, res) => {
-    let admin = req.session.admin
-    res.render('admin/adminSellerManagemt', { title: "ELL Admin", ad: true, admin })
-})
 
 //add product router
 router.get('/adminAddeProduct', verifyLogin, (req, res) => {
@@ -92,10 +87,41 @@ router.get('/adminUserBlock/:usId',verifyLogin,(req,res)=>{
 })
 //unblock user
 router.get('/adminUserunblock/:usId',verifyLogin,(req,res)=>{
-    console.log("ready to go");
+   
     adminHelper.unblockUser(req.params.usId).then(() => {
         res.redirect('../adminUserList')
       })
+})
+
+// catagary manage ment
+router.get('/adminCatagary',verifyLogin,(req,res)=>{
+    let admin = req.session.admin
+    adminHelper.getAllcatagary().then((cat) => {
+//    let count=cat.length;
+console.log(cat);
+    res.render('admin/adminCatagaery', {title : "ELL Admin", ad: true, admin,cat })
+    })
+})
+
+
+router.post('/addcatagarory',verifyLogin,(req,res)=>{
+
+    adminHelper.addcatagarory(req.body).then((response) => {
+
+        res.redirect('/admin/adminCatagary')
+    })
+})
+
+//delect catagary
+router.get('/adminCatagaryDelect/:usId',verifyLogin,(req,res)=>{
+    console.log("here");
+    let catid = req.params.usId
+    
+    adminHelper.catDelect(catid).then((response) => {
+        res.redirect('/admin/adminCatagary')
+    })
+   
+
 })
 
 module.exports = router;
