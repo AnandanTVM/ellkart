@@ -118,4 +118,26 @@ module.exports = {
             })
         })
     },
+    //add product
+    adminAddProduct:(products,callback) => {
+        console.log(products);
+db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
+           
+            const id= data.insertedId.toString()
+            console.log(id);
+            callback(id)
+        })
+       
+   
+},
+getAllProducts:()=>{
+    return new Promise(async(resolve,reject)=>{
+        let product=await db.get().collection(collection.product_COLLECTION).find().toArray()
+        resolve(product)
+    })
+
+}
+
+   
+    
 }

@@ -58,17 +58,6 @@ router.get('/adminLoginOtp', (req, res) => {
     res.render('admin/adminLoginOtp', { title: "Admin login" })
 })
 
-
-
-
-
-//add product router
-router.get('/adminAddeProduct', verifyLogin, (req, res) => {
-    
-    let admin = req.session.admin
-    res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin })
-})
-
 //user list info
 router.get('/adminUserList',verifyLogin,(req,res)=>{
     let admin = req.session.admin
@@ -122,6 +111,46 @@ router.get('/adminCatagaryDelect/:usId',verifyLogin,(req,res)=>{
     })
    
 
+})
+
+
+//add product router
+router.get('/adminAddeProduct', verifyLogin, (req, res) => {
+    
+    let admin = req.session.admin
+    res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin })
+})
+
+router.post('/adminAddProduct',verifyLogin,(req,res)=>{
+    let admin = req.session.admin
+   
+    adminHelper.adminAddProduct(req.body,(result)=>{
+        let photo1=req.files.photo1;
+        photo1.mv('./public/product-photo1/'+result+'.jpg')
+       
+        let photo2=req.files.photo2;
+        photo2.mv('./public/product-photo2/'+result+'.jpg')
+        let photo3=req.files.photo3;
+        photo3.mv('./public/product-photo3/'+result+'.jpg',(err,done)=>{
+            if(!err){
+                res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin,done:true})
+            }
+           else{
+            console.log(err);
+           }
+        })
+        
+    })
+})
+
+//view Product
+router.get('/adminViewProduct',verifyLogin,(req,res)=>{
+    let admin = req.session.admin
+    adminHelper.getAllProducts().then((product)=>{
+        let count=product.length;
+        res.render('admin/adminProductManagement',{ title: "ELL Admin", ad: true, admin,product,count})
+    })
+    
 })
 
 module.exports = router;

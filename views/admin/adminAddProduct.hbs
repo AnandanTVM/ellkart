@@ -4,7 +4,10 @@
         {{!--
         <hr style="height:2px;border-width:0;"> --}}
     </h1>
-
+{{#if done}}
+<h2 style="color: green ;"><b><i>Product Uploader successfully...
+</i></b></h2>
+{{/if}}
     <div class="row d-flex justify-content-center align-items-center h-80">
         <div class="col-xl-9">
 
@@ -15,6 +18,9 @@
                     <i><b>Product Info</b></i>
                     <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
                     <div class="row align-items-center pt-4 pb-3">
+
+<form method="post" action="/admin/adminAddProduct"
+                                    enctype="multipart/form-data">
 
                         <div class="col">
 
@@ -187,10 +193,7 @@
 
                             <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo2"
                                 type="file" />
-                            {{!-- <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file.
-                                Max
-                                file
-                                size 50 MB</div> --}}
+                          
 
                         </div>
 
@@ -205,10 +208,7 @@
 
                             <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo3"
                                 type="file" />
-                            {{!-- <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file.
-                                Max
-                                file
-                                size 50 MB</div> --}}
+
 
                         </div>
 
@@ -227,10 +227,10 @@
                     <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
 
                     <div class=" row px-5 py-4">
-                        <div class="col"><button type="submit" class="btn btn-danger btn-lg">Cancel</button></div>
+                        <div class="col"><a href="/admin/adminHome" class="btn btn-danger btn-lg">Cancel</a></div>
                         <div class="col"> <button type="submit" class="btn btn-primary btn-lg">Upload</button></div>
 
-
+</form>
                     </div>
 
                 </div>
