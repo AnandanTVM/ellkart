@@ -90,12 +90,12 @@ module.exports = {
 
     },
     //add catagary
-    addcatagarory:(catagary)=>{
+    addcatagarory: (catagary) => {
         return new Promise(async (resolve, reject) => {
             db.get().collection(collection.catagary_COLLECTION).insertOne(catagary).then((data) => {
                 resolve(data)
             })
-    
+
         })
     },
 
@@ -118,26 +118,35 @@ module.exports = {
             })
         })
     },
+
     //add product
-    adminAddProduct:(products,callback) => {
+    adminAddProduct: (products, callback) => {
         console.log(products);
-db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
-           
-            const id= data.insertedId.toString()
+        db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
+
+            const id = data.insertedId.toString()
             console.log(id);
             callback(id)
         })
-       
-   
-},
-getAllProducts:()=>{
-    return new Promise(async(resolve,reject)=>{
-        let product=await db.get().collection(collection.product_COLLECTION).find().toArray()
-        resolve(product)
-    })
 
-}
 
-   
-    
+    },
+    //get all product
+    getAllProducts: () => {
+        return new Promise(async (resolve, reject) => {
+            let product = await db.get().collection(collection.product_COLLECTION).find().toArray()
+            resolve(product)
+        })
+
+    },
+    //view all catgary
+
+    getAllCatgary: () => {
+        return new Promise(async (resolve, reject) => {
+            let catagary = await db.get().collection(collection.catagary_COLLECTION).find().toArray()
+            resolve(catagary)
+        })
+
+    },
+
 }

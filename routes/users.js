@@ -68,7 +68,10 @@ router.get('/userLogout', (req, res) => {
 //user home
 router.get('/userHome', (req, res) => {
   let user = req.session.user
-  res.render('user/userHome', { title: "user Home", us: true, user })
+  userHelper.getAllProducts().then((product) => {
+    res.render('user/userHome', { title: "user Home", us: true, user, product })
+  })
+
 })
 
 

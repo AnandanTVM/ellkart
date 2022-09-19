@@ -1,61 +1,70 @@
- <div class="col-lg-8 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
+<div class="col-lg-8 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
     <h1>
         <p class="text-center mt-1"> <i><b>Number of Product found {{count}} </b></i></p>
         {{!--
         <hr style="height:2px;border-width:0;"> --}}
-    </h1>       
+    </h1>
 
 
-<div class="container mt-5 mb-3">
-    <div class="row">
+    <div class="container mt-5 mb-3">
+        <div class="row">
 
-        {{#each product}}
-        <div class="col-md-4">
-            <div class="card p-3 mb-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="img"> <img style="width: 100px;height: 150px;" src="/product-photo1/{{this._id}}.jpg" alt="product image cant load"> </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0">{{this.brand}}</h6>
+            {{#each product}}
+            <div class="col-md-4">
+                <div class="card p-2 mb-2">
+                    <div class="d-flex justify-content-between">
+
+                        <div class="d-flex flex-row align-items-center">
+
+                            <div class="img"> <img style="width: 100px;height: 150px;"
+                                    src="/product-photo1/{{this._id}}.jpg" alt="product image cant load">
+                                <div class="ms-2 c-details">
+
+                                    <h6 class="mb-0">{{this.brand}}</h6>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="dropdown ">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item " href="#">Edit</a></li>
+                                <li><a class="dropdown-item" href="#">Delect</a></li>
+                                <li><a class="dropdown-item" href="#">More Details</a></li>
+
+                            </ul>
                         </div>
                     </div>
-                    <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Action
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item " href="#">Edit</a></li>
-    <li><a class="dropdown-item" href="#">Delect</a></li>
-     <li><a class="dropdown-item" href="#">More Details</a></li>
-   
-  </ul>
-</div>
-                </div>
-               
-                <div class="mt-5">
-                    <h3 class="heading">{{this.productName}}<br>{{this.retailerPrice}} ₹/-</h3>
+
                     <div class="mt-5">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: {{this.stock}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <h3 class="heading">{{this.productName}}<br>{{this.retailerPrice}} ₹/-</h3>
+                        <div class="mt-5">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: {{this.stock}}%"
+                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="mt-3"> <span class="text1">{{this.stock}} stock avalable<span class="text2">of
+                                        100 stocks</span></span> </div>
                         </div>
-                        <div class="mt-3"> <span class="text1">{{this.stock}} stock avalable<span class="text2">of 100 stocks</span></span> </div>
                     </div>
                 </div>
+
             </div>
-            
-        </div>
-        
-{{/each}}
 
-    </div>
-</div>
-
-
-
-
+            {{/each}}
 
         </div>
-
     </div>
+
+
+
+
+
 </div>
 
+</div>
+</div>

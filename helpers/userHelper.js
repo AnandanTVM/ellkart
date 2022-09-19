@@ -53,24 +53,23 @@ module.exports = {
             let response = {}
             let user = await db.get().collection(collection.user_COLLECTION).findOne({ phone: userData.phone })
             if (user) {
-                if(user.block)
-                {
+                if (user.block) {
                     resolve({ status: false })
 
-                }else{
+                } else {
                     bcrypt.compare(userData.password, user.password).then((status) => {
                         if (status) {
-    
+
                             response.user = user
                             response.status = true
                             resolve(response)
                         } else {
-    
+
                             resolve({ status: false })
                         }
                     })
                 }
-               
+
             } else {
 
                 resolve({ status: false })
@@ -79,7 +78,15 @@ module.exports = {
 
 
 
-    }
+    },
+    //get all product
+    getAllProducts: () => {
+        return new Promise(async (resolve, reject) => {
+            let product = await db.get().collection(collection.product_COLLECTION).find().toArray()
+            resolve(product)
+        })
+
+    },
 
 
 

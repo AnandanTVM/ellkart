@@ -1,38 +1,38 @@
- <div class="col-lg-8 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
-    <h1>
-        <p class="text-center mt-1"> <i><b>Number of users found {{count}} </b></i></p>
-        {{!--
-        <hr style="height:2px;border-width:0;"> --}}
-    </h1>       
+<div class="col-lg-8 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
+  <h1>
+    <p class="text-center mt-1"> <i><b>Number of users found {{count}} </b></i></p>
+    {{!--
+    <hr style="height:2px;border-width:0;"> --}}
+  </h1>
 
 
-<div class="row">
-  {{#each user}}
-  <div class="col-sm-6 mt-5">
-    <div class="card card-block">
-      <h3 class="card-title text-center">{{this.name}}</h3>
-      <p class="card-text text-center">{{this.dob}}</p>
-      <p class="card-text text-center">{{this.email}}</p>
-      <p class="card-text text-center">{{this.phone}}</p>
-      {{#if this.block}}
+  <div class="row">
+    {{#each user}}
+    <div class="col-sm-6 mt-5">
+      <div class="card card-block">
+        <h3 class="card-title text-center">{{this.name}}</h3>
+        <p class="card-text text-center">{{this.dob}}</p>
+        <p class="card-text text-center">{{this.email}}</p>
+        <p class="card-text text-center">{{this.phone}}</p>
 
-      <a href="/admin/adminUserunblock/{{this._id}}" class="btn btn-primary">Un Block</a>
-      {{else}}
-       <a href="/admin/adminUserBlock/{{this._id}}" class="btn btn-primary"> Block</a>
-       {{/if}}
+        {{#if this.block}}
+
+        <a href="/admin/adminUserunblock/{{this._id}}" class="btn btn-primary">Un Block</a>
+        {{else}}
+        <a href="/admin/adminUserBlock/{{this._id}}" class="btn btn-primary"> Block</a>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  {{/each}}
-  {{!-- <div class="col-sm-6">
-    <div class="card card-block">
-      <h3 class="card-title">Special title treatment</h3>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+    {{/each}}
+    {{!-- <div class="col-sm-6">
+      <div class="card card-block">
+        <h3 class="card-title">Special title treatment</h3>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
     </div>
-  </div>
-</div> --}}
-        </div>
-
-    </div>
+  </div> --}}
 </div>
 
+</div>
+</div>

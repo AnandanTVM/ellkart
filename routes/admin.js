@@ -59,41 +59,41 @@ router.get('/adminLoginOtp', (req, res) => {
 })
 
 //user list info
-router.get('/adminUserList',verifyLogin,(req,res)=>{
+router.get('/adminUserList', verifyLogin, (req, res) => {
     let admin = req.session.admin
     adminHelper.getAllUser().then((user) => {
-       let count=user.length;
-        res.render('admin/adminUserList', {title : "ELL Admin",ad: true, admin,user,count })
-      })
-   
+        let count = user.length;
+        res.render('admin/adminUserList', { title: "ELL Admin", ad: true, admin, user, count })
+    })
+
 })
 //block user
-router.get('/adminUserBlock/:usId',verifyLogin,(req,res)=>{
-    
+router.get('/adminUserBlock/:usId', verifyLogin, (req, res) => {
+
     adminHelper.blockUser(req.params.usId).then(() => {
         res.redirect('../adminUserList')
-      })
+    })
 })
 //unblock user
-router.get('/adminUserunblock/:usId',verifyLogin,(req,res)=>{
-   
+router.get('/adminUserunblock/:usId', verifyLogin, (req, res) => {
+
     adminHelper.unblockUser(req.params.usId).then(() => {
         res.redirect('../adminUserList')
-      })
+    })
 })
 
 // catagary manage ment
-router.get('/adminCatagary',verifyLogin,(req,res)=>{
+router.get('/adminCatagary', verifyLogin, (req, res) => {
     let admin = req.session.admin
     adminHelper.getAllcatagary().then((cat) => {
-//    let count=cat.length;
-console.log(cat);
-    res.render('admin/adminCatagaery', {title : "ELL Admin", ad: true, admin,cat })
+        //    let count=cat.length;
+        console.log(cat);
+        res.render('admin/adminCatagaery', { title: "ELL Admin", ad: true, admin, cat })
     })
 })
 
 
-router.post('/addcatagarory',verifyLogin,(req,res)=>{
+router.post('/addcatagarory', verifyLogin, (req, res) => {
 
     adminHelper.addcatagarory(req.body).then((response) => {
 
@@ -102,55 +102,61 @@ router.post('/addcatagarory',verifyLogin,(req,res)=>{
 })
 
 //delect catagary
-router.get('/adminCatagaryDelect/:usId',verifyLogin,(req,res)=>{
+router.get('/adminCatagaryDelect/:usId', verifyLogin, (req, res) => {
     console.log("here");
     let catid = req.params.usId
-    
+
     adminHelper.catDelect(catid).then((response) => {
         res.redirect('/admin/adminCatagary')
     })
-   
+
 
 })
 
 
 //add product router
 router.get('/adminAddeProduct', verifyLogin, (req, res) => {
-    
     let admin = req.session.admin
-    res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin })
+    // adminHelper.addcatagarory().then((catagary) => {
+    // })
+
+    adminHelper.getAllCatgary().then((catagary) => {
+        console.log(catagary);
+        res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin, catagary })
+    })
+
 })
 
-router.post('/adminAddProduct',verifyLogin,(req,res)=>{
+router.post('/adminAddProduct', verifyLogin, (req, res) => {
     let admin = req.session.admin
-   
-    adminHelper.adminAddProduct(req.body,(result)=>{
-        let photo1=req.files.photo1;
-        photo1.mv('./public/product-photo1/'+result+'.jpg')
-       
-        let photo2=req.files.photo2;
-        photo2.mv('./public/product-photo2/'+result+'.jpg')
-        let photo3=req.files.photo3;
-        photo3.mv('./public/product-photo3/'+result+'.jpg',(err,done)=>{
-            if(!err){
-                res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin,done:true})
+
+    adminHelper.adminAddProduct(req.body, (result) => {
+        let photo1 = req.files.photo1;
+        photo1.mv('./public/product-photo1/' + result + '.jpg')
+
+        let photo2 = req.files.photo2;
+        photo2.mv('./public/product-photo2/' + result + '.jpg')
+        let photo3 = req.files.photo3;
+        photo3.mv('./public/product-photo3/' + result + '.jpg', (err, done) => {
+            if (!err) {
+                res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin, done: true })
             }
-           else{
-            console.log(err);
-           }
+            else {
+                console.log(err);
+            }
         })
-        
+
     })
 })
 
 //view Product
-router.get('/adminViewProduct',verifyLogin,(req,res)=>{
+router.get('/adminViewProduct', verifyLogin, (req, res) => {
     let admin = req.session.admin
-    adminHelper.getAllProducts().then((product)=>{
-        let count=product.length;
-        res.render('admin/adminProductManagement',{ title: "ELL Admin", ad: true, admin,product,count})
+    adminHelper.getAllProducts().then((product) => {
+        let count = product.length;
+        res.render('admin/adminProductManagement', { title: "ELL Admin", ad: true, admin, product, count })
     })
-    
+
 })
 
 module.exports = router;

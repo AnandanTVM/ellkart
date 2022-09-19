@@ -4,10 +4,10 @@
         {{!--
         <hr style="height:2px;border-width:0;"> --}}
     </h1>
-{{#if done}}
-<h2 style="color: green ;"><b><i>Product Uploader successfully...
-</i></b></h2>
-{{/if}}
+    {{#if done}}
+    <h2 style="color: green ;"><b><i>Product Uploader successfully...
+            </i></b></h2>
+    {{/if}}
     <div class="row d-flex justify-content-center align-items-center h-80">
         <div class="col-xl-9">
 
@@ -19,15 +19,14 @@
                     <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
                     <div class="row align-items-center pt-4 pb-3">
 
-<form method="post" action="/admin/adminAddProduct"
-                                    enctype="multipart/form-data">
+                        <form method="post" action="/admin/adminAddProduct" enctype="multipart/form-data">
 
-                        <div class="col">
+                            <div class="col">
 
-                            <input type="text" placeholder="Product Name" name="productName"
-                                class="form-control border-primary form-control-lg" />
+                                <input type="text" placeholder="Product Name" name="productName"
+                                    class="form-control border-primary form-control-lg" />
 
-                        </div>
+                            </div>
                     </div>
                     <div class="row align-items-center pt-4 pb-3">
 
@@ -42,8 +41,14 @@
 
                         <div class="col">
 
-                            <input type="text" placeholder="Category" name="category"
-                                class="form-control border-primary form-control-lg" />
+                            {{!-- <input type="text" placeholder="Category" name="category"
+                                class="form-control border-primary form-control-lg" /> --}}
+                            <select class="select form-control border-primary form-control-lg">
+                                <option>Select your Category </option>
+                                {{#each catagary }}
+                                <option value="2">{{this.catagary}}</option>
+                                {{/each}}
+                            </select>
 
                         </div>
                     </div>
@@ -193,7 +198,7 @@
 
                             <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo2"
                                 type="file" />
-                          
+
 
                         </div>
 
@@ -230,7 +235,7 @@
                         <div class="col"><a href="/admin/adminHome" class="btn btn-danger btn-lg">Cancel</a></div>
                         <div class="col"> <button type="submit" class="btn btn-primary btn-lg">Upload</button></div>
 
-</form>
+                        </form>
                     </div>
 
                 </div>

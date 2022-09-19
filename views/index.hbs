@@ -1,2 +1,28 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<main>
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+            {{#each product}}
+            <div class="col">
+                <div class="card h-100 shadow p-3 mb-5 bg-white rounded ">
+                    <div class="d-flex justify-content-center"><img src="/product-photo1/{{this._id}}.jpg"
+                            style="width: 150px;height: 200px;" class=" card-img-top" alt="..."></div>
+                    <div class="card-body">
+                        <div class="clearfix mb-3 text-justify">
+                            <h4><span class="float-start badge rounded-pill bg-success">{{this.retailerPrice}}
+                                    ₹/-</span></h4>&nbsp;&nbsp;<s>{{this.mrp}} ₹/-</s>
+
+                        </div>
+                        <h5 class="card-title">{{this.productName}}</h5>FREE Delivery on first order.
+
+                        <div class="d-grid gap-2 my-4"> <a href="#" class="btn btn-success">Buy now</a><a href="#"
+                                class="btn btn-warning">Add to cart</a> </div>
+                    </div>
+                </div>
+
+
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+</main>
