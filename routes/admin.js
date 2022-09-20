@@ -158,6 +158,16 @@ router.get('/adminViewProduct', verifyLogin, (req, res) => {
     })
 
 })
+//view Product in admin side
+router.get('/adminViewProductEdit', verifyLogin, (req, res) => {
+    let admin = req.session.admin
+    // adminHelper.getProducts().then((product) => {
+    //     let count = product.length;
+
+    // })
+    res.render('admin/adminViewProduct', { title: "ELL Admin", ad: true })
+
+})
 
 // Delect Product
 router.get('/adminDelProduct/:id', verifyLogin, (req, res) => {
