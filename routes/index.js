@@ -1,7 +1,7 @@
 const { response } = require('express');
-var express = require('express');
-var router = express.Router();
-var gustHelper = require('../helpers/gustHelper')
+const express = require('express');
+const router = express.Router();
+const gustHelper = require('../helpers/gustHelper')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

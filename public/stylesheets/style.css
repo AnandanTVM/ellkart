@@ -18,9 +18,21 @@
 }
 
 .bg-dark {
-  background-color: #0702FF !important;
+  background-color: #5938FF !important;
 }
 
 .bg-mycolor {
   background-color: #d7adf0 !important;
+}
+
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+tbody td {
+  font-weight: 500;
+  color: #999999;
 }

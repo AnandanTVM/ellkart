@@ -4,90 +4,46 @@
         {{!--
         <hr style="height:2px;border-width:0;"> --}}
     </h1>
+    <div class="mask d-flex align-items-center mb-3 h-80">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="table-responsive bg-white">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">User Name</th>
+                                    <th scope="col">DOB</th>
+                                    <th scope="col">EMAIL</th>
+                                    <th scope="col">PHONE</th>
+                                    <th scope="col"></th>
 
-
-    <div class="container mt-5 mb-3">
-        <div class="row">
-
-            {{#each product}}
-            <div class="col-md-4">
-                <div class="card p-2 mb-2">
-                    <div class="d-flex justify-content-between">
-
-                        <div class="d-flex flex-row align-items-center">
-
-                            <div class="img"> <img style="width: 100px;height: 150px;"
-                                    src="/product-photo1/{{this._id}}.jpg" alt="product image cant load">
-                                <div class="ms-2 c-details">
-
-                                    <h6 class="mb-0">{{this.brand}}</h6>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="dropdown ">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Action
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item " href="#">Edit</a></li>
-                                <li>
-                                    <a class="dropdown-item "  href="/admin/adminDelProduct/{{this._id}}">Delect</a></li>
-                                    {{!-- <a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Delect</a> --}}
-                                    
-                                    </li>
-                                
-                                <li><a class="dropdown-item" href="#">More Details</a></li>
-
-                            </ul>
-                        </div>
-                        
-                    </div>
-{{!-- <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Conformation</h5>
-        <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-      </div>
-      <div class="modal-body">
-        Do you want to delect {{this.productName}}?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a type="button" href="/admin/adminDelProduct/{{this._id}}" class="btn btn-primary">Delect</a>
-      </div>
-    </div>
-  </div>
-</div> --}}
-                    <div class="mt-5">
-                        <h3 class="heading">{{this.productName}}<br>{{this.retailerPrice}} ₹/-</h3>
-                        <div class="mt-5">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: {{this.stock}}%"
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="mt-3"> <span class="text1">{{this.stock}} stock avalable<span class="text2">of
-                                        100 stocks</span></span> </div>
-                        </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each product}}
+                                <tr>
+                                    <th scope="row" style="color: #666666;">{{this.productName}}</th>
+                                    <td>{{this.brand}}</td>
+                                    <td>{{this.stock}}</td>
+                                    <td>₹ {{this.retailerPrice}} </td>
+                                    <td><a></a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
             </div>
-
-            {{/each}}
-
         </div>
+
+
+
+
+
+
+
     </div>
-
-
-
-
-
-</div>
 
 </div>
 </div>

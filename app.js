@@ -1,20 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/users');
-var adminRouter = require('./routes/admin');
-var hbs = require('express-handlebars')
-var app = express();
-var fileUpload = require('express-fileUpload')
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/users');
+const adminRouter = require('./routes/admin');
+const hbs = require('express-handlebars')
+const app = express();
+const fileUpload = require('express-fileUpload')
 
 //data base connection
-var db = require('./config/connection')
+const db = require('./config/connection')
 //sessition
-var session = require('express-session')
+const session = require('express-session')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
 
 //sesstion usiing
-app.use(session({ secret: "MTK", resave: true, saveUninitialized: true, cookie: { maxAge: 30*24*60*60*1000 } }));// sesstion for 30days seted
+app.use(session({ secret: "MTK", resave: true, saveUninitialized: true, cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } }));// sesstion for 30days seted
 app.use((req, res, next) => {
   res.set('cache-control', 'no-cache,private,no-store,must-revalidate,max-stale=0,post-check=0,pre-check=0')
   next();

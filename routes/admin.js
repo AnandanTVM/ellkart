@@ -1,8 +1,8 @@
 
 
-var express = require('express');
-var router = express.Router();
-var adminHelper = require('../helpers/adminHelper')
+const express = require('express');
+const router = express.Router();
+const adminHelper = require('../helpers/adminHelper')
 
 const verifyLogin = (req, res, next) => {
 
@@ -48,7 +48,7 @@ router.get('/adminHome', (req, res) => {
 //logout
 
 router.get('/logout', (req, res) => {
-    req.session.destroy()
+    req.session.adloggedIn = false;
     res.redirect('/admin')
 })
 
@@ -160,11 +160,11 @@ router.get('/adminViewProduct', verifyLogin, (req, res) => {
 })
 
 // Delect Product
-router.get('/adminDelProduct/:id',verifyLogin,(req,res)=>{
+router.get('/adminDelProduct/:id', verifyLogin, (req, res) => {
     let proId = req.params.id
     console.log("here");
     adminHelper.deleteProduct(proId).then((response) => {
-      res.redirect('../adminViewProduct')
+        res.redirect('../adminViewProduct')
     })
 
 })

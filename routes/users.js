@@ -62,7 +62,7 @@ router.post('/userLogin', (req, res) => {
 //logout
 
 router.get('/userLogout', (req, res) => {
-  req.session.destroy()
+  req.session.usloggedIn = false;
   res.redirect('/user/userLogin')
 })
 //user home

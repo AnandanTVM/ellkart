@@ -6,33 +6,52 @@
   </h1>
 
 
-  <div class="row">
-    {{#each user}}
-    <div class="col-sm-6 mt-5">
-      <div class="card card-block">
-        <h3 class="card-title text-center">{{this.name}}</h3>
-        <p class="card-text text-center">{{this.dob}}</p>
-        <p class="card-text text-center">{{this.email}}</p>
-        <p class="card-text text-center">{{this.phone}}</p>
 
-        {{#if this.block}}
+  <div class="mask d-flex align-items-center mb-3 h-80">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="table-responsive bg-white">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">User Name</th>
+                  <th scope="col">DOB</th>
+                  <th scope="col">EMAIL</th>
+                  <th scope="col">PHONE</th>
+                  <th scope="col"></th>
 
-        <a href="/admin/adminUserunblock/{{this._id}}" class="btn btn-primary">Un Block</a>
-        {{else}}
-        <a href="/admin/adminUserBlock/{{this._id}}" class="btn btn-primary"> Block</a>
-        {{/if}}
+                </tr>
+              </thead>
+              <tbody>
+                {{#each user}}
+                <tr>
+                  <th scope="row" style="color: #666666;">{{this.name}}</th>
+                  <td>{{this.dob}}</td>
+                  <td>{{this.email}}</td>
+                  <td>{{this.phone}}</td>
+                  <td>{{#if this.block}}
+
+                    <a href="/admin/adminUserunblock/{{this._id}}" class="btn btn-primary">Un Block</a>
+                    {{else}}
+                    <a href="/admin/adminUserBlock/{{this._id}}" class="btn btn-primary"> Block</a>
+                    {{/if}}
+                  </td>
+
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-    {{/each}}
-    {{!-- <div class="col-sm-6">
-      <div class="card card-block">
-        <h3 class="card-title">Special title treatment</h3>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-  </div> --}}
-</div>
+
+
+
+
+  </div>
+
 
 </div>
 </div>
