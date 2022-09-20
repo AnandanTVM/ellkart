@@ -148,5 +148,16 @@ module.exports = {
         })
 
     },
+    //Delect Products
+    deleteProduct: (proId) => {
+        return new Promise((resolve, reject) => {
+            console.log("h1");
+            db.get().collection(collection.product_COLLECTION).deleteOne({ _id: ObjectId(proId) }).then((data) => {
+
+                resolve(data)
+
+            })
+        })
+    },
 
 }

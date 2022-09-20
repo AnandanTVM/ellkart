@@ -159,4 +159,14 @@ router.get('/adminViewProduct', verifyLogin, (req, res) => {
 
 })
 
+// Delect Product
+router.get('/adminDelProduct/:id',verifyLogin,(req,res)=>{
+    let proId = req.params.id
+    console.log("here");
+    adminHelper.deleteProduct(proId).then((response) => {
+      res.redirect('../adminViewProduct')
+    })
+
+})
+
 module.exports = router;
