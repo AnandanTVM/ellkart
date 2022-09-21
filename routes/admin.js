@@ -159,20 +159,42 @@ router.get('/adminViewProduct', verifyLogin, (req, res) => {
 
 })
 //view Product in admin side
-router.get('/adminViewProductEdit', verifyLogin, (req, res) => {
-    let admin = req.session.admin
-    // adminHelper.getProducts().then((product) => {
-    //     let count = product.length;
+router.get('/adminViewProductEdit/:pid', verifyLogin, async (req, res) => {
 
-    // })
-    res.render('admin/adminViewProduct', { title: "ELL Admin", ad: true })
+    let proId = req.params.pid
+    catagary = await adminHelper.getAllCatgary();
+
+    adminHelper.getProducts(proId).then((product) => {
+
+        res.render('admin/adminViewProduct', { title: "ELL Admin", ad: true, product, catagary })
+    })
+
 
 })
+//Edit Product
+router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
+    console.log("on post");
+    adminHelper.updateProduct(req.params.id, req.body).then(() => {
 
+        res.redirect('../adminViewProduct')
+        if (req.files.photo1) {
+            let photo1 = req.files.photo1;
+            photo1.mv('./public/product-photo1/' + req.params.id + '.jpg')
+        }
+        if (req.files.photo2) {
+            let photo2 = req.files.photo2;
+            photo2.mv('./public/product-photo2/' + req.params.id + '.jpg')
+        }
+        if (req.files.photo3) {
+            let photo3 = req.files.photo3;
+            photo3.mv('./public/product-photo1/' + req.params.id + '.jpg')
+        }
+    })
+})
 // Delect Product
 router.get('/adminDelProduct/:id', verifyLogin, (req, res) => {
     let proId = req.params.id
-    console.log("here");
+
     adminHelper.deleteProduct(proId).then((response) => {
         res.redirect('../adminViewProduct')
     })

@@ -42,7 +42,7 @@
                         <div class="col">
 
 
-                            <select class="select form-control border-primary form-control-lg">
+                            <select class="select form-control border-primary form-control-lg" name="Categorie">
                                 <option>Select your Categorie </option>
                                 {{#each catagary }}
                                 <option value="2">{{this.catagary}}</option>
@@ -172,6 +172,9 @@
                     </div>
                     <i><b>Photos </b></i>
                     <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class=" rowcarousel-item active">
+                        <img src="" id="viewPhoto1" class="d-block w-50">
+                    </div>
                     <div class="row align-items-center py-3">
                         <div class="col-md-3 ps-5">
 
@@ -180,12 +183,15 @@
                         </div>
                         <div class="col-md-9 pe-5">
 
-                            <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo1"
-                                type="file" />
+                            <input class="form-control border-primary form-control-lg" onchange="viewPhotoa(event)"
+                                id="formFileLg" name="photo1" type="file" />
                             <div class="small text-muted mt-2">Upload Products <b>Front Photo </b>Fist.</div>
 
                         </div>
 
+                    </div>
+                    <div class=" rowcarousel-item active">
+                        <img src="" id="viewPhoto2" class="d-block w-50">
                     </div>
                     <div class="row align-items-center py-3">
                         <div class="col-md-3 ps-5">
@@ -195,12 +201,15 @@
                         </div>
                         <div class="col-md-9 pe-5">
 
-                            <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo2"
-                                type="file" />
+                            <input class="form-control border-primary form-control-lg" onchange="viewPhotob(event)"
+                                id="formFileLg" name="photo2" type="file" />
 
 
                         </div>
 
+                    </div>
+                    <div class=" rowcarousel-item active">
+                        <img src="" id="viewPhoto3" class="d-block w-50">
                     </div>
                     <div class="row align-items-center py-3">
                         <div class="col-md-3 ps-5">
@@ -210,8 +219,8 @@
                         </div>
                         <div class="col-md-9 pe-5">
 
-                            <input class="form-control border-primary form-control-lg" id="formFileLg" name="photo3"
-                                type="file" />
+                            <input class="form-control border-primary form-control-lg" onchange="viewPhotoc(event)"
+                                id="formFileLg" name="photo3" type="file" />
 
 
                         </div>
@@ -252,3 +261,20 @@
 
 </div>
 </div>
+<script>
+    function viewPhotoa(event) {
+
+        document.getElementById('viewPhoto1').src = URL.createObjectURL(event.target.files[0])
+
+    }
+    function viewPhotob(event) {
+
+        document.getElementById('viewPhoto2').src = URL.createObjectURL(event.target.files[0])
+
+    }
+    function viewPhotoc(event) {
+
+        document.getElementById('viewPhoto3').src = URL.createObjectURL(event.target.files[0])
+
+    }
+</script>

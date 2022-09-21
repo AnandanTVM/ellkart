@@ -3,29 +3,30 @@
         <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
             {{#each product}}
             <div class="col">
-                <!-- p-5 -->
-                <div class="card h-80 shadow ps-pe-2 pb-pt-1  mb-5 bg-white rounded ">
-                    <div class="d-flex justify-content-center mt-2 "><img src="/product-photo1/{{this._id}}.jpg"
-                            style="width: 150px;height: 200px;" class=" card-img-top" alt="..."></div>
-                    <div class="card-body">
-                        <div class="clearfix mb-3 text-justify">
-                            <h4><span class="float-start badge rounded-pill bg-success">₹ {{this.retailerPrice}}
-                                </span></h4>&nbsp;&nbsp;<s>₹ {{this.mrp}} </s>
+                <!-- p-5 --><a href="/productView/{{this._id}}">
+                    <div class="card h-80 shadow ps-pe-2 pb-pt-1  mb-5 bg-white rounded ">
+                        <div class="d-flex justify-content-center mt-2 "><img src="/product-photo1/{{this._id}}.jpg"
+                                style="width: 150px;height: 200px;" class=" card-img-top" alt="..."></div>
+                        <div class="card-body">
+                            <div class="clearfix mb-3 text-justify">
+                                <h4><span class="float-start badge rounded-pill bg-success">₹ {{this.retailerPrice}}
+                                    </span></h4>&nbsp;&nbsp;<div class="text-dark"> <s>₹ {{this.mrp}} </s></div>
 
-                        </div>
-                        <h5 class="card-title">{{this.productName}}</h5>FREE Delivery on first order.
+                            </div>
+                            <h5 class="card-title text-dark">{{this.productName}}</h5>
+                            <div class="text-dark">FREE Delivery on first order.</div>
+                </a>
+                <div class="d-grid gap-2 my-4">
 
-                        <div class="d-grid gap-2 my-4">
-                            <a href="#" class="btn btn-success">Buy now</a>
-                            <a href="#" class="btn btn-warning">Add to cart</a>
-                        </div>
-                    </div>
+                    <a href="#" class="btn btn-warning">Add to cart</a>
                 </div>
-
-
             </div>
-            {{/each}}
         </div>
+
+
+    </div>
+    {{/each}}
+    </div>
     </div>
 
 </main>

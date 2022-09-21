@@ -12,10 +12,11 @@
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">User Name</th>
-                                    <th scope="col">DOB</th>
-                                    <th scope="col">EMAIL</th>
-                                    <th scope="col">PHONE</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col"></th>
                                     <th scope="col"></th>
 
                                 </tr>
@@ -27,8 +28,43 @@
                                     <td>{{this.brand}}</td>
                                     <td>{{this.stock}}</td>
                                     <td>₹ {{this.retailerPrice}} </td>
-                                    <td><a type="button" href="/admin/adminViewProductEdit" class="btn btn-primary">View
-                                            More</a></td>
+                                    <td><a type="button" href="/admin/adminViewProductEdit/{{this._id}}"
+                                            class="btn btn-primary">Edit</a></td>
+                                    <td>
+
+
+
+                                        <!-- Button trigger modal -->
+                                        <a type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#a{{this._id}}">
+                                            Delect
+                                        </a>
+
+                                    </td>
+
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="a{{this._id}}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you want to delect {{this.productName}} ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                    <a type="button" href="/admin/adminDelProduct/{{this._id}}"
+                                                        class="btn btn-danger">Delect</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </tr>
                                 {{/each}}
                             </tbody>

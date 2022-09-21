@@ -148,6 +148,15 @@ module.exports = {
         })
 
     },
+    //view a product
+    getProducts: (pId) => {
+
+        return new Promise(async (resolve, reject) => {
+
+            let product = await db.get().collection(collection.product_COLLECTION).findOne({ _id: ObjectId(pId) });
+            resolve(product);
+        })
+    },
     //Delect Products
     deleteProduct: (proId) => {
         return new Promise((resolve, reject) => {
@@ -157,6 +166,41 @@ module.exports = {
                 resolve(data)
 
             })
+        })
+    },
+    // update product
+    updateProduct: (proId, data) => {
+        console.log("here");
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.product_COLLECTION).updateOne({
+                _id: ObjectId(proId)
+            },
+                {
+                    $set: {
+                        productName: data.productName,
+                        brand: data.brand,
+                        Categorie: data.Categorie,
+                        modelnumber: data.modelnumber,
+                        mrp: data.mrp,
+                        retailerPrice: data.retailerPrice,
+                        highlights: data.highlights,
+                        stock: data.stock,
+                        inbox: data.inbox,
+                        Type: data.Type,
+                        madein: data.madein,
+                        colour: data.colour,
+                        width: data.width,
+                        hight: data.hight,
+                        wight: data.wight,
+                        warranty: data.warranty,
+                        highlights: data.highlights
+
+                    }
+
+                }).then((response) => {
+                    resolve()
+                })
+
         })
     },
 

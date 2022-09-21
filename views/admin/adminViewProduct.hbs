@@ -1,146 +1,284 @@
-</header>
-<div class="single_product">
-    <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
-        <div class="row">
-            <div class="col-lg-2 order-lg-1 order-2">
-                <ul class="image_list">
-                    <li data-image="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg"><img
-                            src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg" alt="">
-                    </li>
-                    <li data-image="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713228/single_2.jpg"><img
-                            src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713228/single_2.jpg" alt="">
-                    </li>
-                    <li data-image="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713228/single_3.jpg"><img
-                            src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713228/single_3.jpg" alt="">
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 order-lg-2 order-1">
-                <div class="image_selected"><img
-                        src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg" alt="">
-                </div>
-            </div>
-            <div class="col-lg-6 order-3">
-                <div class="product_description">
+<div class="col-lg-6 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
+    <h1>
+        <p class="text-center mt-1"> <i><b>Add Product</b></i></p>
+        {{!--
+        <hr style="height:2px;border-width:0;"> --}}
+    </h1>
+    {{#if done}}
+    <h2 style="color: green ;"><b><i>Product Uploader successfully...
+            </i></b></h2>
+    {{/if}}
+    <div class="row d-flex justify-content-center align-items-center h-80">
+        <div class="col-xl-9">
 
-                    <div class="product_name mt-3">Acer Aspire 3 Celeron Dual Core - (2 GB/500 GB HDD/Windows 10 Home)
-                        A315-33 Laptop (15.6 inch, Black, 2.1 kg)</div>
-                    <div class="product-rating"><span class="badge badge-success"><i class="fa fa-star"></i> 4.5
-                            Star</span> <span class="rating-review">35 Ratings & 45 Reviews</span></div>
-                    <div> <span class="product_price">₹ 29,000</span> <strike class="product_discount"> <span
-                                style='color:black'>₹ 2,000<span> </strike> </div>
-                    <div> <span class="product_saved">You Saved:</span> <span style='color:black'>₹ 2,000<span>
-                    </div>
-                    <hr class="singleline">
-                    <div> <span class="product_info">EMI starts at ₹ 2,000. No Cost EMI Available<span><br> <span
-                                    class="product_info">Warranty: 6 months warranty<span><br> <span
-                                            class="product_info">7 Days easy return policy<span><br> <span
-                                                    class="product_info">In Stock: 25 units sold this
-                                                    week<span> </div>
-                    <div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="br-dashed">
-                                    <div class="row">
-                                        <div class="col-md-3 col-xs-3"> <img
-                                                src="https://img.icons8.com/color/48/000000/price-tag.png"> </div>
-                                        <div class="col-md-9 col-xs-9">
-                                            <div class="pr-info"> <span class="break-all">Get 5% instant discount +
-                                                    10X rewards @ ELL Kart</span> </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body">
+                    <i><b>Product Info</b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <form method="post" action="/admin/adminEditProduct/{{product._id}}"
+                            enctype="multipart/form-data">
+
+                            <div class="col">
+
+                                <input type="text" placeholder="Product Name" value="{{product.productName}}"
+                                    name="productName" class="form-control border-primary form-control-lg" />
+
                             </div>
-                            <div class="col-md-7"> </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.brand}}" placeholder="Brand Name" name="brand"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+
+                            <select class="select form-control border-primary form-control-lg" name="Categorie">
+                                <option value="{{product.catagary}}">{{product.catagary}} </option>
+                                {{#each catagary }}
+                                <option value="2">{{this.catagary}}</option>
+                                {{/each}}
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.modelnumber}}" placeholder="Model Number(Optional)"
+                                name="modelnumber" class="form-control border-warning form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.mrp}}" placeholder="MRP" name="mrp"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.retailerPrice}}" placeholder="Retailer Price"
+                                name="retailerPrice" class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-9 pe-5">
+
+                            <textarea class="form-control border-primary" rows="4" placeholder="Highlights"
+                                name="highlights">{{product.highlights}}</textarea>
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.stock}}" placeholder="Number of stock avalable"
+                                name="stock" class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+
+                    <i><b>General Details </b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.inbox}}" placeholder="In box" name="inbox"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.Type}}" placeholder="Type" name="Type"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.madein}}" placeholder="Made in" name="madein"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.colour}}" placeholder="colour" name="colour"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.width}}" placeholder="width" name="width"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.hight}}" placeholder="Hight" name="hight"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.wight}}" placeholder="Wight" name="wight"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center pt-4 pb-3">
+
+                        <div class="col">
+
+                            <input type="text" value="{{product.warranty}}" placeholder="Warranty" name="warranty"
+                                class="form-control border-primary form-control-lg" />
+
+                        </div>
+                    </div>
+                    <i><b>Photos </b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+                    <div class=" rowcarousel-item active">
+                        <img src="/product-photo1/{{product._id}}.jpg" id="viewPhoto1" class="d-block w-50" alt="...">
+                    </div>
+                    <div class="row align-items-center py-3">
+
+                        <div class="col-md-3 ps-5">
+
+                            <h6 class="mb-0">photo 1</h6>
+
+                        </div>
+
+                        <div class="col-md-9 pe-5">
+
+                            <input class="form-control border-primary form-control-lg" onchange="viewPhotoa(event)"
+                                id="formFileLg" name="photo1" type="file" />
+                            <div class="small text-muted mt-2">Upload Products <b>Front Photo </b>Fist.</div>
+
                         </div>
 
                     </div>
-                    <hr class="singleline">
-                    <div class="order_info d-flex flex-row">
-                        <form action="#">
+                    <div class=" rowcarousel-item active">
+                        <img src="/product-photo2/{{product._id}}.jpg" id="viewPhoto2" class="d-block w-50" alt="...">
                     </div>
-                    <div class="row">
-                        <div class="col-xs-6" style="margin-left: 13px;">
-                            <div class=" col-md-2"> <span>QTY: </span> <input
-                                    class="form-control border-primary form-control-lg" type="number" id="quantity"
-                                    name="quantity" min="1" max="5">
-                            </div>
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+
+                            <h6 class="mb-0">photo 2</h6>
+
+                        </div>
+                        <div class="col-md-9 pe-5">
+
+                            <input class="form-control border-primary form-control-lg" onchange="viewPhotob(event)"
+                                id="formFileLg" name="photo2" type="file" />
+
+
+                        </div>
+
+                    </div>
+                    <div class=" rowcarousel-item active">
+                        <img src="/product-photo3/{{product._id}}.jpg" id="viewPhoto3" class="d-block w-50" alt="...">
+                    </div>
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+
+                            <h6 class="mb-0">photo 3</h6>
+
+                        </div>
+                        <div class="col-md-9 pe-5">
+
+                            <input class="form-control border-primary form-control-lg" onchange="viewPhotoc(event)"
+                                id="formFileLg" name="photo3" type="file" />
+
+
+                        </div>
+
+                    </div>
+                    <i><b>More Details </b></i>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+
+                    <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-9 pe-5">
+
+                            <textarea class="form-control border-warning" rows="4"
+                                placeholder="More about produts(Optional)"
+                                name="highlights">{{product.highlights}}</textarea>
+
                         </div>
                     </div>
-                    <div class="col-xs-6"> <button type="button" class="btn btn-primary shop-button">Add to
-                            Cart</button> <button type="button" class="btn btn-success shop-button">Buy
-                            Now</button>
-                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                    <hr style="height:2px;border-width:0;color:#8800d6;background-color:#8800d6">
+
+                    <div class=" row px-5 py-4">
+                        <div class="col"><a href="/admin/adminHome" class="btn btn-danger btn-lg">Cancel</a></div>
+                        <div class="col"> <button type="submit" class="btn btn-primary btn-lg">Upload</button></div>
+
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="row row-underline">
 
 
-        <div class="row row-underline">
-            <div class="col-md-6"> <span class=" deal-text">Specifications</span> </div>
-            <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="col-md-12">
-                    <tbody>
-                        <tr class="row mt-10">
-                            <td class="col-md-4"><span class="p_specification">Sales Package :</span> </td>
-                            <td class="col-md-8">
-                                <ul>
-                                    <li>2 in 1 Laptop, Power Adaptor, Active Stylus Pen, User Guide, Warranty
-                                        Documents</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr class="row mt-10">
-                            <td class="col-md-4"><span class="p_specification">Model Number :</span> </td>
-                            <td class="col-md-8">
-                                <ul>
-                                    <li> 14-dh0107TU </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr class="row mt-10">
-                            <td class="col-md-4"><span class="p_specification">Part Number :</span> </td>
-                            <td class="col-md-8">
-                                <ul>
-                                    <li>7AL87PA</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr class="row mt-10">
-                            <td class="col-md-4"><span class="p_specification">Color :</span> </td>
-                            <td class="col-md-8">
-                                <ul>
-                                    <li>Black</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr class="row mt-10">
-                            <td class="col-md-4"><span class="p_specification">Suitable for :</span> </td>
-                            <td class="col-md-8">
-                                <ul>
-                                    <li>Processing & Multitasking</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr class="row mt-10">
-                            <td class="col-md-4"><span class="p_specification">Processor Brand :</span> </td>
-                            <td class="col-md-8">
-                                <ul>
-                                    <li>Intel</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
+</div>
+
+
+
+
+
 </div>
 </div>
+<script>
+    function viewPhotoa(event) {
+
+        document.getElementById('viewPhoto1').src = URL.createObjectURL(event.target.files[0])
+
+    }
+    function viewPhotob(event) {
+
+        document.getElementById('viewPhoto2').src = URL.createObjectURL(event.target.files[0])
+
+    }
+    function viewPhotoc(event) {
+
+        document.getElementById('viewPhoto3').src = URL.createObjectURL(event.target.files[0])
+
+    }
+</script>

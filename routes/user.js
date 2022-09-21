@@ -72,6 +72,19 @@ router.get('/userHome', (req, res) => {
     res.render('user/userHome', { title: "user Home", us: true, user, product })
   })
 
+  //view product
+
+  router.get('/userProductView/:pid', verifyLogin, (req, res) => {
+
+    let proId = req.params.pid
+    userHelper.getProducts(proId).then((product) => {
+      console.log("here");
+      res.render('user/userProductView', { title: product.productName, us: true, user, product })
+    })
+
+
+  })
+
 })
 
 

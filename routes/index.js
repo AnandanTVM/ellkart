@@ -11,9 +11,15 @@ router.get('/', function (req, res, next) {
 
 });
 
-//user home
-router.get('/userHome', (req, res) => {
-  let user = req.session.user
+//view product
+
+router.get('/productView/:pid', (req, res) => {
+
+  let proId = req.params.pid
+  gustHelper.getProducts(proId).then((product) => {
+
+    res.render('./gustProductView', { title: product.productName, product })
+  })
 
 
 })

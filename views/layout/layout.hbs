@@ -18,6 +18,17 @@
 </head>
 <title>{{title}}</title>
 <link rel="icon" href="/images/iconLogo.png">
+<!--zoom-->
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+<script src='/javascripts/jquery.zoom.js'></script>
+<script>
+  $(document).ready(function () {
+    $('#ex1').zoom();
+    $('#ex2').zoom({ on: 'grab' });
+    $('#ex3').zoom({ on: 'click' });
+    $('#ex4').zoom({ on: 'toggle' });
+  });
+</script>
 </head>
 
 <body>
@@ -34,6 +45,7 @@
   <!-- javascript vaidation CDN-->
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
   <script src="/javascripts/validation.js">
+
 
   </script>
   <!-- Option 1: Bootstrap Bundle with Popper -->

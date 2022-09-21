@@ -25,6 +25,11 @@
   background-color: #d7adf0 !important;
 }
 
+a {
+  text-decoration: none;
+
+}
+
 table td,
 table th {
   text-overflow: ellipsis;
