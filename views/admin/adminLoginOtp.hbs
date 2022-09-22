@@ -21,7 +21,7 @@
                                 Please enter your Phone Number!
                                 {{/if}}
                                 </p>
-                                <form method="post" action="/admin">
+                                <form method="post" action="/adminOtpvefication">
                                     <div class="form-outline form-white mb-4">
                                         <input type="text" name="phone" placeholder="Enter Phone number" id="typeEmailX"
                                             class="form-control form-control-lg" />
@@ -30,18 +30,18 @@
                                     <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
                                             href="#!">Resend OTP</a></p>
                                     <div class="form-outline form-white mb-4">
-                                        <input type="password" id="typePasswordX" name="password"
-                                            placeholder="Enter Password" class="form-control form-control-lg" />
+                                        <input type="text" id="typePasswordX" name="OTP"
+                                            placeholder="Enter OTP" class="form-control form-control-lg" style="display:none ;" />
                                         {{!-- <label class="form-label" for="typePasswordX">Password</label> --}}
                                     </div>
 
-                                    <p class="small  pb-lg-2"><a class="text-white" href="/admin">Login With
-                                            Password?</a></p>
+                                   
 
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 
                                 </form>
-
+ <p class="small  pb-lg-2"><a class="text-white" href="/admin">Login With
+                                            Password?</a></p>
                             </div>
 
                             {{!-- <div>
