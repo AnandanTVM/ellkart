@@ -246,14 +246,6 @@ module.exports = {
 
         return new Promise(async (res, rej) => {
             phone = "+91" + phone
-            console.log(phone)
-            // var OTP = ""
-            // var otpverify
-
-            // otpval.forEach(val => {
-            //     OTP += val;
-            // });
-            console.log(OTP)
             // chcking the otp
 
             if (OTP.length == 4) {

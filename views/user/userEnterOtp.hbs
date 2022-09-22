@@ -11,17 +11,17 @@
                             <div class=" mb-md-5 mt-md-4 ">
 
                                 <h2 class=" fw-bold mb-1 text-uppercase"><img src="/images/login-icon-png-27.png"
-                                        style="width:80px">Admin OTP Login</h2>
+                                        style="width:80px">Otp Login</h2>
                                 <p class="text-white mb-5">
                                     {{#if logginErr}}
                                 <p style="color: rgb(255, 1, 1);">
-                                    Invalid Phone Number
+                                    Invalid User Name / Password
                                 </p>
                                 {{else}}
-                                Please enter your Phone Number!
+                                Please enter your login and password!
                                 {{/if}}
                                 </p>
-                                <form method="post" action="/admin/adminOtpEnter">
+                                <form method="post" action="/user/userEnterOtp">
                                     <div class="form-outline form-white mb-4">
                                         <input type="text" name="phone" value="{{phone}}"
                                             placeholder="Enter Phone number" id="typeEmailX"
@@ -29,18 +29,22 @@
 
                                     </div>
                                     <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
-                                            href="/admin/adminResendOtp">Resend OTP</a></p>
+                                            href="">Resend OTP?</a></p>
                                     <div class="form-outline form-white mb-4">
-                                        <input type="text" id="typePasswordX" name="OTP" placeholder="Enter OTP"
+                                        <input type="password" id="typePasswordX" name="OTP" placeholder=" OTP"
                                             class="form-control form-control-lg" />
 
                                     </div>
 
 
 
-                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Send OTP</button>
 
                                 </form>
+
+                            </div>
+
+                            <div>
 
                             </div>
 

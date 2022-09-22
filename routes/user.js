@@ -29,9 +29,13 @@ router.post('/userSinghup', (req, res) => {
 })
 //user Login
 router.get('/userLogin', (req, res) => {
+  res.header(
+    "Cache-control",
+    "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
+  );
   if (req.session.usloggedIn) {
     let user = req.session.user
-    res.render('user/userHome', { title: "User Home", us: true, user })
+    res.redirect('/user/userHome')
   } else {
     res.render('user/userLogin', { title: 'User Login', "logginErr": req.session.loginErr })
     req.session.loginErr = false
@@ -59,6 +63,72 @@ router.post('/userLogin', (req, res) => {
 
   })
 })
+
+//OTP login
+router.get('/userOtpLogin', (req, res) => {
+  res.header(
+    "Cache-control",
+    "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
+  );
+  if (req.session.usloggedIn) {
+    let user = req.session.user
+    res.redirect('/user/userHome')
+  } else {
+    res.render('user/userOtpLogin', { title: "OTP LOGIN", "logginErr": req.session.loginErr })
+    req.session.loginErr = false
+  }
+
+})
+router.post('/userOtpLogin', (req, res) => {
+  res.header(
+    "Cache-control",
+    "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
+  );
+  userHelper.getDetails(req.body.phone).then((response) => {
+    let phone = req.body.phone
+    if (response.phoneFound) {
+      req.session.user = response.details
+
+
+
+      res.render('user/userEnterOtp', { title: "user login with otp", phone })
+
+
+
+
+    } else {
+      req.session.loginErr = true
+      res.redirect('./userOtpLogin')
+
+    }
+
+
+  })
+
+})
+
+//OTP Verification
+
+router.post('/userEnterOtp', (req, res) => {
+  const otp = req.body.OTP;
+  let phone = req.body.phone;
+  userHelper.veriOtp(otp, phone).then((vetify) => {
+    console.log(vetify);
+    if (vetify) {
+      req.session.usloggedIn = true
+      console.log("otp success");
+      res.redirect('/user/userHome')
+    } else {
+      console.log("otp failed");
+      req.session.loginErr = true
+      res.redirect('./userOtpLogin')
+    }
+  })
+
+})
+
+
+
 //logout
 
 router.get('/userLogout', (req, res) => {
@@ -67,11 +137,14 @@ router.get('/userLogout', (req, res) => {
 })
 //user home
 router.get('/userHome', (req, res) => {
+  res.header(
+    "Cache-control",
+    "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
+  );
   let user = req.session.user
   userHelper.getAllProducts().then((product) => {
     res.render('user/userHome', { title: "user Home", us: true, user, product })
   })
-
   //view product
 
   router.get('/userProductView/:pid', verifyLogin, (req, res) => {

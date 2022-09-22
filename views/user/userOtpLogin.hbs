@@ -11,7 +11,7 @@
                             <div class=" mb-md-5 mt-md-4 ">
 
                                 <h2 class=" fw-bold mb-1 text-uppercase"><img src="/images/login-icon-png-27.png"
-                                        style="width:80px"> Login</h2>
+                                        style="width:80px">Otp Login</h2>
                                 <p class="text-white mb-5">
                                     {{#if logginErr}}
                                 <p style="color: rgb(255, 1, 1);">
@@ -21,31 +21,31 @@
                                 Please enter your login and password!
                                 {{/if}}
                                 </p>
-                                <form method="post" action="/user/userLogin">
+                                <form method="post" action="/user/userOtpLogin">
                                     <div class="form-outline form-white mb-4">
                                         <input type="text" name="phone" placeholder="Enter Phone number" id="typeEmailX"
                                             class="form-control form-control-lg" />
-                                        {{!-- <label class="form-label" for="typeEmailX">Email/Phone</label> --}}
+
                                     </div>
-                                    <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
-                                            href="">Forgot
-                                            password?</a></p>
+                                    {{!-- <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
+                                            href="#!">Resend OTP?/a></p> --}}
                                     <div class="form-outline form-white mb-4">
                                         <input type="password" id="typePasswordX" name="password"
-                                            placeholder="Enter Password" class="form-control form-control-lg" />
-                                        {{!-- <label class="form-label" for="typePasswordX">Password</label> --}}
+                                            placeholder="Enter Password" class="form-control form-control-lg"
+                                            style="display:none ;" />
+
                                     </div>
 
-                                    <p class="small  pb-lg-2"><a class="text-white" href="/user/userOtpLogin">Login
-                                            With
-                                            OTP?</a></p>
 
-                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Send OTP</button>
 
                                 </form>
 
                             </div>
-
+                            <p class="small  pb-lg-2"><a class="text-white" href="/user/userLogin">Login With
+                                    Password?</a>
+                            </p>
                             <div>
                                 <p class="mb-0">New Seller to Ell ? Create an account <a href="/user/userSingup"
                                         class="text-white-50 fw-bold">Sign

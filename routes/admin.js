@@ -54,13 +54,20 @@ router.get('/logout', (req, res) => {
 
 //login with OTP
 router.get('/adminLoginOtp', (req, res) => {
+
     if (req.session.adloggedIn) {
         let admin = req.session.admin
-        res.render('admin/adminHome', { title: 'admin Home', ad: true, admin })
+        res.redirect('./adminHome')
     } else {
         res.render('admin/adminLoginOtp', { title: 'admin Login', "logginErr": req.session.loginErr });
         req.session.loginErr = false
     }
+
+
+})
+//resent otp
+router.get('/adminResendOtp', (req, res) => {
+    res.redirect('./adminLoginOtp')
 
 
 })
