@@ -17,7 +17,7 @@ module.exports = {
             let extphone = await db.get().collection(collection.user_COLLECTION).findOne({ phone: userData.phone })
             console.log(extphone);
             if (extphone == null) {
-                console.log("i am harae");
+
                 return new Promise(async (resolve, reject) => {
 
 

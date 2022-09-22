@@ -7,6 +7,9 @@ const { response } = require('express')
 const { catagary_COLLECTION } = require('../config/collection')
 var objectId = require('mongodb').ObjectId
 
+const config = require('../config/otpConfig')
+const client = require('twilio')(config.accountSID, config.authToken)
+
 
 module.exports = {
     //admin login
@@ -200,6 +203,83 @@ module.exports = {
                 }).then((response) => {
                     resolve()
                 })
+
+        })
+    },
+
+    //find adimin exitent
+    getDetails: (data) => {
+        return new Promise(async (resolve, reject) => {
+            let phone = data
+
+            let details = await db.get().collection(collection.Admin_COLLECTION).findOne({ phone: data })
+            console.log(details);
+            if (details == null) {
+                resolve({ phoneFound: false })
+            } else {
+                //otp sending process starts
+                console.log(phone)
+                phone = "+91" + phone
+
+                client
+                    .verify
+                    .services(config.serviceID)
+                    .verifications
+                    .create({
+                        to: phone,
+                        channel: "sms",
+                    })
+                    .then((data) => {
+                        resolve({ phoneFound: true, details })
+                        console.log('otp Sending successfully to ' + phone);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        resolve({ phoneFound: false })
+                    })
+
+            }
+        })
+
+    },
+    veriOtp: (OTP, phone) => {
+
+        return new Promise(async (res, rej) => {
+            phone = "+91" + phone
+            console.log(phone)
+            // var OTP = ""
+            // var otpverify
+
+            // otpval.forEach(val => {
+            //     OTP += val;
+            // });
+            console.log(OTP)
+            // chcking the otp
+
+            if (OTP.length == 4) {
+                await client
+                    .verify
+                    .services(config.serviceID)
+                    .verificationChecks
+                    .create({
+                        to: phone,
+                        code: OTP
+                    })
+                    .then((data) => {
+                        console.log(data)
+                        if (data.status == 'approved') {
+                            otpverify = true;
+                        } else {
+                            otpverify = false
+                        }
+
+                    })
+            } else {
+
+                otpverify = false
+            }
+            console.log(otpverify)
+            res(otpverify)
 
         })
     },

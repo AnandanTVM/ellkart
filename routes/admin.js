@@ -54,8 +54,53 @@ router.get('/logout', (req, res) => {
 
 //login with OTP
 router.get('/adminLoginOtp', (req, res) => {
-    console.log("i am otp login");
-    res.render('admin/adminLoginOtp', { title: "Admin login" })
+    if (req.session.adloggedIn) {
+        let admin = req.session.admin
+        res.render('admin/adminHome', { title: 'admin Home', ad: true, admin })
+    } else {
+        res.render('admin/adminLoginOtp', { title: 'admin Login', "logginErr": req.session.loginErr });
+        req.session.loginErr = false
+    }
+
+
+})
+
+router.post('/adminLoginOtp', (req, res) => {
+
+    adminHelper.getDetails(req.body.phone).then((response) => {
+        let phone = req.body.phone
+        if (response.phoneFound) {
+            req.session.admin = response.details
+            res.render('admin/adminEnterOtp', { title: "Admin login with otp", phone })
+        } else {
+            req.session.loginErr = true
+            res.redirect('./adminLoginOtp')
+
+        }
+
+
+    })
+
+})
+//OTP Verification
+
+router.post('/adminOtpEnter', (req, res) => {
+    const otp = req.body.OTP;
+    let phone = req.body.phone;
+    adminHelper.veriOtp(otp, phone).then((vetify) => {
+        console.log(vetify);
+        if (vetify) {
+            req.session.adloggedIn = true
+            // req.session.admin = admin
+            console.log("otp success");
+            res.redirect('/admin/adminHome')
+        } else {
+            console.log("otp failed");
+            req.session.loginErr = true
+            res.redirect('./adminLoginOtp')
+        }
+    })
+
 })
 
 //user list info

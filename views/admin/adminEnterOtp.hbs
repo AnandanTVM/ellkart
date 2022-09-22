@@ -21,17 +21,18 @@
                                 Please enter your Phone Number!
                                 {{/if}}
                                 </p>
-                                <form method="post" action="/admin/adminLoginOtp">
+                                <form method="post" action="/admin/adminOtpEnter">
                                     <div class="form-outline form-white mb-4">
-                                        <input type="text" name="phone" placeholder="Enter Phone number" id="typeEmailX"
+                                        <input type="text" name="phone" value="{{phone}}"
+                                            placeholder="Enter Phone number" id="typeEmailX"
                                             class="form-control form-control-lg" />
                                         {{!-- <label class="form-label" for="typeEmailX">Email/Phone</label> --}}
                                     </div>
-                                    {{!-- <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
-                                            href="#!">Resend OTP</a></p> --}}
+                                    <p class="small  pb-lg-2 d-flex justify-content-end"><a class="text-white-50"
+                                            href="#!">Resend OTP</a></p>
                                     <div class="form-outline form-white mb-4">
                                         <input type="text" id="typePasswordX" name="OTP" placeholder="Enter OTP"
-                                            class="form-control form-control-lg" style="display:none ;" />
+                                            class="form-control form-control-lg" />
                                         {{!-- <label class="form-label" for="typePasswordX">Password</label> --}}
                                     </div>
 
