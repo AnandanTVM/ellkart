@@ -136,30 +136,52 @@ router.get('/userLogout', (req, res) => {
   res.redirect('/user/userLogin')
 })
 //user home
-router.get('/userHome', (req, res) => {
+router.get('/userHome', async(req, res) => {
   res.header(
     "Cache-control",
     "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
   );
   let user = req.session.user
+  let cartcount=await userHelper.getCartCount(user._id)
   userHelper.getAllProducts().then((product) => {
-    res.render('user/userHome', { title: "user Home", us: true, user, product })
+    res.render('user/userHome', { title: "user Home", us: true, user, product,cartcount })
   })
   //view product
 
-  router.get('/userProductView/:pid', verifyLogin, (req, res) => {
+  router.get('/userProductView/:pid', verifyLogin,async (req, res) => {
 
     let proId = req.params.pid
+    let cartcount=await userHelper.getCartCount(user._id)
     userHelper.getProducts(proId).then((product) => {
       console.log("here");
-      res.render('user/userProductView', { title: product.productName, us: true, user, product })
+      res.render('user/userProductView', { title: product.productName, us: true, user, product ,cartcount})
     })
 
 
   })
 
 })
+// add to  cart
+router.get('/userAddToCart/:Pid',verifyLogin,(req,res)=>{
+  let user = req.session.user;
+  let productId=req.params.Pid;
+  let userId=user._id;
+  userHelper.addTocart(productId,userId).then(()=>{
+  res.redirect('../userCart')
+  })
+  
 
+})
+//view cart 
+router.get('/userCart', verifyLogin ,async (req,res)=>{
+let user = req.session.user
+let userId=req.session.user._id
+let cartcount=await userHelper.getCartCount(user._id)
+ let product=await userHelper.getCartDetails(userId)
+    
+      
+ res.render('user/userCart', { title:"Cart", us: true, user,product,cartcount}) 
+})
 
 
 module.exports = router;
