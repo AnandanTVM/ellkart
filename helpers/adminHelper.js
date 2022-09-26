@@ -18,22 +18,25 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let loginStatus = false
             let response = {}
-            let p = parseInt(adminData.phone)
-            let admin = await db.get().collection(collection.Admin_COLLECTION).findOne({ phone: p })
-
+            // let p = parseInt(adminData.phone)
+            let admin = await db.get().collection(collection.Admin_COLLECTION).findOne({phone:adminData.phone})
+console.log(admin);
             if (admin) {
+               
+               
                 if (adminData.password == admin.password) {
 
                     response.admin = admin
                     response.status = true
+                    console.log("passed login");
                     resolve(response)
                 }
                 else {
-                    console.log("you are here");
+                    console.log("failed login");
                     resolve({ status: false })
                 }
             } else {
-                console.log("you are here");
+                console.log("failed login ");
                 resolve({ status: false })
             }
 
@@ -124,6 +127,10 @@ module.exports = {
 
     //add product
     adminAddProduct: (products, callback) => {
+        console.log(products);
+        products.stock=parseInt(products.stock)
+        products.retailerPrice=parseInt(products.retailerPrice)
+        products.mrp=parseInt(products.mrp)
         console.log(products);
         db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
 

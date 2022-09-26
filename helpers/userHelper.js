@@ -182,7 +182,7 @@ let proObj={
             let proExt=userCart.productId.findIndex(productId=> productId.iteam==proId)
                 if (proExt!=-1){
                     db.get().collection(collection.cart_COLLECTION).updateOne(
-                        {'productId.iteam':objectId(proId)},
+                        {user:objectId(userId),'productId.iteam':objectId(proId)},
                         {
                             $inc:{'productId.$.quantity':1}
                         }
@@ -220,6 +220,7 @@ db.get().collection(collection.cart_COLLECTION).updateOne({user:ObjectId(userId)
        
 
 },
+
 getCartDetails:(userId)=>{
     return new Promise(async(resolve,reject)=>{
         let cartIteam=await db.get().collection(collection.cart_COLLECTION).aggregate([
@@ -237,19 +238,75 @@ getCartDetails:(userId)=>{
     }
 },
 {
+    //to join anothtre table fields to current table
     $lookup:{
         from:collection.product_COLLECTION,
         localField:'iteam',
         foreignField:'_id',
         as:'product'
     }
+},{
+    $project:{
+        iteam :1,quantity:1,product:{$arrayElemAt:['$product',0]}
+        //arrayElemAt userd to convert array to object
+    }
 }
 
  ]).toArray()
 
+
         resolve(cartIteam)
     })
 },
+
+//to get total 
+
+
+getTotal:(userId)=>{
+    return new Promise(async(resolve,reject)=>{
+        let total=await db.get().collection(collection.cart_COLLECTION).aggregate([
+{
+    $match:{user:ObjectId(userId)}
+    
+},
+
+{
+    $unwind:'$productId'
+},{
+    $project:{
+        iteam:'$productId.iteam',
+        quantity:'$productId.quantity'
+    }
+},
+{
+    //to join anothtre table fields to current table
+    $lookup:{
+        from:collection.product_COLLECTION,
+        localField:'iteam',
+        foreignField:'_id',
+        as:'product'
+    }
+},{
+    $project:{
+        iteam :1,quantity:1,product:{$arrayElemAt:['$product',0]}
+        //arrayElemAt userd to convert array to object
+    }
+},
+{
+    $group:{
+        _id:null,
+       total:{$sum:{$multiply:['$quantity','$product.retailerPrice']}}
+        //arrayElemAt userd to convert array to object
+    } 
+}
+
+ ]).toArray()
+console.log(total[0].total);
+
+        resolve(total[0].total)
+    })
+},
+//view  cart count
 getCartCount:(userId)=>{
     return new Promise (async(resolve,reject)=>{
         let count=0
@@ -261,8 +318,53 @@ getCartCount:(userId)=>{
         resolve(count)
     })
 
+},
+//change qunty
+userChangeQunty:(details)=>{
+    count=parseInt(details.count)
+    quantity=parseInt(details.quantity)
+    return new Promise((resolve,reject)=>{
+        if(details.count==-1&& details.quantity==1){
+            db.get().collection(collection.cart_COLLECTION).
+            updateOne({_id:objectId(details.cart)},
+            {
+                //delecting that array object
+                $pull:{productId:{iteam:objectId(details.product)}}
+            }
+            ).then((response)=>{
+                resolve({removeProduct:true})
+            })
+        }else{
+            db.get().collection(collection.cart_COLLECTION).updateOne(
+        
+                {_id:objectId(details.cart),'productId.iteam':objectId(details.product)},
+                {
+                    $inc:{'productId.$.quantity':count}
+                }
+                ).then((responce)=>{
+                    resolve({status:true})
+                })
+    
+        
+        }
+       
+  
+})
+},
+//remove cart
+removeCart:(details)=>{
+    return new Promise((resolve,reject)=>{
+    db.get().collection(collection.cart_COLLECTION).
+    updateOne({_id:objectId(details.cart)},
+    {
+        //delecting that array object
+        $pull:{productId:{iteam:objectId(details.product)}}
+    }
+    ).then((response)=>{
+        resolve({removeProduct:true})
+    })
+})
 }
-
 
 
 }

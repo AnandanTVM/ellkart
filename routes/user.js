@@ -178,9 +178,28 @@ let user = req.session.user
 let userId=req.session.user._id
 let cartcount=await userHelper.getCartCount(user._id)
  let product=await userHelper.getCartDetails(userId)
+ let total=await userHelper.getTotal(userId)
     
       
- res.render('user/userCart', { title:"Cart", us: true, user,product,cartcount}) 
+ res.render('user/userCart', { title:"Cart", us: true, user,product,cartcount,total}) 
+})
+
+//cart qunt update
+router.post('/userChangeQunty',(req,res,next)=>{
+  
+userHelper.userChangeQunty(req.body).then(async(responce)=>{
+  responce.total=await userHelper.getTotal(req.body.user)
+  
+  res.json(responce)
+
+})
+
+})
+// cart remove
+router.post('/removeCart',(req,res,next)=>{
+  userHelper.removeCart(req.body).then((response)=>{
+    res.json(response)
+  })
 })
 
 
