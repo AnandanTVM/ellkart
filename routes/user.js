@@ -145,22 +145,24 @@ router.get('/userHome', async (req, res) => {
   let cartcount = await userHelper.getCartCount(user._id)
   userHelper.getAllProducts().then((product) => {
     res.render('user/userHome', { title: "user Home", us: true, user, product, cartcount })
+  }).catch((error) => {
+    res.render('/error', { error })
   })
-  //view product
+})
+//view product
 
-  router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
+router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
 
-    let proId = req.params.pid
-    let cartcount = await userHelper.getCartCount(user._id)
-    userHelper.getProducts(proId).then((product) => {
-      console.log("here");
-      res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
-    })
+  let proId = req.params.pid
+  let cartcount = await userHelper.getCartCount(user._id)
+  userHelper.getProducts(proId).then((product) => {
 
-
+    res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
   })
+
 
 })
+
 // add to  cart
 router.get('/userAddToCart/:Pid', verifyLogin, (req, res) => {
   let user = req.session.user;
@@ -224,7 +226,7 @@ router.post('/checkout', async (req, res) => {
 
 
 })
-
+// check out placed confomation
 router.get('/odderplaced/:rid', verifyLogin, async (req, res) => {
   let user = req.session.user
   let resId = req.params.rid;
@@ -233,4 +235,12 @@ router.get('/odderplaced/:rid', verifyLogin, async (req, res) => {
 
   res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, odderDetils, resId })
 })
+
+//view odder details
+router.get('/userOdderdetails', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(req.session.user._id)
+  res.render('user/odderdetails', { title: "Odder Details", us: true, user, cartcount })
+})
+
 module.exports = router;

@@ -25,9 +25,9 @@ router.get('/', function (req, res, next) {
 });
 //admin Login checks here
 router.post('/', function (req, res, next) {
-   
+
     adminHelper.doAdminLogin(req.body).then((response) => {
-    
+
         if (response.status) {
             req.session.adloggedIn = true
             req.session.admin = response.admin
@@ -181,7 +181,7 @@ router.get('/adminAddeProduct', verifyLogin, (req, res) => {
 
 router.post('/adminAddProduct', verifyLogin, (req, res) => {
     let admin = req.session.admin
-   
+
     adminHelper.adminAddProduct(req.body, (result) => {
         let photo1 = req.files.photo1;
         photo1.mv('./public/product-photo1/' + result + '.jpg')
@@ -239,7 +239,7 @@ router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
         }
         if (req.files.photo3) {
             let photo3 = req.files.photo3;
-            photo3.mv('./public/product-photo1/' + req.params.id + '.jpg')
+            photo3.mv('./public/product-photo3/' + req.params.id + '.jpg')
         }
     })
 })
