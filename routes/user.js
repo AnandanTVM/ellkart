@@ -201,6 +201,12 @@ router.post('/removeCart',(req,res,next)=>{
     res.json(response)
   })
 })
+//checkout
 
+router.get('/checkout',async(req,res)=>{
+  let user = req.session.user
+  let cartcount=await userHelper.getCartCount(user._id)
+  res.render('user/checkout',{ title: "user Home", us: true, user,cartcount })
+})
 
 module.exports = router;
