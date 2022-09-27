@@ -136,25 +136,25 @@ router.get('/userLogout', (req, res) => {
   res.redirect('/user/userLogin')
 })
 //user home
-router.get('/userHome', async(req, res) => {
+router.get('/userHome', async (req, res) => {
   res.header(
     "Cache-control",
     "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
   );
   let user = req.session.user
-  let cartcount=await userHelper.getCartCount(user._id)
+  let cartcount = await userHelper.getCartCount(user._id)
   userHelper.getAllProducts().then((product) => {
-    res.render('user/userHome', { title: "user Home", us: true, user, product,cartcount })
+    res.render('user/userHome', { title: "user Home", us: true, user, product, cartcount })
   })
   //view product
 
-  router.get('/userProductView/:pid', verifyLogin,async (req, res) => {
+  router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
 
     let proId = req.params.pid
-    let cartcount=await userHelper.getCartCount(user._id)
+    let cartcount = await userHelper.getCartCount(user._id)
     userHelper.getProducts(proId).then((product) => {
       console.log("here");
-      res.render('user/userProductView', { title: product.productName, us: true, user, product ,cartcount})
+      res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
     })
 
 
@@ -162,51 +162,71 @@ router.get('/userHome', async(req, res) => {
 
 })
 // add to  cart
-router.get('/userAddToCart/:Pid',verifyLogin,(req,res)=>{
+router.get('/userAddToCart/:Pid', verifyLogin, (req, res) => {
   let user = req.session.user;
-  let productId=req.params.Pid;
-  let userId=user._id;
-  userHelper.addTocart(productId,userId).then(()=>{
-  res.redirect('../userCart')
+  let productId = req.params.Pid;
+  let userId = user._id;
+  userHelper.addTocart(productId, userId).then(() => {
+    res.redirect('../userCart')
   })
-  
+
 
 })
 //view cart 
-router.get('/userCart', verifyLogin ,async (req,res)=>{
-let user = req.session.user
-let userId=req.session.user._id
-let cartcount=await userHelper.getCartCount(user._id)
- let product=await userHelper.getCartDetails(userId)
- let total=await userHelper.getTotal(userId)
-    
-      
- res.render('user/userCart', { title:"Cart", us: true, user,product,cartcount,total}) 
+router.get('/userCart', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let userId = req.session.user._id
+  let cartcount = await userHelper.getCartCount(user._id)
+  let product = await userHelper.getCartDetails(userId)
+  let total = await userHelper.getTotal(userId)
+
+
+  res.render('user/userCart', { title: "Cart", us: true, user, product, cartcount, total })
 })
 
 //cart qunt update
-router.post('/userChangeQunty',(req,res,next)=>{
-  
-userHelper.userChangeQunty(req.body).then(async(responce)=>{
-  responce.total=await userHelper.getTotal(req.body.user)
-  
-  res.json(responce)
+router.post('/userChangeQunty', (req, res, next) => {
 
-})
+  userHelper.userChangeQunty(req.body).then(async (responce) => {
+    responce.total = await userHelper.getTotal(req.body.user)
+
+    res.json(responce)
+
+  })
 
 })
 // cart remove
-router.post('/removeCart',(req,res,next)=>{
-  userHelper.removeCart(req.body).then((response)=>{
+router.post('/removeCart', (req, res, next) => {
+  userHelper.removeCart(req.body).then((response) => {
     res.json(response)
   })
 })
 //checkout
 
-router.get('/checkout',async(req,res)=>{
+router.get('/checkout', verifyLogin, async (req, res) => {
   let user = req.session.user
-  let cartcount=await userHelper.getCartCount(user._id)
-  res.render('user/checkout',{ title: "user Home", us: true, user,cartcount })
+  let cartcount = await userHelper.getCartCount(user._id)
+  let total = await userHelper.getTotal(user._id)
+  res.render('user/checkout', { title: "user Home", us: true, user, cartcount, total })
 })
 
+router.post('/checkout', async (req, res) => {
+  // console.log(req.body);
+
+  let product = await userHelper.getcartProductList(req.session.user._id)
+  let total = await userHelper.getTotal(req.session.user._id)
+
+  userHelper.placeOdder(req.body, product, total).then((response) => {
+    res.json({ status: true })
+
+  })
+
+
+})
+
+router.get('/odderplaced', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(req.session.user._id)
+  res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, })
+})
 module.exports = router;
