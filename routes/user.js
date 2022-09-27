@@ -217,16 +217,20 @@ router.post('/checkout', async (req, res) => {
   let total = await userHelper.getTotal(req.session.user._id)
 
   userHelper.placeOdder(req.body, product, total).then((response) => {
-    res.json({ status: true })
+    resId = response.insertedId;
+    res.json({ status: true, resId })
 
   })
 
 
 })
 
-router.get('/odderplaced', verifyLogin, async (req, res) => {
+router.get('/odderplaced/:rid', verifyLogin, async (req, res) => {
   let user = req.session.user
+  let resId = req.params.rid;
   let cartcount = await userHelper.getCartCount(req.session.user._id)
-  res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, })
+  let odderDetils = await userHelper.getodderdetails(resId)
+
+  res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, odderDetils, resId })
 })
 module.exports = router;

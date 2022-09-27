@@ -265,9 +265,10 @@
       method: 'post',
       data: $('#checkOut').serialize(),
       success: (response) => {
-        alert("Odder placed ")
+
+        console.log(response.resId)
         if (response.status) {
-          location.href = '/user/odderplaced'
+          location.href = '/user/odderplaced/' + response.resId
         }
       }
 

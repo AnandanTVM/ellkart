@@ -388,7 +388,7 @@ module.exports = {
             }
             db.get().collection(collection.Odder_COLLECTION).insertOne(odderObj).then((response) => {
                 db.get().collection(collection.cart_COLLECTION).remove({ user: objectId(odder.userId) })
-                resolve()
+                resolve(response)
             })
 
             console.log(odderObj);
@@ -403,6 +403,41 @@ module.exports = {
         })
 
 
+    },
+    getodderdetails: (resId) => {
+        return new Promise(async (resolve, reject) => {
+            let odderDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                {
+                    $match: { _id: objectId(resId) }
+                },
+                {
+                    $unwind: '$product'
+                },
+                {
+                    $project: {
+                        iteam: '$product.iteam',
+                        quantity: '$product.quantity',
+                    }
+
+                },
+                {
+                    //to join anothtre table fields to current table
+                    $lookup: {
+                        from: collection.product_COLLECTION,
+                        localField: 'iteam',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                }, {
+                    $project: {
+                        iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        //arrayElemAt userd to convert array to object
+                    }
+                }
+            ]).toArray()
+            console.log(odderDetils);
+            resolve(odderDetils)
+        })
     }
 
 
