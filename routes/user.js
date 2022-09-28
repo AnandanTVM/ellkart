@@ -25,7 +25,7 @@ router.post('/userSinghup', (req, res) => {
       res.render("user/userSinup", { title: "User Singup", Done: true })
     }
 
-  }).catch((error)=>{
+  }).catch((error) => {
     res.render("/error", { error })
   })
 })
@@ -160,7 +160,7 @@ router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
   userHelper.getProducts(proId).then((product) => {
 
     res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
-  }).catch((error)=>{
+  }).catch((error) => {
     res.render('/error', { error })
   })
 
@@ -244,7 +244,20 @@ router.get('/odderplaced/:rid', verifyLogin, async (req, res) => {
 router.get('/userOdderdetails', verifyLogin, async (req, res) => {
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(req.session.user._id)
-  res.render('user/odderdetails', { title: "Odder Details", us: true, user, cartcount })
+  let odderdetails = await userHelper.getooderdetails(req.session.user._id)
+  let countodder = odderdetails.length
+
+  res.render('user/odderdetails', { title: "Odder Details", us: true, user, cartcount, odderdetails, countodder })
+})
+//view odder details with with product
+router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
+  let odderId = req.params.orid
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(req.session.user._id)
+  let odder = await userHelper.getOdderdetails(odderId)
+  let odderproduct = await userHelper.getOdderProductdetails(odderId)
+  console.log();
+  res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct })
 })
 
 module.exports = router;

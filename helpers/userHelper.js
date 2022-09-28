@@ -27,16 +27,16 @@ module.exports = {
                     db.get().collection(collection.user_COLLECTION).insertOne(userData).then((data) => {
 
                         resolve(data)
-                       
-                    }).catch((error)=>{
+
+                    }).catch((error) => {
                         reject(error)
                     })
 
                 })
                     .then((data) => {
                         resolve(data)
-                       
-                    }).catch((error)=>{
+
+                    }).catch((error) => {
                         console.log(error);
                         reject(error)
                         console.log();
@@ -46,9 +46,6 @@ module.exports = {
 
                 resolve({ phoneFound: true })
             }
-            console.log("done");
-
-
         })
 
 
@@ -272,46 +269,53 @@ module.exports = {
 
     getTotal: (userId) => {
         return new Promise(async (resolve, reject) => {
-            let total = await db.get().collection(collection.cart_COLLECTION).aggregate([
-                {
-                    $match: { user: ObjectId(userId) }
+            try {
+                let total = await db.get().collection(collection.cart_COLLECTION).aggregate([
+                    {
+                        $match: { user: ObjectId(userId) }
 
-                },
+                    },
 
-                {
-                    $unwind: '$productId'
-                }, {
-                    $project: {
-                        iteam: '$productId.iteam',
-                        quantity: '$productId.quantity'
+                    {
+                        $unwind: '$productId'
+                    }, {
+                        $project: {
+                            iteam: '$productId.iteam',
+                            quantity: '$productId.quantity'
+                        }
+                    },
+                    {
+                        //to join anothtre table fields to current table
+                        $lookup: {
+                            from: collection.product_COLLECTION,
+                            localField: 'iteam',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    }, {
+                        $project: {
+                            iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            //arrayElemAt userd to convert array to object
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            total: { $sum: { $multiply: ['$quantity', '$product.retailerPrice'] } }
+                            //arrayElemAt userd to convert array to object
+                        }
                     }
-                },
-                {
-                    //to join anothtre table fields to current table
-                    $lookup: {
-                        from: collection.product_COLLECTION,
-                        localField: 'iteam',
-                        foreignField: '_id',
-                        as: 'product'
-                    }
-                }, {
-                    $project: {
-                        iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                        //arrayElemAt userd to convert array to object
-                    }
-                },
-                {
-                    $group: {
-                        _id: null,
-                        total: { $sum: { $multiply: ['$quantity', '$product.retailerPrice'] } }
-                        //arrayElemAt userd to convert array to object
-                    }
-                }
 
-            ]).toArray()
-          
+                ]).toArray()
+                resolve(total[0].total)
 
-            resolve(total[0].total)
+            } catch {
+                let total = 0
+                resolve(total)
+            }
+
+
+
         })
     },
     //view  cart count
@@ -446,7 +450,67 @@ module.exports = {
             console.log(odderDetils);
             resolve(odderDetils)
         })
-    }
+    },
+    //find all odder deatails
+    getooderdetails: (userId) => {
+        return new Promise(async (resolve, reject) => {
+
+            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ userId: objectId(userId) }).toArray()
+
+            resolve(odderdetails)
+
+        })
+    },
+    //odder details
+    getOdderdetails: (ordId) => {
+        return new Promise(async (resolve, reject) => {
+
+            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(ordId) }).toArray()
+            console.log(odderdetails);
+            resolve(odderdetails)
+
+        })
+    },
+
+    getOdderProductdetails: (ordId) => {
+        return new Promise(async (resolve, reject) => {
+            let odderProductDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                {
+                    $match: { _id: objectId(ordId) }
+                },
+                {
+                    $unwind: '$product'
+                },
+                {
+                    $project: {
+                        iteam: '$product.iteam',
+                        quantity: '$product.quantity',
+                    }
+
+                },
+                {
+                    //to join anothtre table fields to current table
+                    $lookup: {
+                        from: collection.product_COLLECTION,
+                        localField: 'iteam',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                }, {
+                    $project: {
+                        iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        //arrayElemAt userd to convert array to object
+                    }
+                }
+            ]).toArray()
+            console.log(odderProductDetils);
+            resolve(odderProductDetils)
+        })
+    },
+
+
+
+
 
 
 }
