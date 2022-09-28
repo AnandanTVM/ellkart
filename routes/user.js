@@ -25,6 +25,8 @@ router.post('/userSinghup', (req, res) => {
       res.render("user/userSinup", { title: "User Singup", Done: true })
     }
 
+  }).catch((error)=>{
+    res.render("/error", { error })
   })
 })
 //user Login
@@ -152,12 +154,14 @@ router.get('/userHome', async (req, res) => {
 //view product
 
 router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
-
+  let user = req.session.user
   let proId = req.params.pid
   let cartcount = await userHelper.getCartCount(user._id)
   userHelper.getProducts(proId).then((product) => {
 
     res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
+  }).catch((error)=>{
+    res.render('/error', { error })
   })
 
 

@@ -2,7 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collection')
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
-const { response } = require('express')
+const { response, json } = require('express')
 var objectId = require('mongodb').ObjectId
 const config = require('../config/otpConfig')
 const client = require('twilio')(config.accountSID, config.authToken)
@@ -27,11 +27,19 @@ module.exports = {
                     db.get().collection(collection.user_COLLECTION).insertOne(userData).then((data) => {
 
                         resolve(data)
+                       
+                    }).catch((error)=>{
+                        reject(error)
                     })
 
                 })
                     .then((data) => {
                         resolve(data)
+                       
+                    }).catch((error)=>{
+                        console.log(error);
+                        reject(error)
+                        console.log();
                     })
 
             } else {
@@ -301,7 +309,7 @@ module.exports = {
                 }
 
             ]).toArray()
-            console.log(total[0].total);
+          
 
             resolve(total[0].total)
         })
