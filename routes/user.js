@@ -256,16 +256,32 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
   let cartcount = await userHelper.getCartCount(req.session.user._id)
   let odder = await userHelper.getOdderdetails(odderId)
   let odderproduct = await userHelper.getOdderProductdetails(odderId)
-  console.log();
-  res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct })
+  let adddetails = {}
+
+  if (odder[0].status == 'Canceled') {
+
+    adddetails.cancel = true
+  }
+  else if (odder[0].status == 'placed') {
+    adddetails.placed = true
+  }
+
+
+  res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct, adddetails })
 })
 
 //odder cancel
 
-router.put('/cancelOdder/:odId',verifyLogin,(req,res)=>{
-  let odderId = req.params.orid
+router.get('/cancelOdder/:odId', verifyLogin, (req, res) => {
+  let odderId = req.params.odId
   let user = req.session.user
-  userHelper.cencelodder
+  console.log(odderId);
+  userHelper.cencelodder(odderId).then((response) => {
+
+    res.redirect('../userodderviewpage/' + odderId)
+  }).catch((error) => {
+    res.render('/error', { error })
+  })
 
 })
 

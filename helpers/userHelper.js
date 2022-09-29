@@ -503,12 +503,35 @@ module.exports = {
                     }
                 }
             ]).toArray()
-            console.log(odderProductDetils);
+
             resolve(odderProductDetils)
+        }).catch((error) => {
+            reject(error)
         })
     },
 
+    cencelodder: (ordId) => {
+        return new Promise((resolve, reject) => {
+            let status = "Canceled"
+            console.log(ordId);
+            db.get().collection(collection.Odder_COLLECTION).updateOne({
+                _id: ObjectId(ordId)
+            },
+                {
+                    $set: {
+                        status: status
 
+                    }
+
+                }).then((response) => {
+                    console.log(response);
+                    resolve()
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+        })
+    },
 
 
 

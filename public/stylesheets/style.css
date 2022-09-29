@@ -784,6 +784,10 @@ ul {
   content: 'Placed';
 }
 
+#step-cal::after {
+  content: 'Canceled';
+}
+
 #step-2::after {
   content: 'Accepted';
   left: -10px;
@@ -815,6 +819,10 @@ ul {
 
 .green {
   color: #007965 !important;
+}
+
+.red {
+  color: #ff0000 !important;
 }
 
 /* Media Queries */
