@@ -229,18 +229,25 @@ router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
     adminHelper.updateProduct(req.params.id, req.body).then(() => {
 
         res.redirect('../adminViewProduct')
-        if (req.files.photo1) {
-            let photo1 = req.files.photo1;
-            photo1.mv('./public/product-photo1/' + req.params.id + '.jpg')
+        try {
+            if (req.files.photo1) {
+                let photo1 = req.files.photo1;
+                photo1.mv('./public/product-photo1/' + req.params.id + '.jpg')
+            }
+            if (req.files.photo2) {
+                let photo2 = req.files.photo2;
+                photo2.mv('./public/product-photo2/' + req.params.id + '.jpg')
+            }
+            if (req.files.photo3) {
+                let photo3 = req.files.photo3;
+                photo3.mv('./public/product-photo3/' + req.params.id + '.jpg')
+            }
+        } catch {
+            console.log("error");
         }
-        if (req.files.photo2) {
-            let photo2 = req.files.photo2;
-            photo2.mv('./public/product-photo2/' + req.params.id + '.jpg')
-        }
-        if (req.files.photo3) {
-            let photo3 = req.files.photo3;
-            photo3.mv('./public/product-photo3/' + req.params.id + '.jpg')
-        }
+
+
+
     })
 })
 // Delect Product
@@ -250,6 +257,11 @@ router.get('/adminDelProduct/:id', verifyLogin, (req, res) => {
     adminHelper.deleteProduct(proId).then((response) => {
         res.redirect('../adminViewProduct')
     })
+
+})
+
+router.get('/adminOddermanage', verifyLogin, (req, res) => {
+
 
 })
 
