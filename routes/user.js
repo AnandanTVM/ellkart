@@ -260,4 +260,13 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
   res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct })
 })
 
+//odder cancel
+
+router.put('/cancelOdder/:odId',verifyLogin,(req,res)=>{
+  let odderId = req.params.orid
+  let user = req.session.user
+  userHelper.cencelodder
+
+})
+
 module.exports = router;
