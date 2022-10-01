@@ -1,15 +1,62 @@
 <section class="h-100 gradient-custom">
-  <div class="container py-5">
-    <div class="row d-flex justify-content-center my-4">
-      <div class="col-md-8">
-        <div class="card mb-4">
-          <div class="card-header py-3">
-            <h5 class="mb-0">Billing Address</h5>
-          </div>
-          <div class="card-body">
-            <!-- Single item -->
-            <form method="post" action="" id="checkOut" enctype="multipart/form-data">
-{{#if address}}
+<div class="page-content page-container" id="page-content">
+  <div class="padding">
+     <div class="padding"></div>
+    <div class="row container d-flex justify-content-center">
+      <div class="col-md-6 col-lg-12">
+        <div class="card user-card-full">
+          <div class="row m-l-0 m-r-0">
+            <div class="col-sm-4 bg-c-lite-green user-profile">
+              <div class="card-block text-center text-white">
+                <div class="m-b-25">
+                    
+                    <p style="margin-right: 75%;">Hello,</p>
+                    {{#if user}}
+                  <img
+                    src="https://img.icons8.com/bubbles/100/000000/user.png"
+                    class="img-radius"
+                    alt="User-Profile-Image"
+                  />
+                </div>
+                
+                <h6 class="f-w-600">{{user.name}}</h6>
+                <a href="#" style="color: blue;margin-left: 5%;">Change Password ?</a>
+                <i
+                  class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"
+                ></i>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="card-block">
+                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Personal Information</h6>
+              <form method="post" action="/user/userInfoUpedate">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Email</p>
+                    <input type="text" placeholder="Email Id" value="{{user.email}}" name="email"
+                        class="form-control border-primary form-control-lg" />
+                    
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Phone</p>
+                     <input type="text" placeholder="Phone Number" value="{{user.phone}}" name="phone"
+                        class="form-control border-primary form-control-lg" />
+                    <h6 class="text-muted f-w-400"></h6>
+                  </div>
+                  
+                </div>
+                <div class="row"> <div class="col-6"></div><div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
+              Update
+            </button></div></div>
+                </form> {{/if}}
+                <h6
+                  class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"
+                >Address</h6>
+                
+                {{#if address}}
+                 <!-- Single item -->
+            <form method="post" action="/user/useraddress"  enctype="multipart/form-data">
+
               <div class="row">
                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                   <div class="row align-items-center pt-4 pb-3">
@@ -166,112 +213,21 @@
 
 
               </div>
-{{/if}}
-
-              <!-- Single item -->
-
-              <hr class="my-4" />
-
-              <!-- Single item -->
-
-              <!-- Single item -->
-          </div>
-        </div>
-        <div class="card mb-4">
-          <div class="card-body">
-            <p><strong>Expected shipping delivery</strong></p>
-            <p class="mb-0">5 Days</p>
-          </div>
-        </div>
-        <div class="card mb-4 mb-lg-0">
-          <div class="card-body">
-            <p><strong>We accept</strong></p>
-            <img class="me-2" width="45px"
-              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-              alt="Visa" />
-            <img class="me-2" width="45px"
-              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-              alt="American Express" />
-            <img class="me-2" width="45px"
-              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-              alt="Mastercard" />
-            <img class="me-2" width="45px"
-              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp"
-              alt="PayPal acceptance mark" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4">
-          <div class="card-header py-3">
-            <h5 class="mb-0">Summary</h5>
-          </div>
-          <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                Products
-                <span> ₹<span id="total"> {{total}}</span></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                Shipping
-                <span>Gratis</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                <div>
-                  <strong>Total amount</strong>
-                  <strong>
-                    <p class="mb-0">(including VAT)</p>
-                  </strong>
-                </div>
-                <span><strong>₹ <span id="total2"> {{total}}</span></strong></span>
-              </li>
-              <div class="card-header py-3">
-                <h5 class="mb-0">Payment Method</h5>
+               <div class="row"> <div class="col-6"></div><div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
+              Update
+            </button></div></div>
+                  
+                 {{/if}}
+                
               </div>
-              <input type="text" name="userId" id="" value="{{user._id}}" hidden>
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                <div>
-                  <strong>Cash on delivery</strong>
-
-                </div>
-                <span> <input type="radio" name="paymentmethod" value="COD"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                <div>
-                  <strong>Resopay</strong>
-
-                </div>
-                <span> <input type="radio" name="paymentmethod" value="Resopay"></span>
-              </li>
-
-            </ul>
-
-            <button type="submit" class="btn btn-primary btn-lg btn-block">
-              Go to checkout
-            </button>
+            </div>
             </form>
           </div>
-
         </div>
       </div>
     </div>
   </div>
+</div>
+ <div class="padding"></div>
+  <div class="padding"></div>
 </section>
-<script>
-  $("#checkOut").submit((e) => {
-    e.preventDefault()
-    $.ajax({
-      url: '/user/checkout',
-      method: 'post',
-      data: $('#checkOut').serialize(),
-      success: (response) => {
-
-        console.log(response.resId)
-        if (response.status) {
-          location.href = '/user/odderplaced/' + response.resId
-        }
-      }
-
-    })
-  })
-</script>

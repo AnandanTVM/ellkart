@@ -535,6 +535,119 @@ console.log(odderdetails);
                 })
         })
     },
+    //address
+    updateAddress: (userId,address) => {
+        address.userId=objectId(userId)
+        console.log(address);
+        return new Promise(async (resolve, reject) => {
+ let foundAddress = await db.get().collection(collection.Address_COLLECTION).findOne({ userId: objectId(userId) })
+            console.log(foundAddress);
+            if (foundAddress == null) {
+
+                return new Promise(async (resolve, reject) => {
+
+                   await db.get().collection(collection.Address_COLLECTION).insertOne(address).then((data) => {
+
+                        resolve(data)
+
+                    }).catch((error) => {
+                        reject(error)
+                    })
+
+                })
+                    .then((data) => {
+                        resolve(data)
+
+                    }).catch((error) => {
+                        console.log(error);
+                        reject(error)
+                        console.log();
+                    })
+
+            } else {
+                return new Promise(async (resolve, reject) => {
+
+                    await  db.get().collection(collection.Address_COLLECTION).updateOne({
+                        userId: ObjectId(userId)
+                    },
+                        {
+                            $set: {
+                                fastname:address.fastname,
+                                lastname:address.lastname,
+                                emailid:address.emailid,
+                                mobile:address.mobile,
+                                pincode:address.pincode,
+                                house:address.house,
+                                area:address.area,
+                                landmark:address.landmark,
+                                city:address.city,
+                                state:address.state,
+                            }
+        
+                        }).then((response) => {
+                            console.log(response);
+                            resolve()
+                        }).catch((error) => {
+                            console.log(error);
+                            reject(error)
+                        })
+ 
+                 })
+                     .then((data) => {
+                         resolve(data)
+ 
+                     }).catch((error) => {
+                         console.log(error);
+                         reject(error)
+                         console.log();
+                     })
+               
+            }
+      
+    })
+
+    },
+    getAddress:(userId)=>{
+
+        return new Promise(async (resolve, reject) => {
+await db.get().collection(collection.Address_COLLECTION).findOne({userId:objectId(userId)}).then((data)=>{
+    resolve(data)
+}).catch((error)=>{
+    reject(error)
+    console.log(error);
+})
+
+        })
+
+
+
+    },
+    userinfoUpdate:(userId,data)=>{
+        return new Promise(async (resolve, reject) => {
+
+            await  db.get().collection(collection.user_COLLECTION).updateOne({
+                _id: ObjectId(userId)
+            },
+                {
+                    $set: {
+                        email:data.email,
+                        phone:data.phone
+                      
+                    }
+
+                }).then((response) => {
+                    console.log("updated succesfully");
+                    console.log(response);
+                    resolve()
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+
+         })
+
+    }
+    
 
 
 

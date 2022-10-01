@@ -6,11 +6,11 @@ const verifyLogin = (req, res, next) => {
   if (req.session.usloggedIn) {
     next()
   } else {
-    res.redirect('user/userLogin')
+    res.redirect('/user/userLogin')
   }
 }
 
-//use4r sungup
+//use4r singup
 router.get('/userSingup', (req, res) => {
   res.render('user/userSinup', { title: 'User Singup' })
 })
@@ -213,7 +213,8 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(user._id)
   let total = await userHelper.getTotal(user._id)
-  res.render('user/checkout', { title: "user Home", us: true, user, cartcount, total })
+  let address= await userHelper.getAddress(user._id)
+  res.render('user/checkout', { title: "user Home", us: true, user, cartcount, total,address })
 })
 
 router.post('/checkout', async (req, res) => {
@@ -297,6 +298,38 @@ router.get('/cancelOdder/:odId', verifyLogin, (req, res) => {
     res.redirect('../userodderviewpage/' + odderId)
   }).catch((error) => {
     res.render('/error', { error })
+  })
+
+})
+
+//profile
+router.get('/userProfile',verifyLogin,async(req,res)=>{
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(user._id)
+  let address= await userHelper.getAddress(user._id)
+ 
+  res.render('user/userProfile', { title: "User Profile", us: true, user, cartcount ,address})
+
+})
+//address 
+router.post('/useraddress',verifyLogin,(req,res)=>{
+  let user = req.session.user
+ 
+  userHelper.updateAddress(user._id,req.body).then(()=>{
+    res.redirect('./userProfile')
+  }).catch((error)=>{
+    console.log(error);
+  })
+
+})
+
+//update user info
+router.post('/userInfoUpedate',verifyLogin,(req,res)=>{
+  let user = req.session.user
+  userHelper.userinfoUpdate(user._id,req.body).then(()=>{
+    res.redirect('./userProfile')
+  }).catch((error)=>{
+    console.log(error);
   })
 
 })
