@@ -1,0 +1,184 @@
+<div class="col-lg-12 me-1 rounded" style="background-color:#d7adf0 ;">
+  <h1>
+    <p class="text-center mt-1"> <i><b>Odder Details</b></i></p>
+    {{!
+        <hr style="height:2px;border-width:0;"> }}
+  </h1>
+  {{#each odderDetails}}
+    <h5>
+      <div class="card bg-white rounded shadow-sm py-5 px-4 text-center">
+        <div class="row">
+          <div class="col">Odder Date </div>
+          <div class="col"> {{this.date}}</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Odder ID </div>
+          <div class="col"> {{this._id}}</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Castamer Name </div>
+          <div class="col">{{this.deliveryDetails.name}}</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Address</div>
+          <div class="col">{{this.deliveryDetails.address}}</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Pincode</div>
+          <div class="col">{{this.deliveryDetails.pincode}}</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Payment Method</div>
+          <div class="col">{{this.paymentmethod}}</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Total Amount</div>
+          <div class="col">₹ {{this.total}} /-</div>
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col">Current Status</div>
+          <div class="col"> {{this.status}} </div>
+          <hr />
+        </div>
+
+      </div>
+    </h5>
+  {{/each}}
+  <div class="row">
+    <div class="col-lg-6 my-5">
+      <div id="main-content" class="bg-white border">
+        <div class="text-uppercase">Product details</div>
+        <div class="order my-3 bg-light">
+
+          <div class="row">
+
+            <div class="card-body">
+              {{#each prodetails}}
+                <div class="row">
+                  <div class="col-md-2">
+                    <img
+                      src="/product-photo1/{{this.product._id}}.jpg"
+                      class="img-fluid"
+                      alt="Phone"
+                    />
+                  </div>
+                  <div
+                    class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                  >
+                    <p class="text-muted mb-0">{{this.product.productName}}</p>
+                  </div>
+                  <div
+                    class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                  >
+                    <p class="text-muted mb-0 small">{{this.product.colour}}</p>
+                  </div>
+                  <div
+                    class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                  >
+                    <p class="text-muted mb-0 small">{{this.product.brand}}</p>
+                  </div>
+                  <div
+                    class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                  >
+                    <p class="text-muted mb-0 small">{{this.quantity}}</p>
+                  </div>
+                  <div
+                    class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                  >
+                    <p
+                      class="text-muted mb-0 small"
+                    >{{this.product.retailerPrice}}</p>
+                  </div>
+                </div>
+
+                <hr
+                  class="mb-4"
+                  style="background-color: #e0e0e0; opacity: 1;"
+                />
+
+              {{/each}}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-6 my-5">
+      <div id="main-content" class="bg-white border">
+        <div class="text-uppercase">Admin Updates</div>
+        <div class="order my-3 bg-light">
+
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col">
+                 <div class="row"><div class="text-uppercase">Cancel odder</div></div>
+                  <div class="row">
+                
+             {{#each odderDetails}}    <form method="post" action="/admin/cancleOdder/{{this._id}}">
+                  <input
+                    type="text"
+                    placeholder="Rmark(Optional)"
+                    value="{{this.remark}}"
+                    name="remark"
+                    class="form-control border-warning form-control-lg mt-4" required
+                  />{{/each}}</div>
+                  <div class="col"><button
+                      type="submit"
+                      class="btn btn-danger mt-3  btn-lg"
+                    >Cancel</button></div>
+
+                </form>
+
+              </div>
+              <div class="col">
+                <div class="row"> <div class="text-uppercase">Update odder status</div></div>
+                <div class="row"> {{#each odderDetails}}
+                <form
+                  method="post"
+                  action="/admin/odderstatusupdate/{{this._id}}"
+                >
+                  <select
+                    class="select form-control border-primary form-control-lg mt-4"
+                    name="status"
+                  >
+                   
+                      <option selected>{{this.status}}</option>{{/each}}
+                    <option value="placed">Placed</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Packed">Packed</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+
+                  </select></div>
+               
+               
+                
+                  <div class="col">
+                    <button
+                      type="submit"
+                      class="btn btn-primary mt-3  btn-lg"
+                    >Update</button></div></form>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -258,13 +258,29 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
   let odderproduct = await userHelper.getOdderProductdetails(odderId)
   let adddetails = {}
 
-  if (odder[0].status == 'Canceled') {
-
-    adddetails.cancel = true
-  }
-  else if (odder[0].status == 'placed') {
+  
+  if (odder[0].status == 'placed') {
     adddetails.placed = true
   }
+  else if (odder[0].status == 'Accepted') {
+    adddetails.accepted = true
+  }
+  else if (odder[0].status == 'Packed') {
+    adddetails.packed = true
+  }
+  else if (odder[0].status == 'Shipped') {
+    adddetails.shipped = true
+  }
+  else if (odder[0].status == 'Delivered') {
+    adddetails.delivered = true
+    adddetails.cancel = true
+  }
+  else{
+    adddetails.cancel = true
+  }
+
+   
+  
 
 
   res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct, adddetails })

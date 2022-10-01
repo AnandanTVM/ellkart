@@ -45,6 +45,13 @@
                     <div class="col">
 
                     </div>
+                    {{#if ../adddetails.delivered}}
+                    <div class="col d-flex flex-row-reverse">
+
+                        <a href="/user/return/{{this._id}}" class="btn btn-info  text-uppercase">return
+                        </a>
+                    </div>
+                    {{/if}}
 
                     {{#if ../adddetails.cancel}}
 
@@ -97,6 +104,94 @@
                                 <div id="tracker"></div>
                             </div>
                             {{else}}
+                            {{#if ../adddetails.accepted }}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check "></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted ">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted ">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted ">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                            {{else}}
+                            {{#if ../adddetails.packed }}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check "></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted ">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted ">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                             {{else}}
+                            {{#if ../adddetails.shipped }}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check "></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted green">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted ">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                             {{else}}
+                            {{#if ../adddetails.delivered }}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check "></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted green">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted green">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                            {{else}}
                             <div class="progressbar-track mt-5">
                                 <ul class="progressbar">
                                     <li id="step-cal" class="text-muted red">
@@ -117,6 +212,10 @@
                                 </ul>
                                 <div id="tracker"></div>
                             </div>
+                            {{/if}}
+                            {{/if}}
+                            {{/if}}
+                            {{/if}}
                             {{/if}}
                         </div>
 

@@ -1,0 +1,58 @@
+<div class="col-lg-12  me-1  rounded" style="background-color:#d7adf0 ;">
+    <h1>
+        <p class="text-center mt-1"> <i><b>Number of Product found {{count}} </b></i></p>
+        {{!--
+        <hr style="height:2px;border-width:0;"> --}}
+    </h1>
+    <div class="mask d-flex align-items-center mb-3 h-80">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="table-responsive bg-white">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Odder Id</th>
+                                    <th scope="col">Odder Date</th>
+                                    <th scope="col">Castamer Name</th>
+                                    <th scope="col">Address</th>
+                                     <th scope="col">Payment Method</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each odders}}
+                                <tr>
+                                    <th scope="row" style="color: #666666;">{{this._id}}    </th>
+                                    <th scope="row" style="color: #666666;">{{this.date}}</th>
+                                    <td>{{this.deliveryDetails.name}}</td>
+                                    <td>{{this.deliveryDetails.address}}</td>
+                                    <td> {{this.paymentmethod}} </td>
+                                    <td>{{this.status}}</td>
+                                    <td><a type="button" href="/admin/adminViewOdderUp/{{this._id}}"
+                                            class="btn btn-primary">View More</a></td>
+                                   
+
+
+                                    <!-- Modal -->
+                                   
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+</div>

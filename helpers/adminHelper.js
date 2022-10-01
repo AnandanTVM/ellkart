@@ -283,5 +283,113 @@ module.exports = {
 
         })
     },
+    //find all odders
+    Allodders:()=>{
+         return new Promise(async (resolve, reject) => {
+        let odders = await db.get().collection(collection.Odder_COLLECTION).find().sort({_id: -1}).toArray()
+        resolve(odders)
+
+    })
+        
+    },
+    odderDetails:(odderId)=>{
+        return new Promise(async (resolve, reject) => {
+
+            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(odderId) }).toArray()
+            console.log(odderdetails);
+            resolve(odderdetails)
+
+        })
+        
+    },
+    getoddersProductDetails:(odderId)=>{
+        return new Promise(async (resolve, reject) => {
+            let odderProductDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                {
+                    $match: { _id: objectId(odderId) }
+                },
+                {
+                    $unwind: '$product'
+                },
+                {
+                    $project: {
+                        iteam: '$product.iteam',
+                        quantity: '$product.quantity',
+                    }
+
+                },
+                {
+                    //to join anothtre table fields to current table
+                    $lookup: {
+                        from: collection.product_COLLECTION,
+                        localField: 'iteam',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                }, {
+                    $project: {
+                        iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        //arrayElemAt userd to convert array to object
+                    }
+                }
+            ]).toArray()
+            
+            resolve(odderProductDetils)
+           
+        }).catch((error) => {
+            console.log(error)
+        })
+    },
+    //odder cancel
+    cencelodder:(ordId,remark)=>{
+        return new Promise((resolve, reject) => {
+            let status = "Canceled"
+            console.log(ordId);
+            db.get().collection(collection.Odder_COLLECTION).updateOne({
+                _id: ObjectId(ordId)
+            },
+                {
+                    $set: {
+                        status: status,
+                        remark:remark
+
+                    }
+
+                }).then((response) => {
+                    console.log(response);
+                    resolve()
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+        })
+
+    },
+    updateOdderstatus:(ordId,status)=>{
+        console.log(status);
+        let s1 = status
+        return new Promise((resolve, reject) => {
+            
+            console.log(ordId);
+            db.get().collection(collection.Odder_COLLECTION).updateOne({
+                _id: ObjectId(ordId)
+            },
+                {
+                    $set: {
+                        status: s1,
+                        
+
+                    }
+
+                }).then((response) => {
+                    console.log(response);
+                    resolve()
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+        })
+
+    }
 
 }

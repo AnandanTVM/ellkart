@@ -380,6 +380,9 @@ module.exports = {
     placeOdder: (odder, product, total) => {
         return new Promise((resolve, reject) => {
             console.log("this from project helpers");
+            let d = new Date().toString();
+            let index = d.lastIndexOf(':') +3
+            let date=(d.substring(0, index))
 
             let status = odder.paymentmethod === 'COD' ? 'placed' : 'pending'
             let odderObj = {
@@ -394,7 +397,7 @@ module.exports = {
                 paymentmethod: odder.paymentmethod,
                 product: product, email: odder.emailid,
                 total: total,
-                date: new Date(),
+                date:date,
                 status: status
 
             }
@@ -455,8 +458,8 @@ module.exports = {
     getooderdetails: (userId) => {
         return new Promise(async (resolve, reject) => {
 
-            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ userId: objectId(userId) }).toArray()
-
+            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ userId: objectId(userId) }).sort({_id: -1}).toArray()
+console.log(odderdetails);
             resolve(odderdetails)
 
         })
