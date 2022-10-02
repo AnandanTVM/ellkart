@@ -138,7 +138,7 @@ router.get('/userLogout', (req, res) => {
   res.redirect('/user/userLogin')
 })
 //user home
-router.get('/userHome', async (req, res) => {
+router.get('/userHome',verifyLogin, async (req, res) => {
   res.header(
     "Cache-control",
     "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
@@ -224,8 +224,20 @@ router.post('/checkout', async (req, res) => {
   let total = await userHelper.getTotal(req.session.user._id)
 
   userHelper.placeOdder(req.body, product, total).then((response) => {
-    resId = response.insertedId;
-    res.json({ status: true, resId })
+    ordId = response.insertedId;
+    console.log("here");
+    if(req.body['paymentmethod']==='COD'){
+      console.log("here");
+      res.json({ codSuccess: true, ordId })
+    }
+    else{
+      userHelper.genarateRezopay(ordId,total).then((response)=>{
+        console.log("i am on online payment")
+        res.json(response)
+      })
+     
+    }
+   
 
   })
 
@@ -332,6 +344,9 @@ router.post('/userInfoUpedate',verifyLogin,(req,res)=>{
     console.log(error);
   })
 
+})
+router.post('/verifyPayment',(req,res)=>{
+  console.log(req.body);
 })
 
 module.exports = router;

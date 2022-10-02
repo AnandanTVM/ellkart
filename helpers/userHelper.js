@@ -6,6 +6,12 @@ const { response, json } = require('express')
 var objectId = require('mongodb').ObjectId
 const config = require('../config/otpConfig')
 const client = require('twilio')(config.accountSID, config.authToken)
+const Razorpay = require('razorpay');
+
+let instance = new Razorpay({
+  key_id: 'rzp_test_V6c4v4ekLUGUMI',
+  key_secret: 'NvToocEHI8Ke1w62zSKVY45r',
+});
 
 module.exports = {
 
@@ -413,7 +419,7 @@ module.exports = {
     getcartProductList: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.cart_COLLECTION).findOne({ user: objectId(userId) })
-            console.log("cart :" + cart.productId);
+            
             resolve(cart.productId)
         })
 
@@ -646,6 +652,20 @@ await db.get().collection(collection.Address_COLLECTION).findOne({userId:objectI
 
          })
 
+    },
+    genarateRezopay:(ordId,total)=>{
+        return new Promise((resolve,reject)=>{
+            let options={
+                amount:total,
+                currency:"INR",
+                receipt:""+ordId
+            };
+            instance.orders.create(options,function(err,order){
+                console.log(order)
+                resolve(order)
+            })
+
+        })
     }
     
 
