@@ -166,6 +166,10 @@
 
 
               </div>
+              {{else}}
+              <a href="/user/userProfile" class="btn btn-primary btn-lg btn-block">
+              Add Address
+            </a>
 {{/if}}
 
               <!-- Single item -->
@@ -288,9 +292,7 @@ function razorpayPayment(order){
     "image": "https://example.com/your_logo",
     "order_id":order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response){
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
+      
 
         verifyPayment(response,order)
 
@@ -320,7 +322,15 @@ function verifyPayment(payment,order){
       payment,
       order
     },
-    method:'post'
+    method:'post',
+   success: (response) => {
+      if(response.status){
+         location.href = '/user/odderplaced/' + response.ordId
+      }else{
+        alert("payment failed ", response.err)
+        location.href = '/user/userHome'
+      }
+    }
   })
 }
 

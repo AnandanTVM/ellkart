@@ -347,6 +347,30 @@ router.post('/userInfoUpedate',verifyLogin,(req,res)=>{
 })
 router.post('/verifyPayment',(req,res)=>{
   console.log(req.body);
+  console.log("pass1");
+  userHelper.verfiyPayment(req.body).then(()=>{
+    console.log("sucessfull");
+
+    userHelper.changePayemengtStatus(req.body['order[receipt]']).then(()=>{
+
+      
+      
+      res.json({status:true,ordId})
+   
+    })
+      
+    
+
+  }).catch((err)=>{
+    res.json({status:false,ordId,err})
+  })
+})
+
+router.post('/paymentfailed',(req,res)=>{
+  userHelper.paymentfailed(ordId).then(()=>{
+    res.json({failed:true,ordId})
+
+  })
 })
 
 module.exports = router;

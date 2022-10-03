@@ -7,6 +7,7 @@ var objectId = require('mongodb').ObjectId
 const config = require('../config/otpConfig')
 const client = require('twilio')(config.accountSID, config.authToken)
 const Razorpay = require('razorpay');
+const { resolve } = require('path')
 
 let instance = new Razorpay({
   key_id: 'rzp_test_V6c4v4ekLUGUMI',
@@ -665,6 +666,54 @@ await db.get().collection(collection.Address_COLLECTION).findOne({userId:objectI
                 resolve(order)
             })
 
+        })
+    },
+
+    verfiyPayment:(details)=>{
+        
+        return new Promise((resolve,reject)=>{
+          
+           const crypto=require('crypto');
+           let hmac = crypto.createHmac('sha256', 'NvToocEHI8Ke1w62zSKVY45r');
+           hmac.update(details['payment[razorpay_order_id]']+ '|' +details['payment[razorpay_payment_id]']);
+           hmac=hmac.digest('hex')
+           if(hmac==details['payment[razorpay_signature]']){
+            console.log("mached");
+            resolve()
+           }else{console.log("not mached");
+            reject()
+           }
+
+        })
+
+    },
+    changePayemengtStatus:(ordId)=>{
+        return new Promise((resolve,reject)=>{
+            let k=ordId
+            console.log(k);
+            db.get().collection(collection.Odder_COLLECTION).updateOne({_id:objectId(ordId)},
+            {
+                $set:{
+                    status:'placed'
+                }
+            }).then(()=>{
+                resolve()
+            })
+        })
+    },
+    paymentfailed:(ordId)=>{
+        return new Promise((resolve,reject)=>{
+            let k=ordId
+            console.log(k);
+            db.get().collection(collection.Odder_COLLECTION).updateOne({_id:objectId(ordId)},
+            {
+                $set:{
+                    status:'Canceled',
+                    remark:'due to online paymentfailed'
+                }
+            }).then(()=>{
+                resolve()
+            })
         })
     }
     
