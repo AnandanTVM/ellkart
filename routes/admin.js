@@ -40,9 +40,16 @@ router.post('/', function (req, res, next) {
     })
 });
 //Admin home page
-router.get('/adminHome', (req, res) => {
+router.get('/adminHome', verifyLogin, async (req, res) => {
     let admin = req.session.admin
-    res.render('admin/adminHome', { title: "Admin Home", ad: true, admin })
+    let allCount = {}
+    allCount.usercount = await adminHelper.usercount()
+    allCount.productCount = await adminHelper.productcount()
+    allCount.odderCount = await adminHelper.odderctcount()
+    allCount.totalSalse = await adminHelper.totalSalse()
+
+
+    res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount })
 
 })
 //logout
@@ -263,57 +270,57 @@ router.get('/adminDelProduct/:id', verifyLogin, (req, res) => {
 
 router.get('/adminOddermanage', verifyLogin, (req, res) => {
     let admin = req.session.admin
-    adminHelper.Allodders().then((odders)=>{
-       
-        res.render('admin/odderManagement',{ title: "ELL Admin", ad: true,odders})
+    adminHelper.Allodders().then((odders) => {
 
-    }).catch((error)=>{
-    console.log(error);
+        res.render('admin/odderManagement', { title: "ELL Admin", ad: true, odders })
+
+    }).catch((error) => {
+        console.log(error);
     })
-   
+
 
 })
 
 
-router.get('/adminViewOdderUp/:ordId',verifyLogin,async(req,res)=>{
-    let odderId=req.params.ordId;
+router.get('/adminViewOdderUp/:ordId', verifyLogin, async (req, res) => {
+    let odderId = req.params.ordId;
     let admin = req.session.admin
-    let prodetails=await adminHelper.getoddersProductDetails(odderId)
-  adminHelper.odderDetails(odderId).then((odderDetails)=>{
-    
-   console.log(prodetails);
-        
-        res.render('admin/adminodderView',{ title: "ELL Admin", ad: true,odderDetails,prodetails})
+    let prodetails = await adminHelper.getoddersProductDetails(odderId)
+    adminHelper.odderDetails(odderId).then((odderDetails) => {
 
-    }).catch((error)=>{
+        console.log(prodetails);
+
+        res.render('admin/adminodderView', { title: "ELL Admin", ad: true, odderDetails, prodetails })
+
+    }).catch((error) => {
         console.log(error);
     })
 
 })
 
 //odder cancel
-router.post('/cancleOdder/:ordId',(req,res)=>{
+router.post('/cancleOdder/:ordId', (req, res) => {
     let odderId = req.params.ordId
-    let remark=req.body.remark
-    adminHelper.cencelodder(odderId,remark).then((response) => {
+    let remark = req.body.remark
+    adminHelper.cencelodder(odderId, remark).then((response) => {
 
         res.redirect('../adminViewOdderUp/' + odderId)
-      }).catch((error) => {
+    }).catch((error) => {
         res.render('/error', { error })
-      })
+    })
 
 })
 
 //update status
-router.post('/odderstatusupdate/:ordId',(req,res)=>{
+router.post('/odderstatusupdate/:ordId', (req, res) => {
     let odderId = req.params.ordId
-    let status=req.body.status
-    adminHelper.updateOdderstatus(odderId,status).then((response) => {
+    let status = req.body.status
+    adminHelper.updateOdderstatus(odderId, status).then((response) => {
 
         res.redirect('../adminViewOdderUp/' + odderId)
-      }).catch((error) => {
+    }).catch((error) => {
         res.render('/error', { error })
-      })
+    })
 
 })
 

@@ -284,15 +284,15 @@ module.exports = {
         })
     },
     //find all odders
-    Allodders:()=>{
-         return new Promise(async (resolve, reject) => {
-        let odders = await db.get().collection(collection.Odder_COLLECTION).find().sort({_id: -1}).toArray()
-        resolve(odders)
+    Allodders: () => {
+        return new Promise(async (resolve, reject) => {
+            let odders = await db.get().collection(collection.Odder_COLLECTION).find().sort({ _id: -1 }).toArray()
+            resolve(odders)
 
-    })
-        
+        })
+
     },
-    odderDetails:(odderId)=>{
+    odderDetails: (odderId) => {
         return new Promise(async (resolve, reject) => {
 
             let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(odderId) }).toArray()
@@ -300,9 +300,9 @@ module.exports = {
             resolve(odderdetails)
 
         })
-        
+
     },
-    getoddersProductDetails:(odderId)=>{
+    getoddersProductDetails: (odderId) => {
         return new Promise(async (resolve, reject) => {
             let odderProductDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
                 {
@@ -333,15 +333,15 @@ module.exports = {
                     }
                 }
             ]).toArray()
-            
+
             resolve(odderProductDetils)
-           
+
         }).catch((error) => {
             console.log(error)
         })
     },
     //odder cancel
-    cencelodder:(ordId,remark)=>{
+    cencelodder: (ordId, remark) => {
         return new Promise((resolve, reject) => {
             let status = "Canceled"
             console.log(ordId);
@@ -351,7 +351,7 @@ module.exports = {
                 {
                     $set: {
                         status: status,
-                        remark:remark
+                        remark: remark
 
                     }
 
@@ -365,11 +365,11 @@ module.exports = {
         })
 
     },
-    updateOdderstatus:(ordId,status)=>{
+    updateOdderstatus: (ordId, status) => {
         console.log(status);
         let s1 = status
         return new Promise((resolve, reject) => {
-            
+
             console.log(ordId);
             db.get().collection(collection.Odder_COLLECTION).updateOne({
                 _id: ObjectId(ordId)
@@ -377,7 +377,7 @@ module.exports = {
                 {
                     $set: {
                         status: s1,
-                        
+
 
                     }
 
@@ -390,6 +390,65 @@ module.exports = {
                 })
         })
 
+    },
+    //count total user
+    usercount: () => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.user_COLLECTION).count().then((count) => {
+
+                resolve(count)
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+
+    },
+    productcount: () => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.product_COLLECTION).count().then((count) => {
+
+                resolve(count)
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+
+    },
+    odderctcount: () => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.Odder_COLLECTION).find({ status: { $ne: 'Canceled' } }).count().then((count) => {
+
+                resolve(count)
+                console.log("odder count :" + count);
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+
+    },
+    totalSalse: () => {
+        return new Promise(async (resolve, reject) => {
+            let total = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                {
+                    $match: { status: { $ne: 'Canceled' } }
+                },
+                {
+                    $project: {
+                        total: 1
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        total: { $sum: '$total' }
+                        //arrayElemAt userd to convert array to object
+                    }
+                }
+            ]).toArray()
+            resolve(total[0].total)
+        })
+
     }
+
 
 }
