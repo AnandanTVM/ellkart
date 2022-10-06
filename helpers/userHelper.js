@@ -10,8 +10,8 @@ const Razorpay = require('razorpay');
 const { resolve } = require('path')
 
 let instance = new Razorpay({
-  key_id: 'rzp_test_V6c4v4ekLUGUMI',
-  key_secret: 'NvToocEHI8Ke1w62zSKVY45r',
+    key_id: 'rzp_test_V6c4v4ekLUGUMI',
+    key_secret: 'NvToocEHI8Ke1w62zSKVY45r',
 });
 
 module.exports = {
@@ -104,9 +104,13 @@ module.exports = {
     getProducts: (pId) => {
 
         return new Promise(async (resolve, reject) => {
+            try {
+                let product = await db.get().collection(collection.product_COLLECTION).findOne({ _id: ObjectId(pId) });
+                resolve(product);
+            } catch {
+                reject()
+            }
 
-            let product = await db.get().collection(collection.product_COLLECTION).findOne({ _id: ObjectId(pId) });
-            resolve(product);
         })
     },
     // user otp
@@ -388,8 +392,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             console.log("this from project helpers");
             let d = new Date().toString();
-            let index = d.lastIndexOf(':') +3
-            let date=(d.substring(0, index))
+            let index = d.lastIndexOf(':') + 3
+            let date = (d.substring(0, index))
 
             let status = odder.paymentmethod === 'COD' ? 'placed' : 'pending'
             let odderObj = {
@@ -404,7 +408,7 @@ module.exports = {
                 paymentmethod: odder.paymentmethod,
                 product: product, email: odder.emailid,
                 total: total,
-                date:date,
+                date: date,
                 status: status
 
             }
@@ -420,7 +424,7 @@ module.exports = {
     getcartProductList: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.cart_COLLECTION).findOne({ user: objectId(userId) })
-            
+
             resolve(cart.productId)
         })
 
@@ -465,8 +469,8 @@ module.exports = {
     getooderdetails: (userId) => {
         return new Promise(async (resolve, reject) => {
 
-            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ userId: objectId(userId) }).sort({_id: -1}).toArray()
-console.log(odderdetails);
+            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ userId: objectId(userId) }).sort({ _id: -1 }).toArray()
+            console.log(odderdetails);
             resolve(odderdetails)
 
         })
@@ -543,17 +547,17 @@ console.log(odderdetails);
         })
     },
     //address
-    updateAddress: (userId,address) => {
-        address.userId=objectId(userId)
+    updateAddress: (userId, address) => {
+        address.userId = objectId(userId)
         console.log(address);
         return new Promise(async (resolve, reject) => {
- let foundAddress = await db.get().collection(collection.Address_COLLECTION).findOne({ userId: objectId(userId) })
+            let foundAddress = await db.get().collection(collection.Address_COLLECTION).findOne({ userId: objectId(userId) })
             console.log(foundAddress);
             if (foundAddress == null) {
 
                 return new Promise(async (resolve, reject) => {
 
-                   await db.get().collection(collection.Address_COLLECTION).insertOne(address).then((data) => {
+                    await db.get().collection(collection.Address_COLLECTION).insertOne(address).then((data) => {
 
                         resolve(data)
 
@@ -574,23 +578,23 @@ console.log(odderdetails);
             } else {
                 return new Promise(async (resolve, reject) => {
 
-                    await  db.get().collection(collection.Address_COLLECTION).updateOne({
+                    await db.get().collection(collection.Address_COLLECTION).updateOne({
                         userId: ObjectId(userId)
                     },
                         {
                             $set: {
-                                fastname:address.fastname,
-                                lastname:address.lastname,
-                                emailid:address.emailid,
-                                mobile:address.mobile,
-                                pincode:address.pincode,
-                                house:address.house,
-                                area:address.area,
-                                landmark:address.landmark,
-                                city:address.city,
-                                state:address.state,
+                                fastname: address.fastname,
+                                lastname: address.lastname,
+                                emailid: address.emailid,
+                                mobile: address.mobile,
+                                pincode: address.pincode,
+                                house: address.house,
+                                area: address.area,
+                                landmark: address.landmark,
+                                city: address.city,
+                                state: address.state,
                             }
-        
+
                         }).then((response) => {
                             console.log(response);
                             resolve()
@@ -598,48 +602,48 @@ console.log(odderdetails);
                             console.log(error);
                             reject(error)
                         })
- 
-                 })
-                     .then((data) => {
-                         resolve(data)
- 
-                     }).catch((error) => {
-                         console.log(error);
-                         reject(error)
-                         console.log();
-                     })
-               
+
+                })
+                    .then((data) => {
+                        resolve(data)
+
+                    }).catch((error) => {
+                        console.log(error);
+                        reject(error)
+                        console.log();
+                    })
+
             }
-      
-    })
+
+        })
 
     },
-    getAddress:(userId)=>{
+    getAddress: (userId) => {
 
         return new Promise(async (resolve, reject) => {
-await db.get().collection(collection.Address_COLLECTION).findOne({userId:objectId(userId)}).then((data)=>{
-    resolve(data)
-}).catch((error)=>{
-    reject(error)
-    console.log(error);
-})
+            await db.get().collection(collection.Address_COLLECTION).findOne({ userId: objectId(userId) }).then((data) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+                console.log(error);
+            })
 
         })
 
 
 
     },
-    userinfoUpdate:(userId,data)=>{
+    userinfoUpdate: (userId, data) => {
         return new Promise(async (resolve, reject) => {
 
-            await  db.get().collection(collection.user_COLLECTION).updateOne({
+            await db.get().collection(collection.user_COLLECTION).updateOne({
                 _id: ObjectId(userId)
             },
                 {
                     $set: {
-                        email:data.email,
-                        phone:data.phone
-                      
+                        email: data.email,
+                        phone: data.phone
+
                     }
 
                 }).then((response) => {
@@ -651,17 +655,17 @@ await db.get().collection(collection.Address_COLLECTION).findOne({userId:objectI
                     reject(error)
                 })
 
-         })
+        })
 
     },
-    genarateRezopay:(ordId,total)=>{
-        return new Promise((resolve,reject)=>{
-            let options={
-                amount:total,
-                currency:"INR",
-                receipt:""+ordId
+    genarateRezopay: (ordId, total) => {
+        return new Promise((resolve, reject) => {
+            let options = {
+                amount: total,
+                currency: "INR",
+                receipt: "" + ordId
             };
-            instance.orders.create(options,function(err,order){
+            instance.orders.create(options, function (err, order) {
                 console.log(order)
                 resolve(order)
             })
@@ -669,54 +673,55 @@ await db.get().collection(collection.Address_COLLECTION).findOne({userId:objectI
         })
     },
 
-    verfiyPayment:(details)=>{
-        
-        return new Promise((resolve,reject)=>{
-          
-           const crypto=require('crypto');
-           let hmac = crypto.createHmac('sha256', 'NvToocEHI8Ke1w62zSKVY45r');
-           hmac.update(details['payment[razorpay_order_id]']+ '|' +details['payment[razorpay_payment_id]']);
-           hmac=hmac.digest('hex')
-           if(hmac==details['payment[razorpay_signature]']){
-            console.log("mached");
-            resolve()
-           }else{console.log("not mached");
-            reject()
-           }
+    verfiyPayment: (details) => {
+
+        return new Promise((resolve, reject) => {
+
+            const crypto = require('crypto');
+            let hmac = crypto.createHmac('sha256', 'NvToocEHI8Ke1w62zSKVY45r');
+            hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]']);
+            hmac = hmac.digest('hex')
+            if (hmac == details['payment[razorpay_signature]']) {
+                console.log("mached");
+                resolve()
+            } else {
+                console.log("not mached");
+                reject()
+            }
 
         })
 
     },
-    changePayemengtStatus:(ordId)=>{
-        return new Promise((resolve,reject)=>{
-            let k=ordId
+    changePayemengtStatus: (ordId) => {
+        return new Promise((resolve, reject) => {
+            let k = ordId
             console.log(k);
-            db.get().collection(collection.Odder_COLLECTION).updateOne({_id:objectId(ordId)},
-            {
-                $set:{
-                    status:'placed'
-                }
-            }).then(()=>{
-                resolve()
-            })
+            db.get().collection(collection.Odder_COLLECTION).updateOne({ _id: objectId(ordId) },
+                {
+                    $set: {
+                        status: 'placed'
+                    }
+                }).then(() => {
+                    resolve()
+                })
         })
     },
-    paymentfailed:(ordId)=>{
-        return new Promise((resolve,reject)=>{
-            let k=ordId
+    paymentfailed: (ordId) => {
+        return new Promise((resolve, reject) => {
+            let k = ordId
             console.log(k);
-            db.get().collection(collection.Odder_COLLECTION).updateOne({_id:objectId(ordId)},
-            {
-                $set:{
-                    status:'Canceled',
-                    remark:'due to online paymentfailed'
-                }
-            }).then(()=>{
-                resolve()
-            })
+            db.get().collection(collection.Odder_COLLECTION).updateOne({ _id: objectId(ordId) },
+                {
+                    $set: {
+                        status: 'Canceled',
+                        remark: 'due to online paymentfailed'
+                    }
+                }).then(() => {
+                    resolve()
+                })
         })
     }
-    
+
 
 
 

@@ -19,6 +19,8 @@ router.get('/productView/:pid', (req, res) => {
   gustHelper.getProducts(proId).then((product) => {
 
     res.render('./gustProductView', { title: product.productName, product })
+  }).catch((error) => {
+    res.render('/error', { error })
   })
 
 

@@ -138,7 +138,7 @@ router.get('/userLogout', (req, res) => {
   res.redirect('/user/userLogin')
 })
 //user home
-router.get('/userHome',verifyLogin, async (req, res) => {
+router.get('/userHome', verifyLogin, async (req, res) => {
   res.header(
     "Cache-control",
     "no-cache,private, no-store, must-revalidate,max-stale=0,post-check=0"
@@ -213,8 +213,8 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(user._id)
   let total = await userHelper.getTotal(user._id)
-  let address= await userHelper.getAddress(user._id)
-  res.render('user/checkout', { title: "user Home", us: true, user, cartcount, total,address })
+  let address = await userHelper.getAddress(user._id)
+  res.render('user/checkout', { title: "user Home", us: true, user, cartcount, total, address })
 })
 
 router.post('/checkout', async (req, res) => {
@@ -226,18 +226,18 @@ router.post('/checkout', async (req, res) => {
   userHelper.placeOdder(req.body, product, total).then((response) => {
     ordId = response.insertedId;
     console.log("here");
-    if(req.body['paymentmethod']==='COD'){
+    if (req.body['paymentmethod'] === 'COD') {
       console.log("here");
       res.json({ codSuccess: true, ordId })
     }
-    else{
-      userHelper.genarateRezopay(ordId,total).then((response)=>{
+    else {
+      userHelper.genarateRezopay(ordId, total).then((response) => {
         console.log("i am on online payment")
         res.json(response)
       })
-     
+
     }
-   
+
 
   })
 
@@ -271,7 +271,7 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
   let odderproduct = await userHelper.getOdderProductdetails(odderId)
   let adddetails = {}
 
-  
+
   if (odder[0].status == 'placed') {
     adddetails.placed = true
   }
@@ -288,12 +288,12 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
     adddetails.delivered = true
     adddetails.cancel = true
   }
-  else{
+  else {
     adddetails.cancel = true
   }
 
-   
-  
+
+
 
 
   res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct, adddetails })
@@ -315,60 +315,60 @@ router.get('/cancelOdder/:odId', verifyLogin, (req, res) => {
 })
 
 //profile
-router.get('/userProfile',verifyLogin,async(req,res)=>{
+router.get('/userProfile', verifyLogin, async (req, res) => {
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(user._id)
-  let address= await userHelper.getAddress(user._id)
- 
-  res.render('user/userProfile', { title: "User Profile", us: true, user, cartcount ,address})
+  let address = await userHelper.getAddress(user._id)
+
+  res.render('user/userProfile', { title: "User Profile", us: true, user, cartcount, address })
 
 })
 //address 
-router.post('/useraddress',verifyLogin,(req,res)=>{
+router.post('/useraddress', verifyLogin, (req, res) => {
   let user = req.session.user
- 
-  userHelper.updateAddress(user._id,req.body).then(()=>{
+
+  userHelper.updateAddress(user._id, req.body).then(() => {
     res.redirect('./userProfile')
-  }).catch((error)=>{
+  }).catch((error) => {
     console.log(error);
   })
 
 })
 
 //update user info
-router.post('/userInfoUpedate',verifyLogin,(req,res)=>{
+router.post('/userInfoUpedate', verifyLogin, (req, res) => {
   let user = req.session.user
-  userHelper.userinfoUpdate(user._id,req.body).then(()=>{
+  userHelper.userinfoUpdate(user._id, req.body).then(() => {
     res.redirect('./userProfile')
-  }).catch((error)=>{
+  }).catch((error) => {
     console.log(error);
   })
 
 })
-router.post('/verifyPayment',(req,res)=>{
+router.post('/verifyPayment', (req, res) => {
   console.log(req.body);
   console.log("pass1");
-  userHelper.verfiyPayment(req.body).then(()=>{
+  userHelper.verfiyPayment(req.body).then(() => {
     console.log("sucessfull");
 
-    userHelper.changePayemengtStatus(req.body['order[receipt]']).then(()=>{
+    userHelper.changePayemengtStatus(req.body['order[receipt]']).then(() => {
 
-      
-      
-      res.json({status:true,ordId})
-   
+
+
+      res.json({ status: true, ordId })
+
     })
-      
-    
 
-  }).catch((err)=>{
-    res.json({status:false,ordId,err})
+
+
+  }).catch((err) => {
+    res.json({ status: false, ordId, err })
   })
 })
 
-router.post('/paymentfailed',(req,res)=>{
-  userHelper.paymentfailed(ordId).then(()=>{
-    res.json({failed:true,ordId})
+router.post('/paymentfailed', (req, res) => {
+  userHelper.paymentfailed(ordId).then(() => {
+    res.json({ failed: true, ordId })
 
   })
 })
