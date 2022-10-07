@@ -7,6 +7,9 @@ const gustHelper = require('../helpers/gustHelper')
 router.get('/', function (req, res, next) {
   gustHelper.getAllProducts().then((product) => {
     res.render('index', { title: 'ELL Kart ', product });
+  }).catch((error) => {
+    
+    res.render('./notfount')
   })
 
 });
@@ -20,7 +23,8 @@ router.get('/productView/:pid', (req, res) => {
 
     res.render('./gustProductView', { title: product.productName, product })
   }).catch((error) => {
-    res.render('/error', { error })
+    
+    res.render('./notfount')
   })
 
 

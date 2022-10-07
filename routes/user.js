@@ -12,7 +12,7 @@ const verifyLogin = (req, res, next) => {
 
 //use4r singup
 router.get('/userSingup', (req, res) => {
-  res.render('user/userSinup', { title: 'User Singup' })
+  res.render('user/userSinup', { title: ' Singup' })
 })
 
 router.post('/userSinghup', (req, res) => {
@@ -20,13 +20,13 @@ router.post('/userSinghup', (req, res) => {
   userHelper.userRegister(req.body).then((response) => {
 
     if (response.phoneFound) {
-      res.render("user/userSinup", { title: "User Singup", phfound: true })
+      res.render("user/userSinup", { title: " Singup", phfound: true })
     } else {
-      res.render("user/userSinup", { title: "User Singup", Done: true })
+      res.render("user/userSinup", { title: " Singup", Done: true })
     }
 
   }).catch((error) => {
-    res.render("/error", { error })
+    res.render("user/usernotfount")
   })
 })
 //user Login
@@ -39,7 +39,7 @@ router.get('/userLogin', (req, res) => {
     let user = req.session.user
     res.redirect('/user/userHome')
   } else {
-    res.render('user/userLogin', { title: 'User Login', "logginErr": req.session.loginErr })
+    res.render('user/userLogin', { title: ' Login', "logginErr": req.session.loginErr })
     req.session.loginErr = false
   }
 
@@ -93,7 +93,7 @@ router.post('/userOtpLogin', (req, res) => {
 
 
 
-      res.render('user/userEnterOtp', { title: "user login with otp", phone })
+      res.render('user/userEnterOtp', { title: " login with otp", phone })
 
 
 
@@ -146,9 +146,9 @@ router.get('/userHome', verifyLogin, async (req, res) => {
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(user._id)
   userHelper.getAllProducts().then((product) => {
-    res.render('user/userHome', { title: "user Home", us: true, user, product, cartcount })
+    res.render('user/userHome', { title: "ELL Kart", us: true, user, product, cartcount })
   }).catch((error) => {
-    res.render('/error', { error })
+    res.render("user/usernotfount")
   })
 })
 //view product
@@ -161,7 +161,7 @@ router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
 
     res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
   }).catch((error) => {
-    res.render('/error', { error })
+    res.render("user/usernotfount")
   })
 
 
@@ -187,7 +187,7 @@ router.get('/userCart', verifyLogin, async (req, res) => {
   let total = await userHelper.getTotal(userId)
 
 
-  res.render('user/userCart', { title: "Cart", us: true, user, product, cartcount, total })
+  res.render('user/userCart', { title: "ELL Kart", us: true, user, product, cartcount, total })
 })
 
 //cart qunt update
@@ -214,7 +214,7 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   let cartcount = await userHelper.getCartCount(user._id)
   let total = await userHelper.getTotal(user._id)
   let address = await userHelper.getAddress(user._id)
-  res.render('user/checkout', { title: "user Home", us: true, user, cartcount, total, address })
+  res.render('user/checkout', { title: "ELL Kart", us: true, user, cartcount, total, address })
 })
 
 router.post('/checkout', async (req, res) => {
@@ -232,7 +232,7 @@ router.post('/checkout', async (req, res) => {
     }
     else {
       userHelper.genarateRezopay(ordId, total).then((response) => {
-        console.log("i am on online payment")
+        
         res.json(response)
       })
 
@@ -320,7 +320,7 @@ router.get('/userProfile', verifyLogin, async (req, res) => {
   let cartcount = await userHelper.getCartCount(user._id)
   let address = await userHelper.getAddress(user._id)
 
-  res.render('user/userProfile', { title: "User Profile", us: true, user, cartcount, address })
+  res.render('user/userProfile', { title: "ELL Kart Profile", us: true, user, cartcount, address })
 
 })
 //address 
