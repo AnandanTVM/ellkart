@@ -428,6 +428,7 @@ module.exports = {
     },
     totalSalse: () => {
         return new Promise(async (resolve, reject) => {
+           try{
             let total = await db.get().collection(collection.Odder_COLLECTION).aggregate([
                 {
                     $match: { status: { $ne: 'Canceled' } }
@@ -446,9 +447,84 @@ module.exports = {
                 }
             ]).toArray()
             resolve(total[0].total)
+           }catch{
+console.log("error occers");
+reject()
+           }
         })
 
-    }
+    },
+    weeklySeals: () => {
+        return new Promise(async (resolve, reject) => {
+            try{
+                let slase = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                    {
+                        $group: {
+                           _id: "$month",
+                          count: {
+                              $count: {}
+                           }
+                        }
+                     }
+                ]).toArray()
+               
+                resolve(slase)
+            }catch{
+                reject()
+            }
+            
+        })
 
+
+
+},
+
+getProductReport: () => {
+    currentYear = new Date().getFullYear();
+    return new Promise(async (resolve, reject) => {
+      let ProductReport = await db
+        .get()
+        .collection(collection.Odder_COLLECTION)
+        .aggregate([
+         
+          {
+            $unwind: "$product",
+          },
+          {
+            $project: {
+              item: "$products.item",
+              quantity: "$products.quantity",
+            },
+          },
+          {
+            $group: {
+              _id: "$item",
+              totalSaledProduct: { $sum: "$quantity" },
+            },
+          },
+          {
+            $lookup: {
+              from: collection.product_COLLECTION,
+              localField: "_id",
+              foreignField: "_id",
+              as: "product",
+            },
+          },
+          {
+            $unwind: "$product",
+          },
+          {
+            $project: {
+              name: "$product.name",
+              totalSaledProduct: 1,
+              _id: 1,
+            },
+          },
+        ])
+        .toArray();
+      console.log(ProductReport);
+      resolve(ProductReport);
+    });
+  },
 
 }

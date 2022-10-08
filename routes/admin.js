@@ -41,15 +41,40 @@ router.post('/', function (req, res, next) {
 });
 //Admin home page
 router.get('/adminHome', verifyLogin, async (req, res) => {
-    let admin = req.session.admin
+    try{
+        let admin = req.session.admin
+        let allCount = {}
+        allCount.usercount = await adminHelper.usercount()
+        allCount.productCount = await adminHelper.productcount()
+        allCount.odderCount = await adminHelper.odderctcount()
+        allCount.totalSalse = await adminHelper.totalSalse()
+        SalesReport=await adminHelper.weeklySeals()
+        productReport=await adminHelper.getProductReport()
+       
+    
+    
+        res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount,SalesReport })
+    }catch{
+ let admin = req.session.admin
     let allCount = {}
-    allCount.usercount = await adminHelper.usercount()
-    allCount.productCount = await adminHelper.productcount()
-    allCount.odderCount = await adminHelper.odderctcount()
-    allCount.totalSalse = await adminHelper.totalSalse()
+    allCount.usercount = 0
+    allCount.productCount =0
+    allCount.odderCount = 0
+    allCount.totalSalse = 0
+    SalesReport=0
+    console.log(SalesReport);
 
 
-    res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount })
+    res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount,SalesReport })
+    }
+   
+
+})
+
+//salse report
+router.get('/salseReport', verifyLogin, async (req, res) => {
+    
+    res.render('admin/saleReport', { title: "ELL Kart Sale", ad: true,})
 
 })
 //logout
