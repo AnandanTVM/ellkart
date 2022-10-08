@@ -5,16 +5,16 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="container-fluid">
+        <div class="container-fluid me-5">
             <form class="d-flex justify-content-center">
                 <input class="form-control me-2" type="search" placeholder="Search for products,brands and more"
                     aria-label="Search">
-                <button class="btn btn-outline-light" type="submit">Search</button>
+                <button class="btn btn-outline-light me-5" type="submit">Search</button>
             </form>
         </div>
         <div class="collapse navbar-collapse text-center" id="navbarNav">
             <ul class="navbar-nav  justify-content-end">
-                <div class="dropdown">
+                <div class="dropdown ms-me-4">
                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         {{user.name}}
@@ -29,18 +29,21 @@
 
 
 
-                </li><span class="material-symbols-outlined mt-2 text-white">
+                </li> <a class="nav-link active" aria-current="page" href="/user/userCart"></a><span
+                    class="material-symbols-outlined mt-2 text-white">
                     shopping_cart
-                </span>
+                </span></a>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/user/userCart">
-                        Cart<span class="badge badge-warning">{{cartcount}}</span>
+                        Cart
                     </a>
+
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"></a>
+                    <a class="nav-link active" aria-current="page" href=""><span
+                            class="badge badge-warning">{{cartcount}}</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ms-4">
                     <a type="button" class="btn btn-light" href="/user/userLogout">Logout</a>
 
                 </li>
