@@ -286,8 +286,14 @@ module.exports = {
     //find all odders
     Allodders: () => {
         return new Promise(async (resolve, reject) => {
-            let odders = await db.get().collection(collection.Odder_COLLECTION).find().sort({ _id: -1 }).toArray()
-            resolve(odders)
+            try {
+                let odders = await db.get().collection(collection.Odder_COLLECTION).find().sort({ _id: -1 }).toArray()
+
+                resolve(odders)
+            } catch {
+                reject()
+            }
+
 
         })
 
@@ -428,103 +434,156 @@ module.exports = {
     },
     totalSalse: () => {
         return new Promise(async (resolve, reject) => {
-           try{
-            let total = await db.get().collection(collection.Odder_COLLECTION).aggregate([
-                {
-                    $match: { status: { $ne: 'Canceled' } }
-                },
-                {
-                    $project: {
-                        total: 1
+            try {
+                let total = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                    {
+                        $match: { status: { $ne: 'Canceled' } }
+                    },
+                    {
+                        $project: {
+                            total: 1
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            total: { $sum: '$total' }
+                            //arrayElemAt userd to convert array to object
+                        }
                     }
-                },
-                {
-                    $group: {
-                        _id: null,
-                        total: { $sum: '$total' }
-                        //arrayElemAt userd to convert array to object
-                    }
-                }
-            ]).toArray()
-            resolve(total[0].total)
-           }catch{
-console.log("error occers");
-reject()
-           }
+                ]).toArray()
+                resolve(total[0].total)
+            } catch {
+                console.log("error occers");
+                reject()
+            }
         })
 
     },
     weeklySeals: () => {
         return new Promise(async (resolve, reject) => {
-            try{
+            try {
                 let slase = await db.get().collection(collection.Odder_COLLECTION).aggregate([
                     {
                         $group: {
-                           _id: "$month",
-                          count: {
-                              $count: {}
-                           }
+                            _id: "$month",
+                            count: {
+                                $count: {}
+                            }
                         }
-                     }
+                    }
                 ]).toArray()
-               
+
                 resolve(slase)
-            }catch{
+            } catch {
                 reject()
             }
-            
+
         })
 
 
 
-},
+    },
 
-getProductReport: () => {
-    currentYear = new Date().getFullYear();
-    return new Promise(async (resolve, reject) => {
-      let ProductReport = await db
-        .get()
-        .collection(collection.Odder_COLLECTION)
-        .aggregate([
-         
-          {
-            $unwind: "$product",
-          },
-          {
-            $project: {
-              item: "$products.item",
-              quantity: "$products.quantity",
-            },
-          },
-          {
-            $group: {
-              _id: "$item",
-              totalSaledProduct: { $sum: "$quantity" },
-            },
-          },
-          {
-            $lookup: {
-              from: collection.product_COLLECTION,
-              localField: "_id",
-              foreignField: "_id",
-              as: "product",
-            },
-          },
-          {
-            $unwind: "$product",
-          },
-          {
-            $project: {
-              name: "$product.name",
-              totalSaledProduct: 1,
-              _id: 1,
-            },
-          },
-        ])
-        .toArray();
-      console.log(ProductReport);
-      resolve(ProductReport);
-    });
-  },
+    getProductReport: () => {
+        currentYear = new Date().getFullYear();
+        return new Promise(async (resolve, reject) => {
+            let ProductReport = await db
+                .get()
+                .collection(collection.Odder_COLLECTION)
+                .aggregate([
+
+                    {
+                        $unwind: "$product",
+                    },
+                    {
+                        $project: {
+                            item: "$products.item",
+                            quantity: "$products.quantity",
+                        },
+                    },
+                    {
+                        $group: {
+                            _id: "$item",
+                            totalSaledProduct: { $sum: "$quantity" },
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: collection.product_COLLECTION,
+                            localField: "_id",
+                            foreignField: "_id",
+                            as: "product",
+                        },
+                    },
+                    {
+                        $unwind: "$product",
+                    },
+                    {
+                        $project: {
+                            name: "$product.name",
+                            totalSaledProduct: 1,
+                            _id: 1,
+                        },
+                    },
+                ])
+                .toArray();
+
+            resolve(ProductReport);
+        });
+    },
+    getTotalSalesReport: () => {
+        // giving total sales report (including all the status,payment method,date) no fileteration is given
+
+        return new Promise(async (res, rej) => {
+            let SalesReport = await db
+                .get()
+                .collection(collection.Odder_COLLECTION)
+                .aggregate([
+                    {
+                        $lookup: {
+                            from: collection.user_COLLECTION,
+                            localField: "userId",
+                            foreignField: "_id",
+                            as: "users",
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: collection.product_COLLECTION,
+                            localField: "product.iteam",
+                            foreignField: "_id",
+                            as: "product",
+                        },
+                    },
+                ])
+                .toArray();
+
+            res(SalesReport);
+        });
+    },
+    productSalseCount: () => {
+        // giving total sales report (including all the status,payment method,date) no fileteration is given
+
+        return new Promise(async (res, rej) => {
+            let productSalseCount = await db
+                .get()
+                .collection(collection.Odder_COLLECTION)
+                .aggregate([
+                    {
+                        $unwind: "$product",
+                    },
+                    {
+                        $project: {
+                            name: "$product.name",
+                            totalSaledProduct: 1,
+                            _id: 1,
+                        },
+                ])
+                .toArray();
+
+            res(productSalseCount);
+        });
+    },
 
 }

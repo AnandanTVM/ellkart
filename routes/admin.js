@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const adminHelper = require('../helpers/adminHelper')
+const excelJs = require("exceljs");
 
 const verifyLogin = (req, res, next) => {
 
@@ -41,40 +42,46 @@ router.post('/', function (req, res, next) {
 });
 //Admin home page
 router.get('/adminHome', verifyLogin, async (req, res) => {
-    try{
+    try {
         let admin = req.session.admin
         let allCount = {}
         allCount.usercount = await adminHelper.usercount()
         allCount.productCount = await adminHelper.productcount()
         allCount.odderCount = await adminHelper.odderctcount()
         allCount.totalSalse = await adminHelper.totalSalse()
-        SalesReport=await adminHelper.weeklySeals()
-        productReport=await adminHelper.getProductReport()
-       
-    
-    
-        res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount,SalesReport })
-    }catch{
- let admin = req.session.admin
-    let allCount = {}
-    allCount.usercount = 0
-    allCount.productCount =0
-    allCount.odderCount = 0
-    allCount.totalSalse = 0
-    SalesReport=0
-    console.log(SalesReport);
+        SalesReport = await adminHelper.weeklySeals()
+        productReport = await adminHelper.getProductReport()
 
 
-    res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount,SalesReport })
+
+        res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount, SalesReport })
+    } catch {
+        let admin = req.session.admin
+        let allCount = {}
+        allCount.usercount = 0
+        allCount.productCount = 0
+        allCount.odderCount = 0
+        allCount.totalSalse = 0
+        SalesReport = 0
+        console.log(SalesReport);
+
+
+        res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount, SalesReport })
     }
-   
+
 
 })
 
 //salse report
 router.get('/salseReport', verifyLogin, async (req, res) => {
-    
-    res.render('admin/saleReport', { title: "ELL Kart Sale", ad: true,})
+
+    adminHelper.Allodders().then((odders) => {
+        console.log(odders);
+
+        res.render('admin/saleReport', { title: "ELL Kart Sale", ad: true, odders })
+    }).catch(() => {
+        res.render('./error')
+    })
 
 })
 //logout
@@ -348,5 +355,56 @@ router.post('/odderstatusupdate/:ordId', (req, res) => {
     })
 
 })
+//salse repot Exel
+router.get("/exportExcel", async (req, res) => {
+
+    let SalesReport = await adminHelper.getTotalSalesReport();
+
+
+    try {
+        const workbook = new excelJs.Workbook();
+
+        const worksheet = workbook.addWorksheet("Sales Report");
+
+        worksheet.columns = [
+            { header: "S no.", key: "s_no" },
+            { header: "OrderID", key: "_id" },
+            { header: "User", key: "name" },
+            { header: "Date", key: "date" },
+            { header: "Products", key: "products" },
+            { header: "Method", key: "paymentmethod" },
+            { header: "status", key: "status" },
+            { header: "Amount", key: "total" },
+        ];
+        let counter = 1;
+        SalesReport.forEach((report) => {
+            report.s_no = counter;
+            report.products = "";
+            report.name = report.users[0].name;
+
+            report.product.forEach((eachProduct) => {
+                report.products += eachProduct.productName + ",";
+            });
+            worksheet.addRow(report);
+            counter++;
+        });
+
+        worksheet.getRow(1).eachCell((cell) => {
+            cell.font = { bold: true };
+        });
+        // console.log("finaly resolving the promic ")
+
+        res.header(
+            "Content-Type",
+            "application/vnd.oppenxmlformats-officedocument.spreadsheatml.sheet"
+        );
+        res.header("Content-Disposition", "attachment; filename=report.xlsx");
+
+        workbook.xlsx.write(res);
+    } catch (err) {
+
+        console.log(err.message);
+    }
+});
 
 module.exports = router;
