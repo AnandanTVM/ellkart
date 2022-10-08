@@ -54,7 +54,7 @@ router.get('/adminHome', verifyLogin, async (req, res) => {
 
 
 
-        res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount, SalesReport })
+        res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount, SalesReport, productReport })
     } catch {
         let admin = req.session.admin
         let allCount = {}

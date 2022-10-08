@@ -1,7 +1,7 @@
 var db = require('../config/connection')
 var collection = require('../config/collection')
 const bcrypt = require('bcrypt')
-const { ObjectId } = require('mongodb')
+const { ObjectId, Db } = require('mongodb')
 const { response, json } = require('express')
 var objectId = require('mongodb').ObjectId
 const config = require('../config/otpConfig')
@@ -390,38 +390,38 @@ module.exports = {
     },
     placeOdder: (odder, product, total) => {
         return new Promise((resolve, reject) => {
-            
+
             let d = new Date().toString();
             let index = d.lastIndexOf(':') + 3
             let date = (d.substring(0, index))
             let month = new Date().getMonth();
-            switch(month){
-                case 0 :month="Jan"
-                break;
-                case 1 :month="Feb"
-                break;
-                case 2 :month="Mar"
-                break;
-                case 3 :month="Apr"
-                break;
-                case 4 :month="May"
-                break;
-                case 5 :month="Jun"
-                break;
-                case 6 :month="Jul"
-                break;
-                case 7 :month="Aug"
-                break;
-                case 8 :month="Sep"
-                break;
-                case 9 :month="Aug"
-                break;
-                case 10 :month="Nov"
-                break;
-                case 11 :month="Dec"
-                break;
-                default:console.log("someting wrong")
-               }
+            switch (month) {
+                case 0: month = "Jan"
+                    break;
+                case 1: month = "Feb"
+                    break;
+                case 2: month = "Mar"
+                    break;
+                case 3: month = "Apr"
+                    break;
+                case 4: month = "May"
+                    break;
+                case 5: month = "Jun"
+                    break;
+                case 6: month = "Jul"
+                    break;
+                case 7: month = "Aug"
+                    break;
+                case 8: month = "Sep"
+                    break;
+                case 9: month = "Aug"
+                    break;
+                case 10: month = "Nov"
+                    break;
+                case 11: month = "Dec"
+                    break;
+                default: console.log("someting wrong")
+            }
 
             let status = odder.paymentmethod === 'COD' ? 'placed' : 'pending'
             let odderObj = {
@@ -437,7 +437,7 @@ module.exports = {
                 product: product, email: odder.emailid,
                 total: total,
                 date: date,
-                month:month,
+                month: month,
                 status: status
 
             }
@@ -749,6 +749,32 @@ module.exports = {
                     resolve()
                 })
         })
+    },
+    orderReturn: (ordId, reson) => {
+        console.log(reson);
+        return new Promise((resolve, reject) => {
+
+            db.get().collection(collection.Odder_COLLECTION).updateOne({
+                _id: ObjectId(ordId)
+            },
+                {
+                    $set: {
+                        reson: reson.returnReson,
+                        status: 'Waiting For Approval'
+                    }
+
+                }).then(() => {
+
+                    resolve()
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+
+
+        })
+
+
     }
 
 

@@ -498,19 +498,19 @@ module.exports = {
                     },
                     {
                         $project: {
-                            item: "$products.item",
-                            quantity: "$products.quantity",
-                        },
+                            product: 1
+                        }
                     },
                     {
                         $group: {
-                            _id: "$item",
-                            totalSaledProduct: { $sum: "$quantity" },
-                        },
+                            _id: "$product.iteam",
+                            count: { $sum: "$product.quantity" },
+                        }
+
                     },
                     {
                         $lookup: {
-                            from: collection.product_COLLECTION,
+                            from: "product",
                             localField: "_id",
                             foreignField: "_id",
                             as: "product",
@@ -521,13 +521,17 @@ module.exports = {
                     },
                     {
                         $project: {
-                            name: "$product.name",
-                            totalSaledProduct: 1,
-                            _id: 1,
+                            name: "$product.productName",
+                            count: 1,
+                            _id: 0
+
                         },
-                    },
+
+                    }, { $sort: { count: -1 } }
+
                 ])
                 .toArray();
+            console.log(ProductReport);
 
             resolve(ProductReport);
         });
@@ -560,29 +564,6 @@ module.exports = {
                 .toArray();
 
             res(SalesReport);
-        });
-    },
-    productSalseCount: () => {
-        // giving total sales report (including all the status,payment method,date) no fileteration is given
-
-        return new Promise(async (res, rej) => {
-            let productSalseCount = await db
-                .get()
-                .collection(collection.Odder_COLLECTION)
-                .aggregate([
-                    {
-                        $unwind: "$product",
-                    },
-                    {
-                        $project: {
-                            name: "$product.name",
-                            totalSaledProduct: 1,
-                            _id: 1,
-                        },
-                ])
-                .toArray();
-
-            res(productSalseCount);
         });
     },
 

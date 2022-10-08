@@ -232,7 +232,7 @@ router.post('/checkout', async (req, res) => {
     }
     else {
       userHelper.genarateRezopay(ordId, total).then((response) => {
-        
+
         res.json(response)
       })
 
@@ -288,6 +288,22 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
     adddetails.delivered = true
     adddetails.cancel = true
   }
+  else if (odder[0].status == 'Waiting For Approval') {
+    adddetails.Waiting = true
+    adddetails.cancel = true
+
+  }
+  else if (odder[0].status == 'Approval') {
+    adddetails.Approval = true
+    adddetails.cancel = true
+
+  }
+  else if (odder[0].status == 'Returned') {
+    adddetails.Returned = true
+    adddetails.cancel = true
+
+  }
+
   else {
     adddetails.cancel = true
   }
@@ -371,6 +387,14 @@ router.post('/paymentfailed', (req, res) => {
     res.json({ failed: true, ordId })
 
   })
+})
+//return
+router.post('/return/:id', (req, res) => {
+  let ordId = req.params.id;
+  userHelper.orderReturn(ordId, req.body).then(() => {
+    res.redirect('../userodderviewpage/' + ordId)
+  })
+
 })
 
 module.exports = router;

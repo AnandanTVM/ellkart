@@ -47,9 +47,41 @@
                     </div>
                     {{#if ../adddetails.delivered}}
                     <div class="col d-flex flex-row-reverse">
+                        <div class="dropdown">
+                            <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Return
+                            </a>
 
-                        <a href="/user/return/{{this._id}}" class="btn btn-info  text-uppercase">return
-                        </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <form action="/user/return/{{this._id}}" method="post">
+                                    <li>
+                                        <select class="select form-control border-primary form-control-lg"
+                                            name="returnReson">
+
+                                            <option value="" disabled="">Select Reason</option>
+                                            <option value="DEFECTIVE PRODUCT">The product received is defective
+                                            </option>
+                                            <option value="MISSHIPMENT">Received wrong item</option>
+                                            <option value="MISSING ITEM">Product is missing in the package</option>
+                                            <option value="SIZE FIT ISSUES">Don't like the size/fit of the product
+                                            </option>
+                                            <option value="DAMAGED PRODUCT">Received a broken/damaged item</option>
+                                            <option value="QUALITY ISSUES">Quality of the product not as expected
+                                            </option>
+                                        </select>
+
+
+
+
+                                    </li>
+                                    <li><button href="" class="btn btn-danger mt-5 text-uppercase">Submit
+                                        </button></li>
+                                </form>
+
+                            </ul>
+                        </div>
+
                     </div>
                     {{/if}}
 
@@ -192,6 +224,115 @@
                                 <div id="tracker"></div>
                             </div>
                             {{else}}
+                            {{#if ../adddetails.Waiting}}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift green"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check green"></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box green"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted green">
+                                        <span class="fas fa-truck green"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted green">
+                                        <span class="fas fa-box-open green"></span>
+                                    </li>
+                                    <li id="step-6" class="text-muted green">
+                                        <span class="fa-solid fa-circle-pause green"></span>
+                                    </li>
+                                    <li id="step-7" class="text-muted ">
+
+                                        <span class="fa-sharp fa-solid fa-circle-check"></span>
+                                    </li>
+                                    <li id="step-8" class="text-muted ">
+                                        <span class="fa-solid fa-arrow-rotate-left"></span>
+                                    </li>
+                                </ul>
+                                <br>
+                                Reson:- {{this.reson}}
+                                <div id="tracker"></div>
+                            </div>
+
+                            {{else}}
+                            {{#if ../adddetails.Approval}}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift green"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check green"></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box green"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted green">
+                                        <span class="fas fa-truck green"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted green">
+                                        <span class="fas fa-box-open green"></span>
+                                    </li>
+                                    <li id="step-6" class="text-muted green">
+                                        <span class="fa-solid fa-circle-pause green"></span>
+                                    </li>
+                                    <li id="step-7" class="text-muted green">
+
+                                        <span class="fa-sharp fa-solid fa-circle-check green"></span>
+                                    </li>
+                                    <li id="step-8" class="text-muted ">
+                                        <span class="fa-solid fa-arrow-rotate-left"></span>
+                                    </li>
+                                </ul>
+                                <br>
+                                Reson:- {{this.reson}}
+                                <br>
+                                Message:-Refunds will be processed after you return the product
+                                <div id="tracker"></div>
+                            </div>
+
+                            {{else}}
+                            {{#if ../adddetails.Returned}}
+                            <div class="progressbar-track mt-5">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift green"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green ">
+                                        <span class="fas fa-check green"></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box green"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted green">
+                                        <span class="fas fa-truck green"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted green">
+                                        <span class="fas fa-box-open green"></span>
+                                    </li>
+                                    <li id="step-6" class="text-muted green">
+                                        <span class="fa-solid fa-circle-pause green"></span>
+                                    </li>
+                                    <li id="step-7" class="text-mutedgreen ">
+
+                                        <span class="fa-sharp fa-solid fa-circle-check green"></span>
+                                    </li>
+                                    <li id="step-8" class="text-mutedgreen ">
+                                        <span class="fa-solid fa-arrow-rotate-left green"></span>
+                                    </li>
+                                </ul>
+                                <br>
+                                Reson:- {{this.reson}}
+                                <br>
+                                Message:-Your refund will be credited to your back account within seven days
+                                <div id="tracker"></div>
+                            </div>
+
+                            {{else}}
                             <div class="progressbar-track mt-5">
                                 <ul class="progressbar">
                                     <li id="step-cal" class="text-muted red">
@@ -210,11 +351,15 @@
                                     <li id="step-5" class="text-muted ">
                                         <span class="fas fa-box-open"></span>
                                     </li>
+
                                 </ul>
                                 <div id="tracker"></div>
                                 <br>
                                 Canceled Reson:- {{this.remark}}
                             </div>
+                            {{/if}}
+                            {{/if}}
+                            {{/if}}
                             {{/if}}
                             {{/if}}
                             {{/if}}
