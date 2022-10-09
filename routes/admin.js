@@ -219,7 +219,15 @@ router.get('/adminAddeProduct', verifyLogin, (req, res) => {
 })
 
 router.post('/adminAddProduct', verifyLogin, (req, res) => {
+    console.log("iam heres");
     let admin = req.session.admin
+    //offer calculation
+    let mrp=parseInt(req.body.mrp) ;
+    let rtp=parseInt(req.body.retailerPrice);
+    let offer=parseInt(100-((rtp/mrp)*100))
+    req.body.offer=offer;
+    console.log(req.body);
+
 
     adminHelper.adminAddProduct(req.body, (result) => {
         let photo1 = req.files.photo1;
@@ -264,7 +272,12 @@ router.get('/adminViewProductEdit/:pid', verifyLogin, async (req, res) => {
 })
 //Edit Product
 router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
-    console.log("on post");
+    let mrp=parseInt(req.body.mrp) ;
+    let rtp=parseInt(req.body.retailerPrice);
+  
+    let offer=parseInt(100-((rtp/mrp)*100))
+    req.body.offer=offer;
+    console.log(req.body);
     adminHelper.updateProduct(req.params.id, req.body).then(() => {
 
         res.redirect('../adminViewProduct')
@@ -406,5 +419,24 @@ router.get("/exportExcel", async (req, res) => {
         console.log(err.message);
     }
 });
+router.get("/adminReturn",verifyLogin, async (req, res) => {
+    adminHelper.allReturn().then((odders)=>{
+        approvel=false
+        if(odders.status=='Approval'){
+            approvel=true
+        }
+        res.render('admin/adminRetuenView', { title: "ELL Admin", ad: true, odders,approvel})
+
+    })
+})
+router.get("/returnApprovel/:id",verifyLogin, async (req, res) => {
+    ordId=req.params.id
+   await adminHelper.returnApprovel(ordId).then(()=>{
+        
+        res.redirect('../adminReturn')
+
+    })
+})
+
 
 module.exports = router;

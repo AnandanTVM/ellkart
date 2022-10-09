@@ -127,11 +127,12 @@ module.exports = {
 
     //add product
     adminAddProduct: (products, callback) => {
-        console.log(products);
+       
         products.stock = parseInt(products.stock)
         products.retailerPrice = parseInt(products.retailerPrice)
         products.mrp = parseInt(products.mrp)
-        console.log(products);
+
+        
         db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
 
             const id = data.insertedId.toString()
@@ -183,6 +184,10 @@ module.exports = {
         console.log("here");
         return new Promise((resolve, reject) => {
             console.log(data.Categorie);
+            data.stock = parseInt(data.stock)
+            data.retailerPrice = parseInt(data.retailerPrice)
+            data.mrp = parseInt(data.mrp)
+
             db.get().collection(collection.product_COLLECTION).updateOne({
                 _id: ObjectId(proId)
             },
@@ -204,7 +209,8 @@ module.exports = {
                         hight: data.hight,
                         wight: data.wight,
                         warranty: data.warranty,
-                        highlights: data.highlights
+                        highlights: data.highlights,
+                        offer: data.offer
 
                     }
 
@@ -287,7 +293,10 @@ module.exports = {
     Allodders: () => {
         return new Promise(async (resolve, reject) => {
             try {
-                let odders = await db.get().collection(collection.Odder_COLLECTION).find().sort({ _id: -1 }).toArray()
+                let odders = await db.get().collection(collection.Odder_COLLECTION).aggregate([{
+                    $match: { status: { $nin: ['Waiting For Approval'] } }
+                    
+                }]).sort({ _id: -1 }).toArray()
 
                 resolve(odders)
             } catch {
@@ -567,4 +576,45 @@ module.exports = {
         });
     },
 
+    allReturn: () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let odders = await db.get().collection(collection.Odder_COLLECTION).aggregate([{
+                    $match: { status: 'Waiting For Approval' }
+                    
+                }]).sort({ _id: -1 }).toArray()
+
+                resolve(odders)
+            } catch {
+                reject()
+            }
+
+
+        })
+
+    },
+    returnApprovel:(ordId)=>{
+        return new Promise((resolve, reject) => {
+
+            db.get().collection(collection.Odder_COLLECTION).updateOne({
+                _id: ObjectId(ordId)
+            },
+                {
+                    $set: {
+                       
+                        status: 'Approval'
+                    }
+
+                }).then(() => {
+
+                    resolve()
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+
+
+    })
+
+    }
 }
