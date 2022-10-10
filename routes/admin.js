@@ -222,10 +222,10 @@ router.post('/adminAddProduct', verifyLogin, (req, res) => {
     console.log("iam heres");
     let admin = req.session.admin
     //offer calculation
-    let mrp=parseInt(req.body.mrp) ;
-    let rtp=parseInt(req.body.retailerPrice);
-    let offer=parseInt(100-((rtp/mrp)*100))
-    req.body.offer=offer;
+    let mrp = parseInt(req.body.mrp);
+    let rtp = parseInt(req.body.retailerPrice);
+    let offer = parseInt(100 - ((rtp / mrp) * 100))
+    req.body.offer = offer;
     console.log(req.body);
 
 
@@ -272,11 +272,11 @@ router.get('/adminViewProductEdit/:pid', verifyLogin, async (req, res) => {
 })
 //Edit Product
 router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
-    let mrp=parseInt(req.body.mrp) ;
-    let rtp=parseInt(req.body.retailerPrice);
-  
-    let offer=parseInt(100-((rtp/mrp)*100))
-    req.body.offer=offer;
+    let mrp = parseInt(req.body.mrp);
+    let rtp = parseInt(req.body.retailerPrice);
+
+    let offer = parseInt(100 - ((rtp / mrp) * 100))
+    req.body.offer = offer;
     console.log(req.body);
     adminHelper.updateProduct(req.params.id, req.body).then(() => {
 
@@ -419,23 +419,52 @@ router.get("/exportExcel", async (req, res) => {
         console.log(err.message);
     }
 });
-router.get("/adminReturn",verifyLogin, async (req, res) => {
-    adminHelper.allReturn().then((odders)=>{
-        approvel=false
-        if(odders.status=='Approval'){
-            approvel=true
+router.get("/adminReturn", verifyLogin, async (req, res) => {
+    adminHelper.allReturn().then((odders) => {
+        approvel = false
+        if (odders.status == 'Approval') {
+            approvel = true
         }
-        res.render('admin/adminRetuenView', { title: "ELL Admin", ad: true, odders,approvel})
+        res.render('admin/adminRetuenView', { title: "ELL Admin", ad: true, odders, approvel })
 
     })
 })
-router.get("/returnApprovel/:id",verifyLogin, async (req, res) => {
-    ordId=req.params.id
-   await adminHelper.returnApprovel(ordId).then(()=>{
-        
+router.get("/returnApprovel/:id", verifyLogin, async (req, res) => {
+    ordId = req.params.id
+    await adminHelper.returnApprovel(ordId).then(() => {
+
         res.redirect('../adminReturn')
 
     })
+})
+//coupen
+router.get("/coupen", verifyLogin, (req, res) => {
+    adminHelper.allcoupen().then((coupen) => {
+        res.render('admin/coupen', { title: "ELL Admin", ad: true, coupen })
+    })
+
+})
+router.post("/coupen", (req, res) => {
+    req.body.value = parseInt(req.body.value)
+    adminHelper.addCoupen(req.body).then(() => {
+        res.redirect("./coupen")
+    }).catch((data) => {
+        adminHelper.allcoupen().then((coupen) => {
+            let message = data.message;
+            res.render('admin/coupen', { title: "ELL Admin", ad: true, coupen, message })
+        })
+    })
+})
+
+router.get('/coupenDelect/:coupenId', verifyLogin, (req, res) => {
+    console.log("here");
+    let coupenId = req.params.coupenId
+
+    adminHelper.coupenDelect(coupenId).then((response) => {
+        res.redirect('/admin/coupen')
+    })
+
+
 })
 
 

@@ -1,0 +1,47 @@
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="/stylesheets/coupen.css" rel="stylesheet" id="bootstrap-css">
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container my-5">
+    <center>
+        <h1><b><i>Available Coupons</i></b></h1>
+    </center>
+    <div class="row">
+        {{#each coupen}}
+        <div class="col-sm-6">
+            <div class="coupon bg-white rounded mb-3 d-flex justify-content-between">
+                <div class="kiri p-3">
+                    <div class="icon-container ">
+                        <div class="icon-container_box">
+                            <img src="/images/Qr.png" width="85" alt="totoprayogo.com" class="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="tengah py-3 d-flex w-100 justify-content-start">
+                    <div>
+                        <span class="badge badge-success">Valid</span>
+                        <h3 class="lead">Coupon Code <span style="color: blue;">{{this.code}}</span> </h3>
+                        <p class="text-muted mb-0">₹ {{this.value}} /- OFF</p>
+                    </div>
+                </div>
+                <div class="kanan">
+                    <div class="info m-3 d-flex align-items-center">
+                        <div class="w-100">
+                            <div class="block">
+                                <span class="time font-weight-light">
+                                    <span>19 days</span>
+                                </span>
+                            </div>
+                            <a href="/user/userHome" class="btn btn-lg btn-outline-danger btn-block">
+                                ShopeNow
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+</div>

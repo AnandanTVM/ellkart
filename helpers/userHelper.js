@@ -751,7 +751,7 @@ module.exports = {
         })
     },
     orderReturn: (ordId, reson) => {
-       
+
         return new Promise((resolve, reject) => {
 
             db.get().collection(collection.Odder_COLLECTION).updateOne({
@@ -775,7 +775,15 @@ module.exports = {
         })
 
 
-    }
+    },
+    //coupen
+    getcoupen: () => {
+        return new Promise(async (resolve, reject) => {
+            let coupen = await db.get().collection(collection.Coupen_COLLECTION).find().toArray()
+            resolve(coupen)
+
+        })
+    },
 
 
 

@@ -1,0 +1,54 @@
+<div class="col-lg-6 mt-5 me-1  rounded" style="background-color:#d7adf0 ;">
+    <h1>
+        <p class="text-center mt-1"> <i><b>Coupen</b></i></p>
+        {{!--
+        <hr style="height:2px;border-width:0;"> --}}
+    </h1>
+    <div class="card card-body" style="border-radius: 15px;">
+        <div class="row align-items-center pt-4 pb-3">
+            <form method="post" action="/admin/coupen" enctype="multipart/form-data">
+                <p class="text-center mt-1"> <i><b> Add Coupen</b></i></p>
+                <div class="col">{{#if message}}
+                    <span style="color: red;">
+                        <p class="text-center mt-1"> <i><b>{{message}} </b></i></p>
+                    </span>{{/if}}
+                    <input type="text" placeholder=" Coupen Code" name="code"
+                        class="form-control border-primary form-control-lg" required /><br>
+                    <input type="text" placeholder=" Coupen Value" name="value"
+                        class="form-control border-primary form-control-lg mt-5" required />
+                    <button type="submit" class="btn me-1 mt-2 btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <table class="table mt-5">
+        <thead>
+            <tr style="background-color:#606063;color:azure" align="center">
+
+                <th scope="col">Coupen Code</th>
+                <th scope="col">Coupen Value</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each coupen}}
+            <tr class="table-warning" align="center">
+
+                <td>{{this.code}} </td>
+                <td>{{this.value}}</td>
+                <td><a type="button" href="/admin/coupenDelect/{{this._id}}"
+                        class="btn btn-danger btn-rounded">Delect</a></td>
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+</div>

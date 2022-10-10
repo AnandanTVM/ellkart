@@ -127,12 +127,12 @@ module.exports = {
 
     //add product
     adminAddProduct: (products, callback) => {
-       
+
         products.stock = parseInt(products.stock)
         products.retailerPrice = parseInt(products.retailerPrice)
         products.mrp = parseInt(products.mrp)
 
-        
+
         db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
 
             const id = data.insertedId.toString()
@@ -295,7 +295,7 @@ module.exports = {
             try {
                 let odders = await db.get().collection(collection.Odder_COLLECTION).aggregate([{
                     $match: { status: { $nin: ['Waiting For Approval'] } }
-                    
+
                 }]).sort({ _id: -1 }).toArray()
 
                 resolve(odders)
@@ -581,7 +581,7 @@ module.exports = {
             try {
                 let odders = await db.get().collection(collection.Odder_COLLECTION).aggregate([{
                     $match: { status: 'Waiting For Approval' }
-                    
+
                 }]).sort({ _id: -1 }).toArray()
 
                 resolve(odders)
@@ -593,7 +593,7 @@ module.exports = {
         })
 
     },
-    returnApprovel:(ordId)=>{
+    returnApprovel: (ordId) => {
         return new Promise((resolve, reject) => {
 
             db.get().collection(collection.Odder_COLLECTION).updateOne({
@@ -601,7 +601,7 @@ module.exports = {
             },
                 {
                     $set: {
-                       
+
                         status: 'Approval'
                     }
 
@@ -614,7 +614,44 @@ module.exports = {
                 })
 
 
-    })
+        })
 
-    }
+    },
+    //coupen
+    allcoupen: () => {
+        return new Promise(async (resolve, reject) => {
+            let coupen = await db.get().collection(collection.Coupen_COLLECTION).find().toArray()
+            resolve(coupen)
+
+        })
+    },
+    addCoupen: (details) => {
+        return new Promise(async (resolve, reject) => {
+            let code = await db.get().collection(collection.Coupen_COLLECTION).findOne({ code: details.code })
+            console.log(code);
+            if (code) {
+                reject({ message: 'Coupons already exist.' })
+            } else {
+                db.get().collection(collection.Coupen_COLLECTION).insertOne(details).then((data) => {
+                    resolve(data)
+                })
+            }
+
+
+        })
+
+
+
+    },
+
+    coupenDelect: (coupenId) => {
+        return new Promise((resolve, reject) => {
+            console.log("h1");
+            db.get().collection(collection.Coupen_COLLECTION).deleteOne({ _id: ObjectId(coupenId) }).then((data) => {
+
+                resolve(data)
+
+            })
+        })
+    },
 }
