@@ -396,5 +396,23 @@ router.post('/return/:id', (req, res) => {
   })
 
 })
+//coupen
+router.get('/userCoupen', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(user._id)
+  let coupen = await userHelper.getcoupen()
+
+  res.render('user/userCoupen', { title: "ELL Kart ", us: true, user, cartcount, coupen })
+
+})
+
+
+// router.post('/couponCheck', (req, res) => {
+//   let code = req.body.code;
+//   console.log(code);
+//   userHelper.checkCoupen(code).then(() => {
+//     res.redirect('../userodderviewpage/' + ordId)
+//   })
+// })
 
 module.exports = router;
