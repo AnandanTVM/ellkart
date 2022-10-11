@@ -282,10 +282,13 @@
 <script>
   $("#checkOut").submit((e) => {
     e.preventDefault()
+    let total = parseInt(document.querySelector("#total2").innerHTML)
+    console.log(total)
     $.ajax({
-      url: '/user/checkout',
+      url: '/user/checkout/' + total,
       method: 'post',
       data: $('#checkOut').serialize(),
+
       success: (response) => {
 
 
@@ -299,6 +302,7 @@
       }
 
     })
+
   })
   function razorpayPayment(order) {
     var options = {

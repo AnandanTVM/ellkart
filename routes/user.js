@@ -217,12 +217,12 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   res.render('user/checkout', { title: "ELL Kart", us: true, user, cartcount, total, address })
 })
 
-router.post('/checkout', async (req, res) => {
+router.post('/checkout/:total', async (req, res) => {
   // console.log(req.body);
 
   let product = await userHelper.getcartProductList(req.session.user._id)
-  let total = await userHelper.getTotal(req.session.user._id)
-
+  let total = parseInt(req.params.total)
+  console.log(total);
   userHelper.placeOdder(req.body, product, total).then((response) => {
     ordId = response.insertedId;
     console.log("here");
