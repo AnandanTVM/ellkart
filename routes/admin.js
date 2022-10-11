@@ -277,7 +277,7 @@ router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
 
     let offer = parseInt(100 - ((rtp / mrp) * 100))
     req.body.offer = offer;
-    console.log(req.body);
+
     adminHelper.updateProduct(req.params.id, req.body).then(() => {
 
         res.redirect('../adminViewProduct')

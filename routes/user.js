@@ -420,5 +420,20 @@ router.post('/couponCheck', (req, res) => {
   })
 
 })
+//search
+router.post('/search', (req, res) => {
+  let search = req.body.search
+  console.log(search);
 
+  userHelper.search(search).then(async (product) => {
+    let user = req.session.user
+    let cartcount = await userHelper.getCartCount(user._id)
+
+    res.render('user/userHome', { title: "ELL Kart", us: true, user, product, cartcount })
+  }).catch(async () => {
+    let user = req.session.user
+    let cartcount = await userHelper.getCartCount(user._id)
+    res.render('user/userHome', { title: "ELL Kart", us: true, user, notfunt: true, cartcount })
+  })
+})
 module.exports = router;

@@ -181,9 +181,9 @@ module.exports = {
     },
     // update product
     updateProduct: (proId, data) => {
-        console.log("here");
+
         return new Promise((resolve, reject) => {
-            console.log(data.Categorie);
+
             data.stock = parseInt(data.stock)
             data.retailerPrice = parseInt(data.retailerPrice)
             data.mrp = parseInt(data.mrp)
@@ -195,7 +195,7 @@ module.exports = {
                     $set: {
                         productName: data.productName,
                         brand: data.brand,
-                        Categorie: data.Categorie,
+                        catagary: data.catagary,
                         modelnumber: data.modelnumber,
                         mrp: data.mrp,
                         retailerPrice: data.retailerPrice,

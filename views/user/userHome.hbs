@@ -1,4 +1,19 @@
-<main>
+<main>{{#if notfunt}}
+    <div class="row mt-5">
+        <center><img src="https://www.freepnglogos.com/uploads/thinking-png/critical-thinking-skills-seminar-35.png"
+                width="200" alt="critical thinking skills seminar" /><i><b>
+                    <h1>No product found...</h1>
+                </b></i></center>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col"><a href="/user/userHome" class="btn btn-info mt-5">Goto Home</a></div>
+    </div>
+
+
+
+
+    {{/if}}
     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
         <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
             {{#each product}}
@@ -14,7 +29,7 @@
                                         {{this.retailerPrice}}
                                     </span></h4>&nbsp;&nbsp;<div class="text-dark"> <s>₹ {{this.mrp}} </s>
                                     <h5><span style="color:green;">{{this.offer}} % off</span></h5>
-                                    </div>
+                                </div>
 
 
                             </div>

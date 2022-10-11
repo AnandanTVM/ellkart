@@ -44,11 +44,13 @@
 
 
                             <select class="select form-control border-primary form-control-lg" name="catagary">
-                                <option value=" {{product.catagary}}"> {{product.catagary}} </option>
+                                <option value="{{product.catagary}}" selected> {{product.catagary}} </option>
                                 {{#each catagary }}
                                 <option value="{{this.catagary}}">{{this.catagary}}</option>
                                 {{/each}}
                             </select>
+
+
 
                         </div>
                     </div>
