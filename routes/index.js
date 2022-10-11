@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
   gustHelper.getAllProducts().then((product) => {
     res.render('index', { title: 'ELL Kart ', product });
   }).catch((error) => {
-    
+
     res.render('./notfount')
   })
 
@@ -23,11 +23,22 @@ router.get('/productView/:pid', (req, res) => {
 
     res.render('./gustProductView', { title: product.productName, product })
   }).catch((error) => {
-    
+
     res.render('./notfount')
   })
 
 
+})
+
+router.post('/search', (req, res) => {
+  let search = req.body.search
+  console.log(search);
+
+  gustHelper.search(search).then((product) => {
+    res.render('index', { title: 'ELL Kart ', product });
+  }).catch(() => {
+    res.render('index', { title: 'ELL Kart ', notfunt: true });
+  })
 })
 
 module.exports = router;

@@ -395,6 +395,8 @@ router.get("/exportExcel", async (req, res) => {
             report.products = "";
             report.name = report.users[0].name;
 
+
+
             report.product.forEach((eachProduct) => {
                 report.products += eachProduct.productName + ",";
             });
