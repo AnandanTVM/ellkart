@@ -650,12 +650,9 @@ module.exports = {
     getAddress: (userId) => {
 
         return new Promise(async (resolve, reject) => {
-            await db.get().collection(collection.Address_COLLECTION).findOne({ userId: objectId(userId) }).then((data) => {
-                resolve(data)
-            }).catch((error) => {
-                reject(error)
-                console.log(error);
-            })
+            let address = await db.get().collection(collection.Address_COLLECTION).find({ userId: objectId(userId) }).toArray()
+            resolve(address)
+
 
         })
 

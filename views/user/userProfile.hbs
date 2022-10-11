@@ -1,395 +1,439 @@
+<link rel='stylesheet' href='/stylesheets/address.css' />
 <section class="h-100 gradient-custom">
-<div class="page-content page-container" id="page-content">
-  <div class="padding">
-     <div class="padding"></div>
-    <div class="row container d-flex justify-content-center">
-      <div class="col-md-6 col-lg-12">
-        <div class="card user-card-full">
-          <div class="row m-l-0 m-r-0">
-            <div class="col-sm-4 bg-c-lite-green user-profile">
-              <div class="card-block text-center text-white">
-                <div class="m-b-25">
-                    
+  <div class="page-content page-container" id="page-content">
+    <div class="padding">
+      <div class="padding"></div>
+      <div class="row container d-flex justify-content-center">
+        <div class="col-md-6 col-lg-12">
+          <div class="card user-card-full">
+            <div class="row m-l-0 m-r-0">
+              <div class="col-sm-4 bg-c-lite-green user-profile">
+                <div class="card-block text-center text-white">
+                  <div class="m-b-25">
+
                     <p style="margin-right: 75%;">Hello,</p>
                     {{#if user}}
-                  <img
-                    src="https://img.icons8.com/bubbles/100/000000/user.png"
-                    class="img-radius"
-                    alt="User-Profile-Image"
-                  />
+                    <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius"
+                      alt="User-Profile-Image" />
+                  </div>
+
+                  <h6 class="f-w-600">{{user.name}}</h6>
+                  <a href="#" style="color: blue;margin-left: 5%;">Change Password ?</a>
+                  <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                 </div>
-                
-                <h6 class="f-w-600">{{user.name}}</h6>
-                <a href="#" style="color: blue;margin-left: 5%;">Change Password ?</a>
-                <i
-                  class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"
-                ></i>
               </div>
+              <div class="col-sm-8">
+                <div class="card-block">
+                  <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Personal Information</h6>
+                  <form method="post" action="/user/userInfoUpedate">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Email</p>
+                        <input type="text" placeholder="Email Id" value="{{user.email}}" name="email"
+                          class="form-control border-primary form-control-lg" />
+
+                      </div>
+                      <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Phone</p>
+                        <input type="text" placeholder="Phone Number" value="{{user.phone}}" name="phone"
+                          class="form-control border-primary form-control-lg" />
+                        <h6 class="text-muted f-w-400"></h6>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-6"></div>
+                      <div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
+                          Update
+                        </button></div>
+                    </div>
+                  </form> {{/if}}
+                  <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Address</h6>
+                  <div class="container">
+                    <div class="row">
+                      {{#each address}}
+                      <div class="col-lg-6">
+                        <div class="card card-margin">
+                          <div class="card-header no-border">
+                            <h5 class="card-title">MOM</h5>
+                          </div>
+                          <div class="card-body pt-0">
+                            <div class="widget-49">
+                              <div class="widget-49-title-wrapper">
+                                {{!-- <div class="widget-49-date-primary">
+                                  <span class="widget-49-date-day">09</span>
+                                  <span class="widget-49-date-month">apr</span>
+                                </div> --}}
+                                <div class="widget-49-meeting-info">
+                                  <span class="widget-49-pro-title">{{this.fastname}} {{this.lastname}}</span>
+                                  <span class="widget-49-meeting-time">{{this.mobile}}</span>
+                                  <span class="widget-49-meeting-time">{{this.emailid}}</span>
+                                </div>
+                              </div>
+                              <ul class="widget-49-meeting-points">
+                                <span>{{this.house}}</span></li>
+                                <span>{{this.area}} , {{this.landmark}}</span>
+
+                                <span>{{this.city}} , {{this.state}} </span>
+
+                                {{this.pincode}}
+                              </ul>
+                              <div class="widget-49-meeting-action">
+                                <a href="#" class="btn btn-sm btn-primary">Set as Default</a> <a href="#"
+                                  class="btn btn-sm btn-primary">View All</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+                  {{/each}}
+                  {{!--
+                  <!-- Single item -->
+                  <form method="post" action="/user/useraddress" enctype="multipart/form-data">
+
+                    <div class="row">
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+
+                          <div class="col">
+
+                            <input type="text" placeholder="First Name" value="{{address.fastname}}" name="fastname"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <!-- Data -->
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+
+                          <div class="col">
+
+                            <input type="text" placeholder="Last Name" value="{{address.lastname}}" name="lastname"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+                          <div class="col">
+
+                            <input type="text" placeholder="Email Id" value="{{address.emailid}}" name="emailid"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <!-- Data -->
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+
+                          <div class="col">
+
+                            <input type="text" placeholder="Mobile Number" value="{{address.mobile}}" name="mobile"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+                          <div class="col">
+
+                            <input type="text" placeholder="Pincode" value="{{address.pincode}}" name="pincode"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <!-- Data -->
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+
+                          <div class="col">
+
+                            <input type="text" value="{{address.house}}" placeholder="Flate,House.no,Building,company"
+                              name="house" class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+                          <div class="col">
+
+                            <input type="text" value="{{address.area}}" placeholder="Area,Street,Village" name="area"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <!-- Data -->
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+
+                          <div class="col">
+
+                            <input type="text" value="{{address.landmark}}" placeholder="Landmark (Optional)"
+                              name="landmark" class="form-control border-warning form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+                          <div class="col">
+
+                            <input type="text" value="{{address.city}}" placeholder="Town/City" name="city"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <!-- Data -->
+                        <div class="row align-items-center pt-4 pb-3">
+
+
+
+                          <div class="col">
+
+                            <input type="text" value="{{address.state}}" placeholder="State" name="state"
+                              class="form-control border-primary form-control-lg" />
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-6"></div>
+                      <div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
+                          Update
+                        </button></div>
+                    </div>
+                    {{else}}
+                    <!-- Single item -->
+                    <form method="post" action="/user/useraddress" enctype="multipart/form-data">
+
+                      <div class="row">
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+
+                            <div class="col">
+
+                              <input type="text" placeholder="First Name" value="{{address.fastname}}" name="fastname"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <!-- Data -->
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+
+                            <div class="col">
+
+                              <input type="text" placeholder="Last Name" value="{{address.lastname}}" name="lastname"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+                            <div class="col">
+
+                              <input type="text" placeholder="Email Id" value="{{address.emailid}}" name="emailid"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <!-- Data -->
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+
+                            <div class="col">
+
+                              <input type="text" placeholder="Mobile Number" value="{{address.mobile}}" name="mobile"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+                            <div class="col">
+
+                              <input type="text" placeholder="Pincode" value="{{address.pincode}}" name="pincode"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <!-- Data -->
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+
+                            <div class="col">
+
+                              <input type="text" value="{{address.house}}" placeholder="Flate,House.no,Building,company"
+                                name="house" class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+                            <div class="col">
+
+                              <input type="text" value="{{address.area}}" placeholder="Area,Street,Village" name="area"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <!-- Data -->
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+
+                            <div class="col">
+
+                              <input type="text" value="{{address.landmark}}" placeholder="Landmark (Optional)"
+                                name="landmark" class="form-control border-warning form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+                            <div class="col">
+
+                              <input type="text" value="{{address.city}}" placeholder="Town/City" name="city"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                          <!-- Data -->
+                          <div class="row align-items-center pt-4 pb-3">
+
+
+
+                            <div class="col">
+
+                              <input type="text" value="{{address.state}}" placeholder="State" name="state"
+                                class="form-control border-primary form-control-lg" />
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
+                            Add Address
+                          </button></div>
+                      </div>
+                      {{/if}}
+
+                </div>
+              </div>
+              </form> --}}
             </div>
-            <div class="col-sm-8">
-              <div class="card-block">
-                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Personal Information</h6>
-              <form method="post" action="/user/userInfoUpedate">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Email</p>
-                    <input type="text" placeholder="Email Id" value="{{user.email}}" name="email"
-                        class="form-control border-primary form-control-lg" />
-                    
-                  </div>
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Phone</p>
-                     <input type="text" placeholder="Phone Number" value="{{user.phone}}" name="phone"
-                        class="form-control border-primary form-control-lg" />
-                    <h6 class="text-muted f-w-400"></h6>
-                  </div>
-                  
-                </div>
-                <div class="row"> <div class="col-6"></div><div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
-              Update
-            </button></div></div>
-                </form> {{/if}}
-                <h6
-                  class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"
-                >Address</h6>
-                
-                {{#if address}}
-                 <!-- Single item -->
-            <form method="post" action="/user/useraddress"  enctype="multipart/form-data">
-
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="First Name" value="{{address.fastname}}" name="fastname"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Last Name" value="{{address.lastname}}" name="lastname"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Email Id" value="{{address.emailid}}" name="emailid"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Mobile Number" value="{{address.mobile}}" name="mobile"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Pincode" value="{{address.pincode}}" name="pincode"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.house}}" placeholder="Flate,House.no,Building,company" name="house"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.area}}" placeholder="Area,Street,Village" name="area"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.landmark}}" placeholder="Landmark (Optional)" name="landmark"
-                        class="form-control border-warning form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.city}}" placeholder="Town/City" name="city"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.state}}" placeholder="State" name="state"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-               <div class="row"> <div class="col-6"></div><div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
-              Update
-            </button></div></div>
-            {{else}}
- <!-- Single item -->
-            <form method="post" action="/user/useraddress"  enctype="multipart/form-data">
-
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="First Name" value="{{address.fastname}}" name="fastname"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Last Name" value="{{address.lastname}}" name="lastname"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Email Id" value="{{address.emailid}}" name="emailid"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Mobile Number" value="{{address.mobile}}" name="mobile"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" placeholder="Pincode" value="{{address.pincode}}" name="pincode"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.house}}" placeholder="Flate,House.no,Building,company" name="house"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.area}}" placeholder="Area,Street,Village" name="area"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.landmark}}" placeholder="Landmark (Optional)" name="landmark"
-                        class="form-control border-warning form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.city}}" placeholder="Town/City" name="city"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <!-- Data -->
-                  <div class="row align-items-center pt-4 pb-3">
-
-
-
-                    <div class="col">
-
-                      <input type="text" value="{{address.state}}" placeholder="State" name="state"
-                        class="form-control border-primary form-control-lg" />
-
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-               <div class="row"> <div class="col-6"></div><div class="col-sm-4"><button type="submit" class="btn btn-primary btn-lg btn-block">
-              Add Address
-            </button></div></div>                  
-                 {{/if}}
-                
-              </div>
-            </div>
-            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
- <div class="padding"></div>
+  <div class="padding"></div>
   <div class="padding"></div>
 </section>
