@@ -784,6 +784,23 @@ module.exports = {
 
         })
     },
+    checkCoupen: (code) => {
+        return new Promise(async (resolve, reject) => {
+
+            let coupen = await db.get().collection(collection.Coupen_COLLECTION).findOne({ code: code })
+            if (coupen) {
+                resolve(coupen)
+            } else {
+                console.log("here");
+                reject()
+            }
+
+
+
+
+        })
+
+    }
 
 
 

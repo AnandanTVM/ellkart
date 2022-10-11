@@ -407,12 +407,18 @@ router.get('/userCoupen', verifyLogin, async (req, res) => {
 })
 
 
-// router.post('/couponCheck', (req, res) => {
-//   let code = req.body.code;
-//   console.log(code);
-//   userHelper.checkCoupen(code).then(() => {
-//     res.redirect('../userodderviewpage/' + ordId)
-//   })
-// })
+router.post('/couponCheck', (req, res) => {
+  let code = req.body.code;
+  console.log(code);
+  userHelper.checkCoupen(code).then((data) => {
+    console.log(data);
+    let value = data.value
+    res.json({ value })
+  }).catch((err) => {
+    console.log("here");
+    res.json({ err: true })
+  })
+
+})
 
 module.exports = router;
