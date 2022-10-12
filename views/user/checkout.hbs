@@ -6,10 +6,17 @@
           <div class="card-header py-3">
             <h5 class="mb-0">Billing Address</h5>
           </div>
+
+
           <div class="card-body">
             <!-- Single item -->
             <form method="post" action="" id="checkOut" enctype="multipart/form-data">
-              {{#if address}}
+              {{#if address}} <div class="row">
+                <div class="col"></div>
+                <div class="col-sm-4"><a href="/user/userProfile" class="btn btn-primary mt-5 btn-lg btn-block">
+                    Change Address
+                  </a></div>
+              </div>
               <div class="row">
                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                   <div class="row align-items-center pt-4 pb-3">

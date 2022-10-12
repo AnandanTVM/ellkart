@@ -8,6 +8,7 @@ const config = require('../config/otpConfig')
 const client = require('twilio')(config.accountSID, config.authToken)
 const Razorpay = require('razorpay');
 const { resolve } = require('path')
+const { log } = require('console')
 
 let instance = new Razorpay({
     key_id: 'rzp_test_V6c4v4ekLUGUMI',
@@ -575,82 +576,65 @@ module.exports = {
                 })
         })
     },
-    //address
-    updateAddress: (userId, address) => {
-        address.userId = objectId(userId)
-        console.log(address);
-        return new Promise(async (resolve, reject) => {
-            let foundAddress = await db.get().collection(collection.Address_COLLECTION).findOne({ userId: objectId(userId) })
-            console.log(foundAddress);
-            if (foundAddress == null) {
+    //address address
+    addAddress: (details) => {
+        return new Promise((resolve, reject) => {
 
-                return new Promise(async (resolve, reject) => {
+            db.get().collection(collection.Address_COLLECTION).insertOne(details).then((data) => {
 
-                    await db.get().collection(collection.Address_COLLECTION).insertOne(address).then((data) => {
+                resolve(data)
 
-                        resolve(data)
-
-                    }).catch((error) => {
-                        reject(error)
-                    })
-
-                })
-                    .then((data) => {
-                        resolve(data)
-
-                    }).catch((error) => {
-                        console.log(error);
-                        reject(error)
-                        console.log();
-                    })
-
-            } else {
-                return new Promise(async (resolve, reject) => {
-
-                    await db.get().collection(collection.Address_COLLECTION).updateOne({
-                        userId: ObjectId(userId)
-                    },
-                        {
-                            $set: {
-                                fastname: address.fastname,
-                                lastname: address.lastname,
-                                emailid: address.emailid,
-                                mobile: address.mobile,
-                                pincode: address.pincode,
-                                house: address.house,
-                                area: address.area,
-                                landmark: address.landmark,
-                                city: address.city,
-                                state: address.state,
-                            }
-
-                        }).then((response) => {
-                            console.log(response);
-                            resolve()
-                        }).catch((error) => {
-                            console.log(error);
-                            reject(error)
-                        })
-
-                })
-                    .then((data) => {
-                        resolve(data)
-
-                    }).catch((error) => {
-                        console.log(error);
-                        reject(error)
-                        console.log();
-                    })
-
-            }
-
+            }).catch((error) => {
+                reject(error)
+            })
         })
+
+    }
+    ,
+    // update address
+    updateAddress: (adId, address) => {
+
+        try {
+            return new Promise(async (resolve, reject) => {
+
+                await db.get().collection(collection.Address_COLLECTION).updateOne({
+                    _id: ObjectId(adId)
+                },
+                    {
+                        $set: {
+                            fastname: address.fastname,
+                            lastname: address.lastname,
+                            emailid: address.emailid,
+                            mobile: address.mobile,
+                            pincode: address.pincode,
+                            house: address.house,
+                            area: address.area,
+                            landmark: address.landmark,
+                            city: address.city,
+                            state: address.state,
+                        }
+
+                    }).then((response) => {
+                        console.log(response);
+                        resolve()
+                    })
+
+            })
+        } catch {
+
+            reject()
+        }
+
+
+
 
     },
     getAddress: (userId) => {
 
         return new Promise(async (resolve, reject) => {
-            let address = await db.get().collection(collection.Address_COLLECTION).find({ userId: objectId(userId) }).toArray()
+            console.log(userId);
+            let address = await db.get().collection(collection.Address_COLLECTION).find({ userId: userId }).toArray()
+            console.log(address);
             resolve(address)
 
 
@@ -831,9 +815,69 @@ module.exports = {
 
         })
 
+    },
+    getOneAddress: (adId) => {
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                let address = await db.get().collection(collection.Address_COLLECTION).find({ _id: objectId(adId) }).toArray()
+                resolve(address[0])
+            }
+            catch {
+                reject()
+            }
+
+        })
+
+
+
+    },
+    getDefaultAddress: (userId) => {
+
+        return new Promise(async (resolve, reject) => {
+            console.log(userId);
+            let address = await db.get().collection(collection.Address_COLLECTION).find({ userId: userId, default: true }).toArray()
+            console.log(address);
+            resolve(address[0])
+
+
+        })
+    },
+    changeDefaultAddress: (adId, usId) => {
+
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.Address_COLLECTION)
+                .updateOne({ userId: usId, default: true },
+                    {
+                        $set: {
+                            default: false
+                        }
+                    }).then((response) => {
+                        resolve()
+                    })
+        })
+
+    },
+    changeDefaultAddress1: (adId) => {
+        return new Promise((resolve, reject) => {
+            try {
+                db.get().collection(collection.Address_COLLECTION).updateOne({ _id: objectId(adId) },
+                    {
+                        $set: {
+                            default: true
+                        }
+                    }).then((response) => {
+                        resolve()
+                    })
+            } catch {
+
+                reject()
+            }
+
+
+
+        })
     }
-
-
 
 
 }

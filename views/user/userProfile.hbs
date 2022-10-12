@@ -49,21 +49,28 @@
                     </div>
                   </form> {{/if}}
                   <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Address</h6>
+                  <div class="row">
+                    <div class="col"></div>
+                    <div class="col-lg-4"> <a href="/user/addAddress" class="btn mb-5 btn-sm btn-primary">Add
+                        Address</a>
+                    </div>
+                  </div>
                   <div class="container">
                     <div class="row">
                       {{#each address}}
-                      <div class="col-lg-6">
+                      <div class="col-lg-6 mt-5">
                         <div class="card card-margin">
                           <div class="card-header no-border">
-                            <h5 class="card-title">MOM</h5>
+                            <h5 class="card-title">{{#if this.default}}
+                              <span class="badge badge-success">Default</span>
+                              {{/if}}
+
+                            </h5>
                           </div>
                           <div class="card-body pt-0">
                             <div class="widget-49">
                               <div class="widget-49-title-wrapper">
-                                {{!-- <div class="widget-49-date-primary">
-                                  <span class="widget-49-date-day">09</span>
-                                  <span class="widget-49-date-month">apr</span>
-                                </div> --}}
+
                                 <div class="widget-49-meeting-info">
                                   <span class="widget-49-pro-title">{{this.fastname}} {{this.lastname}}</span>
                                   <span class="widget-49-meeting-time">{{this.mobile}}</span>
@@ -79,18 +86,29 @@
                                 {{this.pincode}}
                               </ul>
                               <div class="widget-49-meeting-action">
-                                <a href="#" class="btn btn-sm btn-primary">Set as Default</a> <a href="#"
-                                  class="btn btn-sm btn-primary">View All</a>
+                                <div class="row">
+                                  <div class="col">{{#if this.default}}
+                                    {{else}}
+                                    <a href="/user/addressDefault/{{this._id}}" class="btn btn-sm btn-primary">Set as
+                                      Default</a>
+                                    {{/if}}
+                                  </div>
+                                  <div class="col"> <a href="/user/addressUpdate/{{this._id}}"
+                                      class="btn btn-sm btn-primary">Update</a></div>
+
+                                </div>
+
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-
+                      {{/each}}
 
                     </div>
+
                   </div>
-                  {{/each}}
+
                   {{!--
                   <!-- Single item -->
                   <form method="post" action="/user/useraddress" enctype="multipart/form-data">

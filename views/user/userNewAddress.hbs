@@ -1,0 +1,219 @@
+{{!--
+<link rel='stylesheet' href='/stylesheets/address.css' /> --}}
+<section class="h-100 gradient-custom">
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="padding"></div>
+            <div class="row container d-flex justify-content-center">
+                <div class="col-md-6 col-lg-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25">
+
+                                        <p style="margin-right: 75%;">Hello,</p>
+                                        {{#if user}}
+                                        <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius"
+                                            alt="User-Profile-Image" />
+                                    </div>
+
+                                    <h6 class="f-w-600">{{user.name}}</h6>{{/if}}
+                                    <a href="#" style="color: blue;margin-left: 5%;">Change Password ?</a>
+                                    <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+
+
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Address Update</h6>
+                                    <div class="container">
+
+
+                                        <!-- Single item -->
+                                        <form method="post" action="/user/addAddress" enctype="multipart/form-data">
+
+                                            <div class="row">
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="First Name" name="fastname"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <!-- Data -->
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Last Name" name="lastname"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Email Id" name="emailid"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <!-- Data -->
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Mobile Number" name="mobile"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Pincode" name="pincode"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <!-- Data -->
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+
+                                                        <div class="col">
+
+                                                            <input type="text"
+                                                                placeholder="Flate,House.no,Building,company"
+                                                                name="house"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Area,Street,Village"
+                                                                name="area"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <!-- Data -->
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Landmark (Optional)"
+                                                                name="landmark"
+                                                                class="form-control border-warning form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="Town/City" name="city"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                    <!-- Data -->
+                                                    <div class="row align-items-center pt-4 pb-3">
+
+
+
+                                                        <div class="col">
+
+                                                            <input type="text" placeholder="State" name="state"
+                                                                class="form-control border-primary form-control-lg" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"></div>
+                                                <div class="col-sm-4"><button type="submit"
+                                                        class="btn btn-primary btn-lg btn-block">
+                                                        Add
+                                                    </button></div>
+                                            </div>
+
+
+
+
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="padding"></div>
+        <div class="padding"></div>
+</section>

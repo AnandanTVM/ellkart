@@ -26,7 +26,7 @@ router.post('/userSinghup', (req, res) => {
     }
 
   }).catch((error) => {
-    res.render("user/usernotfount")
+    res.redirect('../error')
   })
 })
 //user Login
@@ -148,7 +148,7 @@ router.get('/userHome', verifyLogin, async (req, res) => {
   userHelper.getAllProducts().then((product) => {
     res.render('user/userHome', { title: "ELL Kart", us: true, user, product, cartcount })
   }).catch((error) => {
-    res.render("user/usernotfount")
+    res.redirect('../error')
   })
 })
 //view product
@@ -161,7 +161,7 @@ router.get('/userProductView/:pid', verifyLogin, async (req, res) => {
 
     res.render('user/userProductView', { title: product.productName, us: true, user, product, cartcount })
   }).catch((error) => {
-    res.render("user/usernotfount")
+    res.redirect('../error')
   })
 
 
@@ -213,7 +213,7 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(user._id)
   let total = await userHelper.getTotal(user._id)
-  let address = await userHelper.getAddress(user._id)
+  let address = await userHelper.getDefaultAddress(user._id)
   res.render('user/checkout', { title: "ELL Kart", us: true, user, cartcount, total, address })
 })
 
@@ -325,7 +325,7 @@ router.get('/cancelOdder/:odId', verifyLogin, (req, res) => {
 
     res.redirect('../userodderviewpage/' + odderId)
   }).catch((error) => {
-    res.render('/error', { error })
+    res.redirect('../error')
   })
 
 })
@@ -340,13 +340,14 @@ router.get('/userProfile', verifyLogin, async (req, res) => {
 
 })
 //address 
-router.post('/useraddress', verifyLogin, (req, res) => {
+router.post('/useraddress/:id', verifyLogin, (req, res) => {
   let user = req.session.user
+  let adId = req.params.id;
 
-  userHelper.updateAddress(user._id, req.body).then(() => {
-    res.redirect('./userProfile')
+  userHelper.updateAddress(adId, req.body).then(() => {
+    res.redirect('../userProfile')
   }).catch((error) => {
-    console.log(error);
+    res.redirect('../error')
   })
 
 })
@@ -357,7 +358,7 @@ router.post('/userInfoUpedate', verifyLogin, (req, res) => {
   userHelper.userinfoUpdate(user._id, req.body).then(() => {
     res.redirect('./userProfile')
   }).catch((error) => {
-    console.log(error);
+    res.redirect('../error')
   })
 
 })
@@ -436,4 +437,63 @@ router.post('/search', (req, res) => {
     res.render('user/userHome', { title: "ELL Kart", us: true, user, notfunt: true, cartcount })
   })
 })
+//add address
+
+router.get('/addAddress', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(user._id)
+  res.render('user/userNewAddress', { title: "ELL Kart ", us: true, user, cartcount })
+})
+
+
+router.post('/addAddress', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let details = req.body
+  details.userId = user._id;
+  details.default = false;
+  console.log(details);
+
+  userHelper.addAddress(details).then((data) => {
+    res.redirect('./userProfile')
+  })
+
+})
+
+//address update
+router.get('/addressUpdate/:id', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let cartcount = await userHelper.getCartCount(user._id)
+  let adId = req.params.id;
+  userHelper.getOneAddress(adId).then((address) => {
+    res.render('user/updateAddress', { title: "ELL Kart", us: true, user, cartcount, address })
+  }).catch(() => {
+    res.redirect('../error')
+  })
+  //change default
+  router.get('/addressDefault/:id', (req, res) => {
+    let user = req.session.user
+    let adId = req.params.id;
+
+    userHelper.changeDefaultAddress(adId, user._id).then(() => {
+
+      userHelper.changeDefaultAddress1(adId).then(() => {
+
+        res.redirect('../userProfile')
+      })
+
+
+    })
+
+  })
+
+
+  //error
+  router.get('/error', verifyLogin, (req, res) => {
+    let user = req.session.user
+    res.render('user/userError', { us: true, user, title: "ELL Kart" })
+  })
+
+
+})
+
 module.exports = router;
