@@ -115,13 +115,13 @@ router.post('/userEnterOtp', (req, res) => {
   const otp = req.body.OTP;
   let phone = req.body.phone;
   userHelper.veriOtp(otp, phone).then((vetify) => {
-    console.log(vetify);
+
     if (vetify) {
       req.session.usloggedIn = true
-      console.log("otp success");
+
       res.redirect('/user/userHome')
     } else {
-      console.log("otp failed");
+
       req.session.loginErr = true
       res.redirect('./userOtpLogin')
     }
