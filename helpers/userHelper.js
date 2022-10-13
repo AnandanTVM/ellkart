@@ -4,15 +4,20 @@ const bcrypt = require('bcrypt')
 const { ObjectId, Db } = require('mongodb')
 const { response, json } = require('express')
 var objectId = require('mongodb').ObjectId
-const config = require('../config/otpConfig')
-const client = require('twilio')(config.accountSID, config.authToken)
+require("dotenv").config()
+const authToken=process.env.AUTH_TOKEN
+const accountSID=process.env.ACCOUNTS_ID
+const serviceID=process.env.SERVICE_ID
+
+const client = require('twilio')(accountSID,authToken)
+
 const Razorpay = require('razorpay');
 const { resolve } = require('path')
 const { log } = require('console')
 
 let instance = new Razorpay({
-    key_id: 'rzp_test_V6c4v4ekLUGUMI',
-    key_secret: 'NvToocEHI8Ke1w62zSKVY45r',
+    key_id: process.env.RAZOPAY_KERY_ID,
+    key_secret: process.env.RAZOPAY_KEY_SECRET,
 });
 
 module.exports = {
@@ -131,7 +136,7 @@ module.exports = {
 
                 client
                     .verify
-                    .services(config.serviceID)
+                    .services(serviceID)
                     .verifications
                     .create({
                         to: phone,
@@ -159,7 +164,7 @@ module.exports = {
             if (OTP.length == 4) {
                 await client
                     .verify
-                    .services(config.serviceID)
+                    .services(serviceID)
                     .verificationChecks
                     .create({
                         to: phone,
@@ -333,13 +338,18 @@ module.exports = {
     //view  cart count
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
-            let count = 0
-            let cart = await db.get().collection(collection.cart_COLLECTION).findOne({ user: ObjectId(userId) })
-            if (cart) {
-
-                count = cart.productId.length
+            try{
+                let count = 0
+                let cart = await db.get().collection(collection.cart_COLLECTION).findOne({ user: ObjectId(userId) })
+                if (cart) {
+    
+                    count = cart.productId.length
+                }
+                resolve(count)
+            }catch{
+                reject()
             }
-            resolve(count)
+           
         })
 
     },
@@ -462,37 +472,42 @@ module.exports = {
     },
     getodderdetails: (resId) => {
         return new Promise(async (resolve, reject) => {
-            let odderDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
-                {
-                    $match: { _id: objectId(resId) }
-                },
-                {
-                    $unwind: '$product'
-                },
-                {
-                    $project: {
-                        iteam: '$product.iteam',
-                        quantity: '$product.quantity',
+            try{
+                let odderDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                    {
+                        $match: { _id: objectId(resId) }
+                    },
+                    {
+                        $unwind: '$product'
+                    },
+                    {
+                        $project: {
+                            iteam: '$product.iteam',
+                            quantity: '$product.quantity',
+                        }
+    
+                    },
+                    {
+                        //to join anothtre table fields to current table
+                        $lookup: {
+                            from: collection.product_COLLECTION,
+                            localField: 'iteam',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    }, {
+                        $project: {
+                            iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            //arrayElemAt userd to convert array to object
+                        }
                     }
-
-                },
-                {
-                    //to join anothtre table fields to current table
-                    $lookup: {
-                        from: collection.product_COLLECTION,
-                        localField: 'iteam',
-                        foreignField: '_id',
-                        as: 'product'
-                    }
-                }, {
-                    $project: {
-                        iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                        //arrayElemAt userd to convert array to object
-                    }
-                }
-            ]).toArray()
-            console.log(odderDetils);
-            resolve(odderDetils)
+                ]).toArray()
+                console.log(odderDetils);
+                resolve(odderDetils)
+            }catch{
+                reject()
+            }
+            
         })
     },
     //find all odder deatails
@@ -507,51 +522,61 @@ module.exports = {
     },
     //odder details
     getOdderdetails: (ordId) => {
-        return new Promise(async (resolve, reject) => {
-
-            let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(ordId) }).toArray()
-            console.log(odderdetails);
-            resolve(odderdetails)
-
-        })
+      
+            return new Promise(async (resolve, reject) => {
+                try{
+                let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(ordId) }).toArray()
+                console.log(odderdetails);
+                resolve(odderdetails)
+            }
+            catch{
+              reject()
+            }
+            })
+       
     },
 
     getOdderProductdetails: (ordId) => {
-        return new Promise(async (resolve, reject) => {
-            let odderProductDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
-                {
-                    $match: { _id: objectId(ordId) }
-                },
-                {
-                    $unwind: '$product'
-                },
-                {
-                    $project: {
-                        iteam: '$product.iteam',
-                        quantity: '$product.quantity',
+       
+            return new Promise(async (resolve, reject) => {
+                try{
+                let odderProductDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
+                    {
+                        $match: { _id: objectId(ordId) }
+                    },
+                    {
+                        $unwind: '$product'
+                    },
+                    {
+                        $project: {
+                            iteam: '$product.iteam',
+                            quantity: '$product.quantity',
+                        }
+    
+                    },
+                    {
+                        //to join anothtre table fields to current table
+                        $lookup: {
+                            from: collection.product_COLLECTION,
+                            localField: 'iteam',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    }, {
+                        $project: {
+                            iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            //arrayElemAt userd to convert array to object
+                        }
                     }
-
-                },
-                {
-                    //to join anothtre table fields to current table
-                    $lookup: {
-                        from: collection.product_COLLECTION,
-                        localField: 'iteam',
-                        foreignField: '_id',
-                        as: 'product'
-                    }
-                }, {
-                    $project: {
-                        iteam: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                        //arrayElemAt userd to convert array to object
-                    }
-                }
-            ]).toArray()
-
-            resolve(odderProductDetils)
-        }).catch((error) => {
-            reject(error)
-        })
+                ]).toArray()
+    
+                resolve(odderProductDetils)
+            }catch{
+                reject()
+            }
+            })
+       
+       
     },
 
     cencelodder: (ordId) => {

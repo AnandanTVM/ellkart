@@ -11,10 +11,15 @@ const hbs = require('express-handlebars')
 const app = express();
 const fileUpload = require('express-fileUpload')
 
+// //env
+// require("dotenv").config()
+// console.log(process.env.AUTH_TOKEN);
+//if need here u can use this
 //data base connection
 const db = require('./config/connection')
 //sessition
-const session = require('express-session')
+const session = require('express-session');
+const { log } = require('console');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

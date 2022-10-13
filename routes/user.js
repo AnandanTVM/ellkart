@@ -245,12 +245,17 @@ router.post('/checkout/:total', async (req, res) => {
 })
 // check out placed confomation
 router.get('/odderplaced/:rid', verifyLogin, async (req, res) => {
-  let user = req.session.user
-  let resId = req.params.rid;
-  let cartcount = await userHelper.getCartCount(req.session.user._id)
-  let odderDetils = await userHelper.getodderdetails(resId)
-
-  res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, odderDetils, resId })
+  try{
+    let user = req.session.user
+    let resId = req.params.rid;
+    let cartcount = await userHelper.getCartCount(req.session.user._id)
+    let odderDetils = await userHelper.getodderdetails(resId)
+  
+    res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, odderDetils, resId })
+  }catch{
+    res.redirect('../error')
+  }
+ 
 })
 
 //view odder details
@@ -264,11 +269,16 @@ router.get('/userOdderdetails', verifyLogin, async (req, res) => {
 })
 //view odder details with with product
 router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
+
+
+try{
   let odderId = req.params.orid
   let user = req.session.user
   let cartcount = await userHelper.getCartCount(req.session.user._id)
   let odder = await userHelper.getOdderdetails(odderId)
   let odderproduct = await userHelper.getOdderProductdetails(odderId)
+  
+
   let adddetails = {}
 
 
@@ -313,6 +323,13 @@ router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
 
 
   res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct, adddetails })
+}catch{
+
+  res.redirect('../error')
+}
+
+
+ 
 })
 
 //odder cancel

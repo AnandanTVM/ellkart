@@ -6,10 +6,12 @@ const { ObjectId } = require('mongodb')
 const { response } = require('express')
 const { catagary_COLLECTION } = require('../config/collection')
 var objectId = require('mongodb').ObjectId
+require("dotenv").config()
+const authToken=process.env.AUTH_TOKEN
+const accountSID=process.env.ACCOUNTS_ID
+const serviceID=process.env.SERVICE_ID
 
-const config = require('../config/otpConfig')
-const client = require('twilio')(config.accountSID, config.authToken)
-
+const client = require('twilio')(accountSID,authToken)
 
 module.exports = {
     //admin login
@@ -237,7 +239,7 @@ module.exports = {
 
                 client
                     .verify
-                    .services(config.serviceID)
+                    .services(serviceID)
                     .verifications
                     .create({
                         to: phone,
@@ -265,7 +267,7 @@ module.exports = {
             if (OTP.length == 4) {
                 await client
                     .verify
-                    .services(config.serviceID)
+                    .services(serviceID)
                     .verificationChecks
                     .create({
                         to: phone,
