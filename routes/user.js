@@ -511,4 +511,62 @@ router.get('/addressUpdate/:id', verifyLogin, async (req, res) => {
 
 })
 
+//Forgot password
+router.get('/forgotPassword', (req, res) => {
+
+  res.render('user/userForgotPassword', { title: "Ell Kart" })
+})
+
+router.post('/forgotPassword', (req, res) => {
+
+  userHelper.getDetails(req.body.phone).then((response) => {
+    let phone = req.body.phone
+    if (response.phoneFound) {
+      res.render('user/userfgOTP', { title: "Ell Kart", phone })
+    } else {
+      req.session.logginErr = true
+      res.redirect('./forgotPassword')
+    }
+  })
+})
+router.post('/userFPOTPVerification', (req, res) => {
+  const otp = req.body.OTP;
+  let phone = req.body.phone;
+  userHelper.veriOtp(otp, phone).then((vetify) => {
+
+    if (vetify) {
+      res.render('user/userChangePassword', { title: "Ell Kart", phone })
+    } else {
+
+      req.session.loginErr = true
+      res.redirect('./forgotPassword')
+    }
+  })
+
+})
+router.post('/userChangePassword', (req, res) => {
+
+  userHelper.changePassword(req.body).then((status) => {
+    console.log(status);
+    if (status) {
+      req.session.changepass = true
+      res.redirect('./userCPProfile')
+    } else { res.redirect('./userLogin') }
+
+
+  }).catch(() => {
+    res.redirect('../error')
+  })
+
+})
+router.get('/userCPProfile', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  console.log(user);
+  let cartcount = await userHelper.getCartCount(user._id)
+  let status = req.session.changepass
+  res.render('user/userCPProfile', { title: "ELL Kart Profile", us: true, user, cartcount, status })
+  req.session.changepass = false
+})
+
+
 module.exports = router;

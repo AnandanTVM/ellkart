@@ -879,6 +879,70 @@ module.exports = {
 
 
         })
+    },
+    changePassword: (data) => {
+        password = data.password
+        let phone = data.phone
+        if (data.oldPaaword) {
+
+
+            return new Promise(async (resolve, reject) => {
+
+                let oldpassword = data.oldPaaword
+                password = await bcrypt.hash(password, 10)
+
+                let user = await db.get().collection(collection.user_COLLECTION).findOne({ phone: phone })
+
+                bcrypt.compare(oldpassword, user.password).then((status) => {
+
+                    if (status) {
+
+                        db.get().collection(collection.user_COLLECTION).updateOne({ phone: phone },
+                            {
+                                $set: {
+                                    password: password
+                                }
+                            })
+
+                        resolve()
+
+                    } else {
+
+                        resolve({ status: true })
+                    }
+                })
+
+
+
+
+
+
+            })
+        } else {
+
+            return new Promise(async (resolve, reject) => {
+                try {
+                    password = await bcrypt.hash(password, 10)
+                    db.get().collection(collection.user_COLLECTION).updateOne({ phone: phone },
+                        {
+                            $set: {
+                                password: password
+                            }
+                        })
+
+                    resolve()
+                } catch {
+
+                    reject()
+                }
+
+
+
+
+            })
+        }
+
+
     }
 
 

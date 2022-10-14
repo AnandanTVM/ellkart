@@ -48,3 +48,25 @@ $(document).ready(function () {
 
 
 })
+$(document).ready(function () {
+    // Validate Username
+    $("#changePassword").validate({
+        rules: {
+            password: {
+                required: true,
+                minlength: 8
+            },
+            passwordConfirm: {
+                required: true,
+                minlength: 8,
+                equalTo: "#password"
+            },
+            oldPaaword: {
+                required: true,
+                minlength: 8
+            }
+
+        }
+    })
+})
+
