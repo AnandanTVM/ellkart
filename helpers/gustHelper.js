@@ -48,7 +48,7 @@ module.exports = {
 
                     new Promise(async (resolve, reject) => {
                         product = await db.get().collection(collection.product_COLLECTION).find({ $text: { $search: data } }, { score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } }).toArray()
-
+                        console.log(product);
                         resolve(product)
                     }).then((product) => {
                         if (product == "") {

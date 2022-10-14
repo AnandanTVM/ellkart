@@ -24,7 +24,7 @@
                             <div class="col">
 
                                 <input type="text" placeholder="Product Name" name="productName"
-                                    class="form-control border-primary form-control-lg" />
+                                    class="form-control border-primary form-control-lg" required />
 
                             </div>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Brand Name" name="brand"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="col">
 
 
-                            <select class="select form-control border-primary form-control-lg" name="catagary">
+                            <select class="select form-control border-primary form-control-lg" name="catagary" required>
                                 <option>Select your Categorie </option>
                                 {{#each catagary }}
                                 <option value="{{this.catagary}}">{{this.catagary}}</option>
@@ -65,7 +65,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="MRP" name="mrp"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Retailer Price" name="retailerPrice"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Number of stock avalable" name="stock"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="In box" name="inbox"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Type" name="Type"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Made in" name="madein"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="colour" name="colour"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="width" name="width"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Hight" name="hight"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Wight" name="wight"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                         <div class="col">
 
                             <input type="text" placeholder="Warranty" name="warranty"
-                                class="form-control border-primary form-control-lg" />
+                                class="form-control border-primary form-control-lg" required />
 
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                         <div class="col-md-9 pe-5">
 
                             <input class="form-control border-primary form-control-lg" onchange="viewPhotoa(event)"
-                                id="formFileLg" name="photo1" type="file" />
+                                id="formFileLg" name="photo1" type="file" required />
                             <div class="small text-muted mt-2">Upload Products <b>Front Photo </b>Fist.</div>
 
                         </div>
@@ -202,7 +202,7 @@
                         <div class="col-md-9 pe-5">
 
                             <input class="form-control border-primary form-control-lg" onchange="viewPhotob(event)"
-                                id="formFileLg" name="photo2" type="file" />
+                                id="formFileLg" name="photo2" type="file" required />
 
 
                         </div>
@@ -220,7 +220,7 @@
                         <div class="col-md-9 pe-5">
 
                             <input class="form-control border-primary form-control-lg" onchange="viewPhotoc(event)"
-                                id="formFileLg" name="photo3" type="file" />
+                                id="formFileLg" name="photo3" type="file" required />
 
 
                         </div>

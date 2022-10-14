@@ -6,9 +6,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="container-fluid">
-            <form class="d-flex justify-content-center" action="/search" method="post">
+            <form class="d-flex justify-content-center" id="search" action="/search" method="post">
                 <input class="form-control me-2" type="search" name="search"
-                    placeholder="Search for products,brands and more" aria-label="Search">
+                    placeholder="Search for products,brands and more" id="searchProduct" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
         </div>
@@ -35,3 +35,14 @@
     </div>
 
 </nav>
+<script>
+    $("#search").submit(e => {
+        if ($("#searchProduct").val()) {
+            $("#search").submit()
+        }
+        else {
+            e.preventDefault();
+        }
+
+    })
+</script>
