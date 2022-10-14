@@ -1,10 +1,10 @@
-var db = require('../config/connection')
-var collection = require('../config/collection')
+let db = require('../config/connection')
+let collection = require('../config/collection')
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
 const { response } = require('express')
 const { catagary_COLLECTION } = require('../config/collection')
-var objectId = require('mongodb').ObjectId
+let objectId = require('mongodb').ObjectId
 
 
 module.exports = {
@@ -54,7 +54,7 @@ module.exports = {
                         if (product == "") {
                             reject()
                         }
-                        console.log("i am here");
+
                         resolve(product)
 
                     })

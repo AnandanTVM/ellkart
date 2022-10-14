@@ -55,7 +55,7 @@ router.post('/userLogin', (req, res) => {
 
       req.session.usloggedIn = true
       req.session.user = response.user
-      console.log(req.session.user);
+
       res.redirect('/user/userHome')
     } else {
 
@@ -218,16 +218,16 @@ router.get('/checkout', verifyLogin, async (req, res) => {
 })
 
 router.post('/checkout/:total', async (req, res) => {
-  // console.log(req.body);
+
 
   let product = await userHelper.getcartProductList(req.session.user._id)
   let total = parseInt(req.params.total)
-  console.log(total);
+
   userHelper.placeOdder(req.body, product, total).then((response) => {
     ordId = response.insertedId;
-    console.log("here");
+
     if (req.body['paymentmethod'] === 'COD') {
-      console.log("here");
+
       res.json({ codSuccess: true, ordId })
     }
     else {
@@ -245,17 +245,17 @@ router.post('/checkout/:total', async (req, res) => {
 })
 // check out placed confomation
 router.get('/odderplaced/:rid', verifyLogin, async (req, res) => {
-  try{
+  try {
     let user = req.session.user
     let resId = req.params.rid;
     let cartcount = await userHelper.getCartCount(req.session.user._id)
     let odderDetils = await userHelper.getodderdetails(resId)
-  
+
     res.render('user/odderplaced', { title: "Odder Placed", us: true, user, cartcount, odderDetils, resId })
-  }catch{
+  } catch {
     res.redirect('../error')
   }
- 
+
 })
 
 //view odder details
@@ -271,73 +271,73 @@ router.get('/userOdderdetails', verifyLogin, async (req, res) => {
 router.get('/userodderviewpage/:orid', verifyLogin, async (req, res) => {
 
 
-try{
-  let odderId = req.params.orid
-  let user = req.session.user
-  let cartcount = await userHelper.getCartCount(req.session.user._id)
-  let odder = await userHelper.getOdderdetails(odderId)
-  let odderproduct = await userHelper.getOdderProductdetails(odderId)
-  
-
-  let adddetails = {}
+  try {
+    let odderId = req.params.orid
+    let user = req.session.user
+    let cartcount = await userHelper.getCartCount(req.session.user._id)
+    let odder = await userHelper.getOdderdetails(odderId)
+    let odderproduct = await userHelper.getOdderProductdetails(odderId)
 
 
-  if (odder[0].status == 'placed') {
-    adddetails.placed = true
+    let adddetails = {}
+
+
+    if (odder[0].status == 'placed') {
+      adddetails.placed = true
+    }
+    else if (odder[0].status == 'Accepted') {
+      adddetails.accepted = true
+    }
+    else if (odder[0].status == 'Packed') {
+      adddetails.packed = true
+    }
+    else if (odder[0].status == 'Shipped') {
+      adddetails.shipped = true
+    }
+    else if (odder[0].status == 'Delivered') {
+      adddetails.delivered = true
+      adddetails.cancel = true
+    }
+    else if (odder[0].status == 'Waiting For Approval') {
+      adddetails.Waiting = true
+      adddetails.cancel = true
+
+    }
+    else if (odder[0].status == 'Approval') {
+      adddetails.Approval = true
+      adddetails.cancel = true
+
+    }
+    else if (odder[0].status == 'Returned') {
+      adddetails.Returned = true
+      adddetails.cancel = true
+
+    }
+
+    else {
+      adddetails.cancel = true
+    }
+
+
+
+
+
+    res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct, adddetails })
+  } catch {
+
+    res.redirect('../error')
   }
-  else if (odder[0].status == 'Accepted') {
-    adddetails.accepted = true
-  }
-  else if (odder[0].status == 'Packed') {
-    adddetails.packed = true
-  }
-  else if (odder[0].status == 'Shipped') {
-    adddetails.shipped = true
-  }
-  else if (odder[0].status == 'Delivered') {
-    adddetails.delivered = true
-    adddetails.cancel = true
-  }
-  else if (odder[0].status == 'Waiting For Approval') {
-    adddetails.Waiting = true
-    adddetails.cancel = true
-
-  }
-  else if (odder[0].status == 'Approval') {
-    adddetails.Approval = true
-    adddetails.cancel = true
-
-  }
-  else if (odder[0].status == 'Returned') {
-    adddetails.Returned = true
-    adddetails.cancel = true
-
-  }
-
-  else {
-    adddetails.cancel = true
-  }
 
 
 
-
-
-  res.render('user/viewodderdetails', { title: "Odder Details", us: true, user, cartcount, odder, odderproduct, adddetails })
-}catch{
-
-  res.redirect('../error')
-}
-
-
- 
 })
 
 //odder cancel
 
 router.get('/cancelOdder/:odId', verifyLogin, (req, res) => {
   let odderId = req.params.odId
-  let user = req.session.user
-  console.log(odderId);
+
+
   userHelper.cencelodder(odderId).then((response) => {
 
     res.redirect('../userodderviewpage/' + odderId)
@@ -380,10 +380,8 @@ router.post('/userInfoUpedate', verifyLogin, (req, res) => {
 
 })
 router.post('/verifyPayment', (req, res) => {
-  console.log(req.body);
-  console.log("pass1");
   userHelper.verfiyPayment(req.body).then(() => {
-    console.log("sucessfull");
+
 
     userHelper.changePayemengtStatus(req.body['order[receipt]']).then(() => {
 
@@ -427,13 +425,13 @@ router.get('/userCoupen', verifyLogin, async (req, res) => {
 
 router.post('/couponCheck', (req, res) => {
   let code = req.body.code;
-  console.log(code);
+
   userHelper.checkCoupen(code).then((data) => {
-    console.log(data);
+
     let value = data.value
     res.json({ value })
   }).catch((err) => {
-    console.log("here");
+
     res.json({ err: true })
   })
 
@@ -441,7 +439,7 @@ router.post('/couponCheck', (req, res) => {
 //search
 router.post('/search', (req, res) => {
   let search = req.body.search
-  console.log(search);
+
 
   userHelper.search(search).then(async (product) => {
     let user = req.session.user
@@ -468,7 +466,7 @@ router.post('/addAddress', verifyLogin, async (req, res) => {
   let details = req.body
   details.userId = user._id;
   details.default = false;
-  console.log(details);
+
 
   userHelper.addAddress(details).then((data) => {
     res.redirect('./userProfile')

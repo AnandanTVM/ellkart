@@ -63,7 +63,7 @@ router.get('/adminHome', verifyLogin, async (req, res) => {
         allCount.odderCount = 0
         allCount.totalSalse = 0
         SalesReport = 0
-        console.log(SalesReport);
+
 
 
         res.render('admin/adminHome', { title: "Admin Home", ad: true, admin, allCount, SalesReport })
@@ -76,7 +76,7 @@ router.get('/adminHome', verifyLogin, async (req, res) => {
 router.get('/salseReport', verifyLogin, async (req, res) => {
 
     adminHelper.Allodders().then((odders) => {
-        console.log(odders);
+
 
         res.render('admin/saleReport', { title: "ELL Kart Sale", ad: true, odders })
     }).catch(() => {
@@ -134,14 +134,14 @@ router.post('/adminOtpEnter', (req, res) => {
     const otp = req.body.OTP;
     let phone = req.body.phone;
     adminHelper.veriOtp(otp, phone).then((vetify) => {
-        console.log(vetify);
+
         if (vetify) {
             req.session.adloggedIn = true
             // req.session.admin = admin
-            console.log("otp success");
+
             res.redirect('/admin/adminHome')
         } else {
-            console.log("otp failed");
+
             req.session.loginErr = true
             res.redirect('./adminLoginOtp')
         }
@@ -178,7 +178,7 @@ router.get('/adminCatagary', verifyLogin, (req, res) => {
     let admin = req.session.admin
     adminHelper.getAllcatagary().then((cat) => {
         //    let count=cat.length;
-        console.log(cat);
+
         res.render('admin/adminCatagaery', { title: "ELL Admin", ad: true, admin, cat })
     })
 })
@@ -194,7 +194,7 @@ router.post('/addcatagarory', verifyLogin, (req, res) => {
 
 //delect catagary
 router.get('/adminCatagaryDelect/:usId', verifyLogin, (req, res) => {
-    console.log("here");
+
     let catid = req.params.usId
 
     adminHelper.catDelect(catid).then((response) => {
@@ -212,21 +212,21 @@ router.get('/adminAddeProduct', verifyLogin, (req, res) => {
     // })
 
     adminHelper.getAllCatgary().then((catagary) => {
-        console.log(catagary);
+
         res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin, catagary })
     })
 
 })
 
 router.post('/adminAddProduct', verifyLogin, (req, res) => {
-    console.log("iam heres");
+
     let admin = req.session.admin
     //offer calculation
     let mrp = parseInt(req.body.mrp);
     let rtp = parseInt(req.body.retailerPrice);
     let offer = parseInt(100 - ((rtp / mrp) * 100))
     req.body.offer = offer;
-    console.log(req.body);
+
 
 
     adminHelper.adminAddProduct(req.body, (result) => {
@@ -241,7 +241,7 @@ router.post('/adminAddProduct', verifyLogin, (req, res) => {
                 res.render('admin/adminAddProduct', { title: "Add Products", ad: true, admin, done: true })
             }
             else {
-                console.log(err);
+
             }
         })
 
@@ -295,7 +295,7 @@ router.post('/adminEditProduct/:id', verifyLogin, (req, res) => {
                 photo3.mv('./public/product-photo3/' + req.params.id + '.jpg')
             }
         } catch {
-            console.log("error");
+
         }
 
 
@@ -320,7 +320,7 @@ router.get('/adminOddermanage', verifyLogin, (req, res) => {
         res.render('admin/odderManagement', { title: "ELL Admin", ad: true, odders })
 
     }).catch((error) => {
-        console.log(error);
+
     })
 
 
@@ -333,12 +333,12 @@ router.get('/adminViewOdderUp/:ordId', verifyLogin, async (req, res) => {
     let prodetails = await adminHelper.getoddersProductDetails(odderId)
     adminHelper.odderDetails(odderId).then((odderDetails) => {
 
-        console.log(prodetails);
+
 
         res.render('admin/adminodderView', { title: "ELL Admin", ad: true, odderDetails, prodetails })
 
     }).catch((error) => {
-        console.log(error);
+
     })
 
 })
@@ -407,7 +407,7 @@ router.get("/exportExcel", async (req, res) => {
         worksheet.getRow(1).eachCell((cell) => {
             cell.font = { bold: true };
         });
-        // console.log("finaly resolving the promic ")
+
 
         res.header(
             "Content-Type",
@@ -418,7 +418,7 @@ router.get("/exportExcel", async (req, res) => {
         workbook.xlsx.write(res);
     } catch (err) {
 
-        console.log(err.message);
+
     }
 });
 router.get("/adminReturn", verifyLogin, async (req, res) => {
@@ -459,7 +459,7 @@ router.post("/coupen", (req, res) => {
 })
 
 router.get('/coupenDelect/:coupenId', verifyLogin, (req, res) => {
-    console.log("here");
+
     let coupenId = req.params.coupenId
 
     adminHelper.coupenDelect(coupenId).then((response) => {

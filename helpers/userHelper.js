@@ -1,15 +1,15 @@
-var db = require('../config/connection')
-var collection = require('../config/collection')
+let db = require('../config/connection')
+let collection = require('../config/collection')
 const bcrypt = require('bcrypt')
 const { ObjectId, Db } = require('mongodb')
 const { response, json } = require('express')
-var objectId = require('mongodb').ObjectId
+let objectId = require('mongodb').ObjectId
 require("dotenv").config()
-const authToken=process.env.AUTH_TOKEN
-const accountSID=process.env.ACCOUNTS_ID
-const serviceID=process.env.SERVICE_ID
+const authToken = process.env.AUTH_TOKEN
+const accountSID = process.env.ACCOUNTS_ID
+const serviceID = process.env.SERVICE_ID
 
-const client = require('twilio')(accountSID,authToken)
+const client = require('twilio')(accountSID, authToken)
 
 const Razorpay = require('razorpay');
 const { resolve } = require('path')
@@ -29,7 +29,7 @@ module.exports = {
 
 
             let extphone = await db.get().collection(collection.user_COLLECTION).findOne({ phone: userData.phone })
-            console.log(extphone);
+
             if (extphone == null) {
 
                 return new Promise(async (resolve, reject) => {
@@ -50,9 +50,7 @@ module.exports = {
                         resolve(data)
 
                     }).catch((error) => {
-                        console.log(error);
                         reject(error)
-                        console.log();
                     })
 
             } else {
@@ -126,12 +124,12 @@ module.exports = {
             let phone = data
 
             let details = await db.get().collection(collection.user_COLLECTION).findOne({ phone: data })
-            console.log(details);
+
             if (details == null) {
                 resolve({ phoneFound: false })
             } else {
                 //otp sending process starts
-                console.log(phone)
+
                 phone = "+91" + phone
 
                 client
@@ -144,10 +142,10 @@ module.exports = {
                     })
                     .then((data) => {
                         resolve({ phoneFound: true, details })
-                        console.log('otp Sending successfully to ' + phone);
+
                     })
                     .catch((error) => {
-                        console.log(error);
+
                         resolve({ phoneFound: false })
                     })
 
@@ -171,7 +169,7 @@ module.exports = {
                         code: OTP
                     })
                     .then((data) => {
-                        console.log(data)
+
                         if (data.status == 'approved') {
                             otpverify = true;
                         } else {
@@ -183,7 +181,7 @@ module.exports = {
 
                 otpverify = false
             }
-            console.log(otpverify)
+
             res(otpverify)
 
         })
@@ -338,18 +336,18 @@ module.exports = {
     //view  cart count
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
-            try{
+            try {
                 let count = 0
                 let cart = await db.get().collection(collection.cart_COLLECTION).findOne({ user: ObjectId(userId) })
                 if (cart) {
-    
+
                     count = cart.productId.length
                 }
                 resolve(count)
-            }catch{
+            } catch {
                 reject()
             }
-           
+
         })
 
     },
@@ -425,13 +423,13 @@ module.exports = {
                     break;
                 case 8: month = "Sep"
                     break;
-                case 9: month = "Aug"
+                case 9: month = "Oct"
                     break;
                 case 10: month = "Nov"
                     break;
                 case 11: month = "Dec"
                     break;
-                default: console.log("someting wrong")
+                default: "someting wrong"
             }
 
             let status = odder.paymentmethod === 'COD' ? 'placed' : 'pending'
@@ -457,7 +455,7 @@ module.exports = {
                 resolve(response)
             })
 
-            console.log(odderObj);
+
         })
 
     },
@@ -472,7 +470,7 @@ module.exports = {
     },
     getodderdetails: (resId) => {
         return new Promise(async (resolve, reject) => {
-            try{
+            try {
                 let odderDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
                     {
                         $match: { _id: objectId(resId) }
@@ -485,7 +483,7 @@ module.exports = {
                             iteam: '$product.iteam',
                             quantity: '$product.quantity',
                         }
-    
+
                     },
                     {
                         //to join anothtre table fields to current table
@@ -502,12 +500,12 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-                console.log(odderDetils);
+
                 resolve(odderDetils)
-            }catch{
+            } catch {
                 reject()
             }
-            
+
         })
     },
     //find all odder deatails
@@ -515,31 +513,31 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
 
             let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ userId: objectId(userId) }).sort({ _id: -1 }).toArray()
-            console.log(odderdetails);
+
             resolve(odderdetails)
 
         })
     },
     //odder details
     getOdderdetails: (ordId) => {
-      
-            return new Promise(async (resolve, reject) => {
-                try{
+
+        return new Promise(async (resolve, reject) => {
+            try {
                 let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(ordId) }).toArray()
-                console.log(odderdetails);
+
                 resolve(odderdetails)
             }
-            catch{
-              reject()
+            catch {
+                reject()
             }
-            })
-       
+        })
+
     },
 
     getOdderProductdetails: (ordId) => {
-       
-            return new Promise(async (resolve, reject) => {
-                try{
+
+        return new Promise(async (resolve, reject) => {
+            try {
                 let odderProductDetils = await db.get().collection(collection.Odder_COLLECTION).aggregate([
                     {
                         $match: { _id: objectId(ordId) }
@@ -552,7 +550,7 @@ module.exports = {
                             iteam: '$product.iteam',
                             quantity: '$product.quantity',
                         }
-    
+
                     },
                     {
                         //to join anothtre table fields to current table
@@ -569,20 +567,20 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-    
+
                 resolve(odderProductDetils)
-            }catch{
+            } catch {
                 reject()
             }
-            })
-       
-       
+        })
+
+
     },
 
     cencelodder: (ordId) => {
         return new Promise((resolve, reject) => {
             let status = "Canceled"
-            console.log(ordId);
+
             db.get().collection(collection.Odder_COLLECTION).updateOne({
                 _id: ObjectId(ordId)
             },
@@ -593,10 +591,10 @@ module.exports = {
                     }
 
                 }).then((response) => {
-                    console.log(response);
+
                     resolve()
                 }).catch((error) => {
-                    console.log(error);
+
                     reject(error)
                 })
         })
@@ -640,7 +638,7 @@ module.exports = {
                         }
 
                     }).then((response) => {
-                        console.log(response);
+
                         resolve()
                     })
 
@@ -649,28 +647,15 @@ module.exports = {
 
             reject()
         }
-
-
-
-
     },
     getAddress: (userId) => {
-
         return new Promise(async (resolve, reject) => {
-            console.log(userId);
             let address = await db.get().collection(collection.Address_COLLECTION).find({ userId: userId }).toArray()
-            console.log(address);
             resolve(address)
-
-
         })
-
-
-
     },
     userinfoUpdate: (userId, data) => {
         return new Promise(async (resolve, reject) => {
-
             await db.get().collection(collection.user_COLLECTION).updateOne({
                 _id: ObjectId(userId)
             },
@@ -682,11 +667,10 @@ module.exports = {
                     }
 
                 }).then((response) => {
-                    console.log("updated succesfully");
-                    console.log(response);
+
+
                     resolve()
                 }).catch((error) => {
-                    console.log(error);
                     reject(error)
                 })
 
@@ -701,7 +685,7 @@ module.exports = {
                 receipt: "" + ordId
             };
             instance.orders.create(options, function (err, order) {
-                console.log(order)
+
                 resolve(order)
             })
 
@@ -717,10 +701,10 @@ module.exports = {
             hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]']);
             hmac = hmac.digest('hex')
             if (hmac == details['payment[razorpay_signature]']) {
-                console.log("mached");
+
                 resolve()
             } else {
-                console.log("not mached");
+
                 reject()
             }
 
@@ -729,8 +713,6 @@ module.exports = {
     },
     changePayemengtStatus: (ordId) => {
         return new Promise((resolve, reject) => {
-            let k = ordId
-            console.log(k);
             db.get().collection(collection.Odder_COLLECTION).updateOne({ _id: objectId(ordId) },
                 {
                     $set: {
@@ -743,8 +725,6 @@ module.exports = {
     },
     paymentfailed: (ordId) => {
         return new Promise((resolve, reject) => {
-            let k = ordId
-            console.log(k);
             db.get().collection(collection.Odder_COLLECTION).updateOne({ _id: objectId(ordId) },
                 {
                     $set: {
@@ -773,7 +753,7 @@ module.exports = {
 
                     resolve()
                 }).catch((error) => {
-                    console.log(error);
+
                     reject(error)
                 })
 
@@ -797,12 +777,9 @@ module.exports = {
             if (coupen) {
                 resolve(coupen)
             } else {
-                console.log("here");
+
                 reject()
             }
-
-
-
 
         })
 
@@ -825,7 +802,7 @@ module.exports = {
                         if (product == "") {
                             reject()
                         }
-                        console.log("i am here");
+
                         resolve(product)
 
                     })
@@ -860,9 +837,9 @@ module.exports = {
     getDefaultAddress: (userId) => {
 
         return new Promise(async (resolve, reject) => {
-            console.log(userId);
+
             let address = await db.get().collection(collection.Address_COLLECTION).find({ userId: userId, default: true }).toArray()
-            console.log(address);
+
             resolve(address[0])
 
 

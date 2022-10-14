@@ -1,17 +1,17 @@
 
-var db = require('../config/connection')
-var collection = require('../config/collection')
+let db = require('../config/connection')
+let collection = require('../config/collection')
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
 const { response } = require('express')
 const { catagary_COLLECTION } = require('../config/collection')
-var objectId = require('mongodb').ObjectId
+let objectId = require('mongodb').ObjectId
 require("dotenv").config()
-const authToken=process.env.AUTH_TOKEN
-const accountSID=process.env.ACCOUNTS_ID
-const serviceID=process.env.SERVICE_ID
+const authToken = process.env.AUTH_TOKEN
+const accountSID = process.env.ACCOUNTS_ID
+const serviceID = process.env.SERVICE_ID
 
-const client = require('twilio')(accountSID,authToken)
+const client = require('twilio')(accountSID, authToken)
 
 module.exports = {
     //admin login
@@ -21,8 +21,8 @@ module.exports = {
             let loginStatus = false
             let response = {}
             // let p = parseInt(adminData.phone)
-            let admin = await db.get().collection(collection.Admin_COLLECTION).findOne({ phone: adminData.phone })
-            console.log(admin);
+            const admin = await db.get().collection(collection.Admin_COLLECTION).findOne({ phone: adminData.phone })
+
             if (admin) {
 
 
@@ -30,15 +30,15 @@ module.exports = {
 
                     response.admin = admin
                     response.status = true
-                    console.log("passed login");
+
                     resolve(response)
                 }
                 else {
-                    console.log("failed login");
+
                     resolve({ status: false })
                 }
             } else {
-                console.log("failed login ");
+
                 resolve({ status: false })
             }
 
@@ -58,10 +58,10 @@ module.exports = {
     //block user
 
     blockUser: (usrId) => {
-        console.log("i am here");
+
 
         const ousrId = objectId(usrId)
-        console.log(ousrId)
+
         return new Promise((resolve, reject) => {
             db.get().collection(collection.user_COLLECTION)
                 .updateOne({ _id: ousrId },
@@ -72,17 +72,17 @@ module.exports = {
                     }).then((response) => {
                         resolve()
                     })
-            console.log("outside")
+
         })
 
     },
     //UNblock user
 
     unblockUser: (usrId) => {
-        console.log("i am here");
+
 
         const ousrId = objectId(usrId)
-        console.log(ousrId)
+
         return new Promise((resolve, reject) => {
             db.get().collection(collection.user_COLLECTION)
                 .updateOne({ _id: ousrId },
@@ -93,7 +93,7 @@ module.exports = {
                     }).then((response) => {
                         resolve()
                     })
-            console.log("outside")
+
         })
 
     },
@@ -118,7 +118,7 @@ module.exports = {
     //delect catagary
     catDelect: (cat) => {
         return new Promise((resolve, reject) => {
-            console.log("h1");
+
             db.get().collection(collection.catagary_COLLECTION).deleteOne({ _id: ObjectId(cat) }).then((data) => {
 
                 resolve(data)
@@ -138,7 +138,7 @@ module.exports = {
         db.get().collection(collection.product_COLLECTION).insertOne(products).then((data) => {
 
             const id = data.insertedId.toString()
-            console.log(id);
+
             callback(id)
         })
 
@@ -173,7 +173,7 @@ module.exports = {
     //Delect Products
     deleteProduct: (proId) => {
         return new Promise((resolve, reject) => {
-            console.log("h1");
+
             db.get().collection(collection.product_COLLECTION).deleteOne({ _id: ObjectId(proId) }).then((data) => {
 
                 resolve(data)
@@ -229,12 +229,12 @@ module.exports = {
             let phone = data
 
             let details = await db.get().collection(collection.Admin_COLLECTION).findOne({ phone: data })
-            console.log(details);
+
             if (details == null) {
                 resolve({ phoneFound: false })
             } else {
                 //otp sending process starts
-                console.log(phone)
+
                 phone = "+91" + phone
 
                 client
@@ -247,10 +247,10 @@ module.exports = {
                     })
                     .then((data) => {
                         resolve({ phoneFound: true, details })
-                        console.log('otp Sending successfully to ' + phone);
+
                     })
                     .catch((error) => {
-                        console.log(error);
+
                         resolve({ phoneFound: false })
                     })
 
@@ -274,7 +274,7 @@ module.exports = {
                         code: OTP
                     })
                     .then((data) => {
-                        console.log(data)
+
                         if (data.status == 'approved') {
                             otpverify = true;
                         } else {
@@ -286,7 +286,7 @@ module.exports = {
 
                 otpverify = false
             }
-            console.log(otpverify)
+
             res(otpverify)
 
         })
@@ -313,7 +313,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
 
             let odderdetails = await db.get().collection(collection.Odder_COLLECTION).find({ _id: objectId(odderId) }).toArray()
-            console.log(odderdetails);
+
             resolve(odderdetails)
 
         })
@@ -354,14 +354,14 @@ module.exports = {
             resolve(odderProductDetils)
 
         }).catch((error) => {
-            console.log(error)
+            reject()
         })
     },
     //odder cancel
     cencelodder: (ordId, remark) => {
         return new Promise((resolve, reject) => {
             let status = "Canceled"
-            console.log(ordId);
+
             db.get().collection(collection.Odder_COLLECTION).updateOne({
                 _id: ObjectId(ordId)
             },
@@ -373,21 +373,21 @@ module.exports = {
                     }
 
                 }).then((response) => {
-                    console.log(response);
+
                     resolve()
                 }).catch((error) => {
-                    console.log(error);
+
                     reject(error)
                 })
         })
 
     },
     updateOdderstatus: (ordId, status) => {
-        console.log(status);
+
         let s1 = status
         return new Promise((resolve, reject) => {
 
-            console.log(ordId);
+
             db.get().collection(collection.Odder_COLLECTION).updateOne({
                 _id: ObjectId(ordId)
             },
@@ -399,10 +399,10 @@ module.exports = {
                     }
 
                 }).then((response) => {
-                    console.log(response);
+
                     resolve()
                 }).catch((error) => {
-                    console.log(error);
+
                     reject(error)
                 })
         })
@@ -436,7 +436,7 @@ module.exports = {
             await db.get().collection(collection.Odder_COLLECTION).find({ status: { $ne: 'Canceled' } }).count().then((count) => {
 
                 resolve(count)
-                console.log("odder count :" + count);
+
             }).catch((err) => {
                 reject(err)
             })
@@ -465,7 +465,7 @@ module.exports = {
                 ]).toArray()
                 resolve(total[0].total)
             } catch {
-                console.log("error occers");
+
                 reject()
             }
         })
@@ -542,7 +542,7 @@ module.exports = {
 
                 ])
                 .toArray();
-            console.log(ProductReport);
+
 
             resolve(ProductReport);
         });
@@ -611,7 +611,7 @@ module.exports = {
 
                     resolve()
                 }).catch((error) => {
-                    console.log(error);
+
                     reject(error)
                 })
 
@@ -630,7 +630,7 @@ module.exports = {
     addCoupen: (details) => {
         return new Promise(async (resolve, reject) => {
             let code = await db.get().collection(collection.Coupen_COLLECTION).findOne({ code: details.code })
-            console.log(code);
+
             if (code) {
                 reject({ message: 'Coupons already exist.' })
             } else {
@@ -648,7 +648,7 @@ module.exports = {
 
     coupenDelect: (coupenId) => {
         return new Promise((resolve, reject) => {
-            console.log("h1");
+
             db.get().collection(collection.Coupen_COLLECTION).deleteOne({ _id: ObjectId(coupenId) }).then((data) => {
 
                 resolve(data)

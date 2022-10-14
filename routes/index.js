@@ -32,7 +32,7 @@ router.get('/productView/:pid', (req, res) => {
 
 router.post('/search', (req, res) => {
   let search = req.body.search
-  console.log(search);
+
 
   gustHelper.search(search).then((product) => {
     res.render('index', { title: 'ELL Kart ', product });
